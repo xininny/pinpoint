@@ -129,10 +129,10 @@ Every window scored in Stages 2 and 3 is dumped to `results/cascade/<db>/result_
 | | time |
 |---|---|
 | Smoke test | a few minutes |
-| Claim 1 (two configurations) | a few hours on a T4 |
+| Claim 1 (two configurations) | about 3 hours on a Colab T4 |
 | Claim 2 (reuses claim 1's run) | seconds |
 
-Runs are resumable: a target whose report already exists is skipped, so re-running a claim after a dropped Colab session continues instead of starting over. Mounting Google Drive in the notebook keeps results across sessions.
+Measured on a free Colab T4. The work is not GPU-bound, so a T4 is not much slower here than a datacentre GPU. Runs are resumable: a target whose report already exists is skipped, so re-running a claim after a dropped Colab session continues instead of starting over. Mounting Google Drive in the notebook keeps results across sessions.
 
 ## Troubleshooting
 

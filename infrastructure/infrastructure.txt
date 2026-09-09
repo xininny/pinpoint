@@ -35,27 +35,32 @@ the clone at artifact/binshot/, which backbone.py puts on sys.path.
 
 Expected runtime
 ----------------
-    smoke test                       a few minutes
-    claim 1 (two configurations)     a few hours on a T4
+    claim 1 (two configurations)     about 3 hours on a Colab T4
     claim 2 (reuses claim 1's run)   seconds
 
-The estimate for claim 1 comes from the archived full-corpus run: the 25
-binaries of the packaged subset account for about 5,000 seconds of GPU time
-there, on an NVIDIA H200. A Colab T4 is several times slower than an H200 for
-this workload, which puts the claim-1 cell in the range of a few hours -- inside
-Colab's 12-hour session limit, but not by a wide margin.
+Measured on a free Colab T4: the cascade over the 25 binaries and both
+reference databases runs at roughly 0.75 target-database pairs per minute,
+putting the cascade at about two and a half hours; the Stage-1 baseline that
+claim 1 also needs is much cheaper, since Stage 1 embeds each candidate once
+instead of sliding a window over it.
 
-Two things make that safe:
+The work is not GPU-bound. On an NVIDIA H200 with the GPU to itself, this
+pipeline holds the device at about 35% utilization: the cost is in Python-side
+window construction and tokenization, not in the model. A T4 is therefore not
+several times slower than a datacentre GPU here, and can be faster than a
+busy shared one.
 
-  * The smoke test finishes in minutes and exercises the same code path, so a
-    reviewer can confirm the setup before committing to the long run.
+Two things keep the long run safe inside Colab's 12-hour session limit:
+
   * Runs are resumable. pinpoint.py skips a target whose report already exists,
     so re-running a claim after a dropped session continues instead of starting
-    over. Mounting Google Drive in the notebook keeps results across sessions.
+    over. Mounting Google Drive keeps results across sessions.
+  * Progress is streamed. Each finished target prints as it completes, so the
+    cell is visibly alive rather than appearing hung.
 
-Precomputing the reference embeddings is part of install.sh and matters: without
-it the cascade recomputes each reference's embedding once per candidate
-function.
+Precomputing the reference embeddings is part of install.sh and matters:
+without it the cascade recomputes each reference's embedding once per
+candidate function.
 
 Constraints
 -----------
