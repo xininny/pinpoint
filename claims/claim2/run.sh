@@ -6,8 +6,7 @@ source "$HERE/../common.sh"
 OUT="$HERE/actual"; mkdir -p "$OUT"
 
 echo "== running PinPoint's full cascade over the subset"
-run_pinpoint "$CASCADE" > "$OUT/run.log" 2>&1
-grep -vE '^Run ' "$OUT/run.log" | tail -5 || true
+run_pinpoint "$CASCADE" 2>&1 | tee "$OUT/run.log"
 assert_no_skips "$OUT/run.log"
 
 echo

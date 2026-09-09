@@ -1,0 +1,13 @@
+This artifact bundles third-party material.
+
+  BinShot (https://github.com/asw0316/binshot), MIT License, Copyright (c) 2022
+  BinShot Project. Its Python sources are not copied into this repository;
+  install.sh clones them. Its published similarity model and vocabulary are
+  redistributed unchanged in the data bundle under artifact/models/, together
+  with BinShot's license text (artifact/models/BINSHOT_LICENSE) and a note on
+  their provenance (artifact/models/NOTICE.txt).
+
+  Target and reference data are derived by static analysis from binaries built
+  from open-source releases; see license.txt for the per-project licenses.
+
+Everything else is MIT, Copyright (c) 2026 PinPoint authors. See LICENSE.

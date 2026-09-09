@@ -21,7 +21,7 @@ ARCHIVE="${TMPDIR:-/tmp}/pinpoint-acsac26-data.tar.gz"
 # The bundle's contents are fixed, so its digest is too. Checked after every
 # download, whatever the URL, so a truncated transfer or a stale mirror fails
 # here rather than showing up later as an unexplained number.
-EXPECTED_SHA256="3b45dd7215c2e298ac6ea47d969136b2ae84a48529bf9525e49b135d0a58ae5a"
+EXPECTED_SHA256="45201db1a193b929c2510e11f168a8314174a003b639dd16ef27d1df2131d509"
 
 if [ -f "$ART_ROOT/models/binshot_sim.model" ] && \
    [ -d "$ART_ROOT/data/targets" ] && \

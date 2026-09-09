@@ -19,7 +19,11 @@ run_pinpoint() {   # run_pinpoint <output_dir> [extra args...]
     # a target whose report already exists is skipped anyway.
     [ -d "$out" ] && find "$out" -name '*.lock' -delete 2>/dev/null
 
-    "$PY" "$ART/pinpoint.py" --vuln_db regular fno_inline \
+    # PYTHONUNBUFFERED: pinpoint.py reports each finished target through
+    # tqdm.write, which goes to stdout. Piped to a log, stdout is block
+    # buffered, so those lines would only appear when the run ends -- the cell
+    # looks hung for hours. Unbuffered, they arrive as each target completes.
+    PYTHONUNBUFFERED=1 "$PY" "$ART/pinpoint.py" --vuln_db regular fno_inline \
         --output_dir "$out" --cuda "$CUDA" "$@"
 }
 

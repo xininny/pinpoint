@@ -6,14 +6,12 @@ source "$HERE/../common.sh"
 OUT="$HERE/actual"; mkdir -p "$OUT"
 
 echo "== running PinPoint's full cascade over the subset"
-run_pinpoint "$CASCADE" > "$OUT/run.cascade.log" 2>&1
-grep -vE '^Run ' "$OUT/run.cascade.log" | tail -5 || true
+run_pinpoint "$CASCADE" 2>&1 | tee "$OUT/run.cascade.log"
 assert_no_skips "$OUT/run.cascade.log"
 
 echo
 echo "== running the same subset with Stage 1 only (whole-function matching)"
-run_pinpoint "$BASELINE" --stage 1 > "$OUT/run.stage1.log" 2>&1
-grep -vE '^Run ' "$OUT/run.stage1.log" | tail -5 || true
+run_pinpoint "$BASELINE" --stage 1 2>&1 | tee "$OUT/run.stage1.log"
 assert_no_skips "$OUT/run.stage1.log"
 
 BASE_FLAT="$(flatten_stage "$BASELINE" 1)"
