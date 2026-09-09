@@ -21,7 +21,7 @@ ARCHIVE="${TMPDIR:-/tmp}/pinpoint-acsac26-data.tar.gz"
 # The bundle's contents are fixed, so its digest is too. Checked after every
 # download, whatever the URL, so a truncated transfer or a stale mirror fails
 # here rather than showing up later as an unexplained number.
-EXPECTED_SHA256="45201db1a193b929c2510e11f168a8314174a003b639dd16ef27d1df2131d509"
+EXPECTED_SHA256="8df5d3e28eb3f70e6e42a2c776ab985331314a5a51334d3648c2b6380ee30a45"
 
 if [ -f "$ART_ROOT/models/binshot_sim.model" ] && \
    [ -d "$ART_ROOT/data/targets" ] && \
@@ -62,7 +62,7 @@ case "$URL" in
         PINPOINT_DATA_URL=<url to pinpoint-acsac26-data.tar.gz> \
             artifact/scripts/fetch_data.sh
 
-    The bundle unpacks to  data/{reference_db,targets,targets_fno_inline}  and
+    The bundle unpacks to  data/{reference_db,targets}  and
     models/{binshot_sim.model,pretrain.all.corpus.voca}  under artifact/.
 MSG
         exit 1

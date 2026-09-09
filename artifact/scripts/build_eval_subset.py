@@ -114,7 +114,7 @@ def main():
     args = ap.parse_args()
     root = args.paper_root
 
-    for sub in ('targets', 'targets_fno_inline', 'reference_db', 'ground_truth'):
+    for sub in ('targets', 'reference_db', 'ground_truth'):
         os.makedirs(os.path.join(args.out, sub), exist_ok=True)
 
     # ---- targets -------------------------------------------------------
@@ -123,16 +123,16 @@ def main():
     total = 0
     for name in SUBSET:
         projbin.add((name.split('-')[0], name.split('-')[1]))
-        for src_dir, dst_dir in (('json_all', 'targets'),
-                                 ('json_fno_inline', 'targets_fno_inline')):
-            src = os.path.join(root, 'data', src_dir, name + '.json')
-            if not os.path.exists(src):
-                if src_dir == 'json_all':
-                    sys.exit(f'[!] missing target: {src}')
-                continue
-            dst = os.path.join(args.out, dst_dir, name + '.json')
-            shutil.copyfile(src, dst)
-            total += os.path.getsize(dst)
+        # Only the default builds are targets. The -fno-inline builds exist in
+        # the corpus to supply extra *references* for Types II-IV, not to be
+        # searched: both reference databases are queried against the same
+        # default-build targets, exactly as in the paper's run.
+        src = os.path.join(root, 'data', 'json_all', name + '.json')
+        if not os.path.exists(src):
+            sys.exit(f'[!] missing target: {src}')
+        dst = os.path.join(args.out, 'targets', name + '.json')
+        shutil.copyfile(src, dst)
+        total += os.path.getsize(dst)
     print(f'    {len(SUBSET)} binaries, {total / 2**20:.0f} MiB')
 
     # ---- references ----------------------------------------------------

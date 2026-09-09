@@ -23,9 +23,7 @@ PYEOF
 echo "== smoke set: ${#SMOKE[@]} binaries"
 rm -rf "$WORK"; mkdir -p "$WORK"
 for b in "${SMOKE[@]}"; do
-    for d in targets targets_fno_inline; do
-        [ -f "$ART/data/$d/$b.json" ] && ln -sf "$ART/data/$d/$b.json" "$WORK/$b.json" && break
-    done
+    [ -f "$ART/data/targets/$b.json" ] && ln -sf "$ART/data/targets/$b.json" "$WORK/$b.json"
 done
 ls -1 "$WORK" | sed 's/^/   /'
 

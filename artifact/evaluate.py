@@ -1,21 +1,14 @@
 #!/usr/bin/env python3
 """
-evaluate.py -- reproduce the paper's two effectiveness tables from a run's reports.
+evaluate.py -- reproduce the paper's Table IV from a run's reports.
 
-Two tables, matching Section VII-B and VII-C of the paper:
+Within-function vulnerability range localization, over the reference queries
+whose ground-truth target function came out at Top-1. A query counts as correct
+when the range PinPoint reports overlaps the DWARF-derived vulnerable bytes at
+all; covering the whole vulnerable region is not required.
 
-  retrieval     Type-wise Top-K function-retrieval accuracy and MRR. The unit is
-                a ground-truth target-function instance: one recovered function
-                in one target binary that the ground truth marks as carrying
-                vulnerable code. Following the paper, an instance's rank is the
-                best (lowest) rank it achieves over all references derived from
-                the same vulnerable function, and ties share a rank.
-
-  localization  Within-function vulnerability range localization, over the
-                reference queries whose ground-truth target function came out at
-                Top-1. A query counts as correct when the range PinPoint reports
-                overlaps the DWARF-derived vulnerable bytes at all; covering the
-                whole vulnerable region is not required.
+Retrieval (Table III) is a separate measurement made by analysis/topk_table.py,
+the paper's own code; see claims/claim1/.
 
 Types follow the paper's taxonomy, read off the ground-truth label of the
 instance: V -> Type I, NV-V -> Type II, V-NV -> Type III, V-V -> Type IV.
@@ -164,12 +157,13 @@ def tokens_to_bytes(blocks, lo, hi):
 
 
 def load_targets(data_dir, name):
-    for sub in ('targets', 'targets_fno_inline'):
-        p = os.path.join(data_dir, sub, name + '.json')
-        if os.path.exists(p):
-            with open(p) as f:
-                return {x['func_name']: x for x in json.load(f)}
-    return {}
+    """Both reference databases are queried against the same default-build
+    targets, so there is one target directory."""
+    p = os.path.join(data_dir, 'targets', name + '.json')
+    if not os.path.exists(p):
+        return {}
+    with open(p) as f:
+        return {x['func_name']: x for x in json.load(f)}
 
 
 def main():
@@ -240,52 +234,40 @@ def main():
                     if overlap_len(pred, info['ranges']) > 0:
                         loc[typ]['correct'] += 1
 
-    # ---- retrieval table -------------------------------------------------
-    ret = defaultdict(lambda: {'n': 0, 't1': 0, 't5': 0, 't10': 0, 'rr': 0.0})
-    for (build, name), (typ, rank) in best_rank.items():
-        d = ret[typ]
-        d['n'] += 1
-        if rank is not None:
-            if rank <= 1: d['t1'] += 1
-            if rank <= 5: d['t5'] += 1
-            if rank <= 10: d['t10'] += 1
-            d['rr'] += 1.0 / rank
+    PAPER = {'Type I': (1568, 1568, 100.0), 'Type II': (1128, 872, 77.3),
+             'Type III': (1518, 1518, 100.0), 'Type IV': (275, 261, 94.9),
+             'Total': (4489, 4219, 94.0)}
 
     name = args.label or os.path.basename(args.results.rstrip('/'))
-    print('=' * 78)
-    print(f'PinPoint -- effectiveness on the packaged subset   [{name}]')
-    print('=' * 78)
-    print(f'  results : {rel(args.results)}')
-    print(f'  targets : {len(seen_targets)} binaries')
+    print('TABLE IV: Within-function vulnerability range localization of')
+    print('PinPoint-BinShot for reference queries whose ground-truth target appears at')
+    print('Top-1. #Queries denotes the number of such reference queries. A query is')
+    print('counted as Correct when at least one reported range overlaps the vulnerable')
+    print('region; complete coverage of the region is not required. Accuracy is the')
+    print('fraction of correct queries within each type.')
     print()
-    print('RETRIEVAL  (Top-K accuracy and MRR per inlining type; unit = target-function instance)')
-    print(f'  {"Type":<10}{"#Inst":>7}{"Top-1":>9}{"Top-5":>9}{"Top-10":>9}{"MRR":>8}')
-    tot = {'n': 0, 't1': 0, 't5': 0, 't10': 0, 'rr': 0.0}
-    for t in TYPE_ORDER:
-        d = ret.get(t)
-        if not d or not d['n']:
-            print(f'  {t:<10}{0:>7}{"-":>9}{"-":>9}{"-":>9}{"-":>8}')
-            continue
-        for k in tot: tot[k] += d[k]
-        print(f'  {t:<10}{d["n"]:>7}{100*d["t1"]/d["n"]:>8.1f}%{100*d["t5"]/d["n"]:>8.1f}%'
-              f'{100*d["t10"]/d["n"]:>8.1f}%{d["rr"]/d["n"]:>8.3f}')
-    if tot['n']:
-        print(f'  {"Overall":<10}{tot["n"]:>7}{100*tot["t1"]/tot["n"]:>8.1f}%'
-              f'{100*tot["t5"]/tot["n"]:>8.1f}%{100*tot["t10"]/tot["n"]:>8.1f}%{tot["rr"]/tot["n"]:>8.3f}')
-
+    print(f'  results : {rel(args.results)}   ({len(seen_targets)} target binaries)')
     print()
-    print('LOCALIZATION  (queries whose ground-truth function is Top-1; correct = reported range overlaps)')
-    print(f'  {"Type":<10}{"#Queries":>10}{"#Correct":>10}{"Accuracy":>10}')
+    print(f'  {"":<8}{"this run on the subset":^30}{"the paper, full corpus":^30}')
+    print(f'  {"Type":<8}{"#Queries":>10}{"#Correct":>10}{"Accuracy":>10}'
+          f'{"#Queries":>10}{"#Correct":>10}{"Accuracy":>10}')
+    print('  ' + '-' * 68)
     lq = lc = 0
     for t in TYPE_ORDER:
-        d = loc.get(t)
-        if not d or not d['queries']:
-            print(f'  {t:<10}{0:>10}{0:>10}{"-":>10}')
-            continue
+        d = loc.get(t) or {'queries': 0, 'correct': 0}
         lq += d['queries']; lc += d['correct']
-        print(f'  {t:<10}{d["queries"]:>10}{d["correct"]:>10}{100*d["correct"]/d["queries"]:>9.1f}%')
-    if lq:
-        print(f'  {"Total":<10}{lq:>10}{lc:>10}{100*lc/lq:>9.1f}%')
+        acc = f'{100*d["correct"]/d["queries"]:.1f}%' if d['queries'] else '-'
+        p = PAPER[t]
+        print(f'  {t.replace("Type ",""):<8}{d["queries"]:>10}{d["correct"]:>10}{acc:>10}'
+              f'{p[0]:>10}{p[1]:>10}{p[2]:>9.1f}%')
+    print('  ' + '-' * 68)
+    tot = f'{100*lc/lq:.1f}%' if lq else '-'
+    p = PAPER['Total']
+    print(f'  {"Total":<8}{lq:>10}{lc:>10}{tot:>10}{p[0]:>10}{p[1]:>10}{p[2]:>9.1f}%')
+    print()
+    print('  Types I and III reach 100% by construction: their ground-truth vulnerable')
+    print('  range spans the target function itself, so any reported range inside it')
+    print('  overlaps. Type II is the informative row, and the one this subset carries.')
 
     if args.json:
         with open(args.json, 'w') as f:
