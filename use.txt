@@ -1,0 +1,98 @@
+Intended use and limitations
+============================
+
+What this artifact is for
+-------------------------
+Reproducing the paper's two effectiveness results on a packaged subset of the
+evaluation corpus, on hardware a reviewer already has:
+
+  Claim 1  PinPoint improves function retrieval, above all for Type II, where
+           the compiler inlined the vulnerable function into a non-vulnerable
+           host and it no longer exists as a routine to match against.
+  Claim 2  Once the right function is retrieved, PinPoint localizes the
+           vulnerable code's address range inside it.
+
+The code is the complete tool, not a demonstration cut of it: the same
+pinpoint.py and the same analysis scripts produced the paper's tables. What is
+scoped down is the data.
+
+Why a subset, and how it was chosen
+-----------------------------------
+The full corpus is 300 target binaries against a 577-entry reference database
+(plus 409 -fno-inline references), and a full pass takes about a week on one
+GPU. The packaged subset is 25 binaries carrying roughly 400 Type II evaluation
+cases.
+
+The subset deliberately concentrates on Type II. Types I and III localize by
+construction -- their ground-truth vulnerable range spans the whole target
+function, so any reported range inside it overlaps, and both sit at 100% in the
+paper. Type IV has only 19 instances in the entire corpus, and the binaries
+carrying them are among the most expensive to run. Type II is where the paper's
+contribution is measured, and it is what the subset is sized to measure.
+
+Type II accuracy varies widely by project, so the binaries were chosen to
+reproduce the corpus's *project* mix for Type II rather than to be cheap. Within
+each project they are drawn at random from those at or below the project's
+median runtime. The rule uses only the inlining type, the project, and measured
+runtime -- never whether PinPoint got a case right.
+artifact/scripts/build_eval_subset.py carries the rule and the seed.
+
+What the subset does not support
+--------------------------------
+* Exact reproduction of the paper's numbers. The subset is around 5% of the
+  corpus, so its accuracies approximate the paper's rather than matching them.
+  Measured against the archived full run, Type II Top-1 comes out at 63.8%
+  against the paper's 65.5%, and Type II localization at 70.3% against 77.3%.
+
+* Three projects are missing. binutils, jasper and libxml2 are excluded because
+  the cheapest qualifying binary in each costs more than the whole interactive
+  budget (1,280 s, 2,140 s and 2,705 s of GPU time respectively, against a
+  target of a few hours for everything). Together they hold 33% of the corpus's
+  Type II cases. A reviewer who wants them can add those binaries from the
+  archived corpus; the subset script takes an explicit binary list.
+
+* Type IV is absent and Type I and Type III are present only incidentally, in
+  numbers too small to compare against the paper. The subset is not a scaled
+  model of the whole evaluation, only of its Type II part.
+
+* The efficiency results (pruning speedup, amortized latency) are not
+  reproduced. They are a property of the full corpus run and say nothing that a
+  subset can show.
+
+What it is not
+--------------
+* Not the analysis front end. Recovering functions, basic blocks and normalized
+  tokens with Ghidra, and extracting the DWARF ground truth, is a separate
+  offline stage. Its output ships as JSON so that reviewers do not repeat a
+  multi-day preprocessing step; the stage itself is not included, so the
+  artifact cannot be pointed at a new binary as it stands.
+
+* Not a trained model. The backbone is BinShot's published similarity model,
+  used as-is with no fine-tuning. This work contributes the localization layer
+  on top of it; there is no training step to reproduce.
+
+* Not a scanner. PinPoint answers "where is this known vulnerable code inside
+  this binary", given a reference for it. It does not discover unknown
+  vulnerabilities and says nothing about whether a match is exploitable.
+
+Known limitations that the results show
+---------------------------------------
+* Ties at the top. The backbone saturates at 1.00 for functions that are merely
+  similar in shape, so many windows reach the maximum score and the score alone
+  cannot say which one holds the vulnerable code. PinPoint breaks the tie with
+  the containment rule of Section VII-A; where that rule picks the wrong window,
+  localization fails even though the retrieval was right.
+
+* The reported window is capped at the backbone's 253-token input. Where the
+  vulnerable region is much larger, the window covers only part of it -- which
+  is why the paper's criterion is overlap rather than coverage.
+
+* Retrieval and localization are not the same problem. A query can retrieve the
+  correct host function and still report a range that misses the inlined
+  vulnerable code; Type II is exactly where that happens.
+
+Ethics
+------
+Every vulnerability used here is public and long fixed. The artifact contains
+static-analysis output derived from binaries built from open-source releases,
+no exploit code, and no undisclosed vulnerability.

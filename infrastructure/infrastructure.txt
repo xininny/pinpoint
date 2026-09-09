@@ -1,0 +1,73 @@
+Infrastructure requirements
+===========================
+
+Summary
+-------
+A free Google Colab GPU runtime is enough, and is the intended platform. A
+shared notebook link is in infrastructure/colab_link.txt.
+
+    GPU       required. Any CUDA GPU with >= 4 GB; a Colab T4 is what this was
+              sized for. Peak usage stays under 2 GB.
+    CPU-only  not practical. The pipeline embeds hundreds of thousands of
+              sliding windows; Colab's two cores would take days.
+    disk      ~600 MB (270 MB data bundle, plus dependencies and results)
+    RAM       ~4 GB
+    network   needed once during setup, for the backbone clone and the data
+              bundle. The evaluation itself runs offline.
+
+Software
+--------
+    Python     3.9 - 3.12   (developed on 3.11; verified on 3.12, Colab's version)
+    PyTorch    >= 2.0       (verified on 2.10 and 2.14)
+    git        for the backbone clone
+    curl/wget  for the data bundle
+
+requirements.txt deliberately does not list torch or torchvision. The backbone
+imports torchvision, and the two must come from the same build: installing one
+over a mismatched partner fails at import with the misleading "operator
+torchvision::nms does not exist". Colab ships a matched pair, so install.sh
+checks for them and installs only when one is genuinely absent.
+
+The similarity model is loaded with torch.load(..., weights_only=False): it is a
+pickled BinShot module object rather than a state dict, so the backbone's class
+definitions must be importable at load time. install.sh arranges that by placing
+the clone at artifact/binshot/, which backbone.py puts on sys.path.
+
+Expected runtime
+----------------
+    smoke test                       a few minutes
+    claim 1 (two configurations)     a few hours on a T4
+    claim 2 (reuses claim 1's run)   seconds
+
+The estimate for claim 1 comes from the archived full-corpus run: the 25
+binaries of the packaged subset account for about 5,000 seconds of GPU time
+there, on an NVIDIA H200. A Colab T4 is several times slower than an H200 for
+this workload, which puts the claim-1 cell in the range of a few hours -- inside
+Colab's 12-hour session limit, but not by a wide margin.
+
+Two things make that safe:
+
+  * The smoke test finishes in minutes and exercises the same code path, so a
+    reviewer can confirm the setup before committing to the long run.
+  * Runs are resumable. pinpoint.py skips a target whose report already exists,
+    so re-running a claim after a dropped session continues instead of starting
+    over. Mounting Google Drive in the notebook keeps results across sessions.
+
+Precomputing the reference embeddings is part of install.sh and matters: without
+it the cascade recomputes each reference's embedding once per candidate
+function.
+
+Constraints
+-----------
+* No IDA Pro, no Ghidra, no Docker at evaluation time. The analysis front end
+  that produced the target JSON is offline; its output ships as data.
+
+* Determinism: the model runs under torch.no_grad() in eval mode with no
+  sampling, so scores are deterministic on a given device. Scores are rounded to
+  two decimals, which absorbs most cross-device floating-point differences, but
+  a small number of windows can still land on the other side of a rounding
+  boundary on different hardware. Accuracies should not move by more than a
+  fraction of a point.
+
+* The machine used to record the reference outputs was shared with other jobs,
+  so wall-clock times measured there are upper bounds rather than typical.

@@ -1,0 +1,67 @@
+{
+ "binaries": [
+  "coreutils-shred-45-clang-O2",
+  "coreutils-shred-45-gcc-O1",
+  "coreutils-split-03-clang-O1",
+  "coreutils-split-03-gcc-O1",
+  "coreutils-split-03-gcc-O2",
+  "coreutils-split-03-gcc-O3",
+  "libarchive-bsdtar-44-gcc-O2",
+  "libarchive-bsdtar-49-clang-O2",
+  "libarchive-bsdtar-49-gcc-O1",
+  "libarchive-bsdtar-49-gcc-O2",
+  "libjpeg-djpeg-06-gcc-O1",
+  "libjpeg-djpeg-06-gcc-O2",
+  "libming-listswf-27-clang-O2",
+  "libtiff-tiffcrop-21-clang-O1",
+  "libtiff-tiffcrop-21-clang-O2",
+  "libtiff-tiffcrop-21-clang-O3",
+  "libtiff-tiffcrop-71-gcc-O1",
+  "libtiff-tiffcrop-92-clang-O1",
+  "libtiff-tiffcrop-92-clang-O2",
+  "libtiff-tiffcrop-92-gcc-O1",
+  "libtiff-tiffcrop-92-gcc-O2",
+  "libtiff-tiffinfo-25-gcc-O3",
+  "zziplib-unzzipcatmem-74-clang-O2",
+  "zziplib-unzzipcatmem-74-gcc-O1",
+  "zziplib-unzzipcatmem-74-gcc-O2"
+ ],
+ "smoke": [
+  "zziplib-unzzipcatmem-74-gcc-O2",
+  "coreutils-split-03-gcc-O2",
+  "libjpeg-djpeg-06-gcc-O2",
+  "libtiff-tiffinfo-25-gcc-O3"
+ ],
+ "instances_by_type": {
+  "II": 46,
+  "I": 10,
+  "III": 1,
+  "IV": 0
+ },
+ "corpus_instances_by_type": {
+  "I": 273,
+  "II": 195,
+  "III": 89,
+  "IV": 19
+ },
+ "cves": [
+  "CVE-2006-2025",
+  "CVE-2012-2806",
+  "CVE-2016-10092",
+  "CVE-2016-10271",
+  "CVE-2016-10272",
+  "CVE-2016-10349",
+  "CVE-2016-10350",
+  "CVE-2016-5321",
+  "CVE-2016-5844",
+  "CVE-2016-9827",
+  "CVE-2016-9828",
+  "CVE-2016-9831",
+  "CVE-2017-5974",
+  "CVE-2017-5975",
+  "CVE-2017-5976",
+  "CVE-2018-19664",
+  "gnubug_25003",
+  "gnubug_26545"
+ ]
+}

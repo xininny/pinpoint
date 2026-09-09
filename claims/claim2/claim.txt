@@ -1,0 +1,22 @@
+Vulnerability Range Localization
+
+This claim demonstrates that once PinPoint has retrieved the correct target
+function, it also reports where inside that function the vulnerable code sits.
+This matters for Type II: the retrieved function is a large host that merely
+contains the inlined vulnerable code, so identifying the function alone does not
+tell an analyst what to patch.
+
+For every reference query whose ground-truth function is ranked Top-1, the
+evaluation converts the token window PinPoint reports into byte ranges through
+the target's basic blocks and compares it against the DWARF-derived vulnerable
+bytes. Following the paper, a query counts as correct when at least one reported
+range overlaps the vulnerable bytes; complete coverage of the region is not
+required, since a window is capped at the backbone's 253-token input while the
+vulnerable region is often larger. Where several windows tie at the maximum
+similarity score, the reported region is chosen by the containment rule of the
+paper's Section VII-A.
+
+Types I and III reach 100% by construction, because their ground-truth range
+spans the entire target function; Type II is the informative row. In the paper's
+Table IV, 77.3% of Type II Top-1 queries are localized. On this subset the
+figure is 70.3%.

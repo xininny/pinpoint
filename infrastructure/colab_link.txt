@@ -1,0 +1,14 @@
+Google Colab
+============
+
+The artifact is designed to run on a free Colab GPU runtime.
+
+  TODO(authors): paste the shared Colab link here before submission, e.g.
+  https://colab.research.google.com/drive/<id>?usp=sharing
+
+The same notebook is in the repository as PinPoint_AE_ACSAC.ipynb and can be
+opened directly from GitHub (File -> Open notebook -> GitHub) if the link above
+is unavailable.
+
+Set Runtime -> Change runtime type -> T4 GPU before running. A GPU is required;
+see infrastructure.txt.

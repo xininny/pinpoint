@@ -1,0 +1,47 @@
+License
+=======
+
+Artifact
+--------
+Name : MIT License
+URL  : https://opensource.org/license/mit
+File : LICENSE (repository root)
+
+Covers everything written for this artifact: the localization layer under
+artifact/ (pinpoint.py, backbone.py, size_based_pruning.py, the three stage
+modules, report.py, precompute_reference_embeddings.py and evaluate.py), the
+analysis code under artifact/analysis/, the scripts under artifact/scripts/,
+the claim runners under claims/, and the Colab notebook.
+
+Third-party code
+----------------
+BinShot -- the BCSD backbone, used unmodified as a pre-trained model.
+
+    Name      : MIT License
+    URL       : https://github.com/asw0316/binshot/blob/main/LICENSE
+    Copyright : (c) 2022 BinShot Project
+    Obtained  : cloned by install.sh into artifact/binshot/; not redistributed
+                in this repository.
+
+The similarity model weights (artifact/models/binshot_sim.model) and the
+vocabulary (artifact/models/pretrain.all.corpus.voca) are BinShot's published
+artifacts, redistributed unchanged in the data bundle under the same MIT
+license so that the reproduction does not depend on a third-party download
+link staying alive.
+
+Data
+----
+The target and reference JSON files under artifact/data/ are derived by static
+analysis from binaries built from open-source releases, each under its own
+upstream license. They contain normalized disassembly and DWARF-derived address
+ranges, not redistributed source or binaries.
+
+    coreutils    GPL-3.0-or-later   https://www.gnu.org/licenses/gpl-3.0.html
+    libarchive   BSD-2-Clause       https://github.com/libarchive/libarchive/blob/master/COPYING
+    libjpeg      IJG License        https://jpegclub.org/reference/libjpeg-license/
+    libming      LGPL-2.1-or-later  https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+    libtiff      libtiff License    https://gitlab.com/libtiff/libtiff/-/blob/master/LICENSE.md
+    zziplib      LGPL-2.1 / MPL-1.1 https://github.com/gdraheim/zziplib/blob/master/COPYING.LIB
+
+The full corpus, archived separately, additionally covers binutils
+(GPL-3.0-or-later), jasper (JasPer-2.0) and libxml2 (MIT).

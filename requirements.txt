@@ -1,0 +1,14 @@
+# PyTorch and torchvision are deliberately NOT pinned here.
+#
+# The BCSD backbone imports torchvision, and torch and torchvision must come
+# from the same build: installing one of them over an existing mismatched
+# partner fails at import with the misleading "operator torchvision::nms does
+# not exist". Google Colab already ships a matched pair, so install.sh checks
+# for them and only installs when they are genuinely absent.
+numpy
+scipy
+scikit-learn
+tqdm
+matplotlib
+seaborn
+ipython
