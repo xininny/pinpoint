@@ -216,14 +216,11 @@ def main():
 
     # The analysis code resolves ground truth through this file, so it travels
     # with the subset rather than being staged by hand.
-    gt_v3 = os.path.join(root, 'ground_truth_v3.txt')
+    gt_v3 = args.ground_truth or os.path.join(root, 'ground_truth_v3.txt')
     if not os.path.exists(gt_v3):
-        gt_v3 = '/home/mijin/archive/misc/ground_truth_v3 copy.txt'
-    if os.path.exists(gt_v3):
-        shutil.copyfile(gt_v3, os.path.join(args.out, 'ground_truth', 'ground_truth_v3.txt'))
-        print('    ground_truth_v3.txt copied')
-    else:
-        sys.exit('[!] ground_truth_v3.txt not found; pass --paper-root containing it')
+        sys.exit(f'[!] ground truth not found at {gt_v3}; pass --ground-truth')
+    shutil.copyfile(gt_v3, os.path.join(args.out, 'ground_truth', 'ground_truth_v3.txt'))
+    print('    ground_truth_v3.txt copied')
 
     with open(os.path.join(args.out, 'ground_truth', 'subset.json'), 'w') as f:
         json.dump({'binaries': SUBSET, 'smoke': SMOKE,
