@@ -89,8 +89,15 @@ for f in \
         missing=1
     fi
 done
-n_expected=$("$PY" -c "import json;print(len(json.load(open('$ART/data/ground_truth/subset.json'))['binaries']))" 2>/dev/null || echo 0)
-n_targets=$(ls -1 "$ART/data/targets"/*.json 2>/dev/null | wc -l)
+n_expected=0
+if [ -f "$ART/data/ground_truth/subset.json" ]; then
+    n_expected=$("$PY" -c "import json,sys;print(len(json.load(open(sys.argv[1]))['binaries']))" \
+                 "$ART/data/ground_truth/subset.json" 2>/dev/null) || n_expected=0
+fi
+n_targets=0
+if [ -d "$ART/data/targets" ]; then
+    n_targets=$(find "$ART/data/targets" -maxdepth 1 -name '*.json' | wc -l)
+fi
 if [ "$n_targets" -eq "$n_expected" ] && [ "$n_expected" -gt 0 ]; then
     printf '    ok      artifact/data/targets (%s binaries)\n' "$n_targets"
 else

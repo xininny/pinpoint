@@ -27,8 +27,18 @@ EXPECTED_SHA256="f62131e4be6b5294375b8f85a5e62d4025ce576e3391e1f2f16ee5d663ad028
 # Is what is on disk the subset this checkout declares? "The directory exists"
 # is not enough: a checkout that pulled a different subset keeps the old
 # binaries, and the run would then quietly evaluate them.
-want=$("$PY_BIN" -c "import json;print(len(json.load(open('$ART_ROOT/data/ground_truth/subset.json'))['binaries']))" 2>/dev/null || echo 0)
-have=$(ls -1 "$ART_ROOT/data/targets"/*.json 2>/dev/null | wc -l)
+# Both counts have to survive a fresh clone, where data/targets does not exist
+# yet: under `set -o pipefail` a failing ls in a pipeline would end the script
+# with no output at all.
+want=0
+if [ -f "$ART_ROOT/data/ground_truth/subset.json" ]; then
+    want=$("$PY_BIN" -c "import json,sys;print(len(json.load(open(sys.argv[1]))['binaries']))" \
+           "$ART_ROOT/data/ground_truth/subset.json" 2>/dev/null) || want=0
+fi
+have=0
+if [ -d "$ART_ROOT/data/targets" ]; then
+    have=$(find "$ART_ROOT/data/targets" -maxdepth 1 -name '*.json' | wc -l)
+fi
 
 if [ -f "$ART_ROOT/models/binshot_sim.model" ] && [ "$want" -gt 0 ] && [ "$have" -eq "$want" ]; then
     echo "[=] data already present under $ART_ROOT ($have binaries) -- nothing to do"
