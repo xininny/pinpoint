@@ -178,8 +178,6 @@ def main():
     with open(os.path.join(args.data, 'ground_truth', 'gt_ranges.json')) as f:
         GT = json.load(f)
 
-    # instance -> best rank over references of the same vulnerable function
-    best_rank = {}          # (build, func) -> (type, best rank or None)
     loc = defaultdict(lambda: {'queries': 0, 'correct': 0})
     seen_targets = set()
     tcache = {}
@@ -213,15 +211,8 @@ def main():
                     typ = TYPE_OF_LABEL.get(info['label'])
                     if typ is None:
                         continue
-                    key = (build, name)
-                    prev = best_rank.get(key, (typ, None))[1]
-                    r = rows.get(name)
-                    rank = r['rank'] if r else None
-                    if rank is not None and (prev is None or rank < prev):
-                        prev = rank
-                    best_rank[key] = (typ, prev)
-
                     # localization is scored only where this query put it at Top-1
+                    r = rows.get(name)
                     if r is None or r['rank'] != 1 or r['range'] is None:
                         continue
                     tf = funcs.get(name)
@@ -272,8 +263,7 @@ def main():
     if args.json:
         with open(args.json, 'w') as f:
             json.dump({'label': name, 'targets': len(seen_targets),
-                       'retrieval': {t: ret[t] for t in ret},
-                       'localization': {t: loc[t] for t in loc}}, f, indent=1)
+                       'localization': {t: dict(loc[t]) for t in loc}}, f, indent=1)
         print(f'\n  json    : {rel(args.json)}')
     return 0
 
