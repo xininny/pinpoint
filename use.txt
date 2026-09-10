@@ -35,11 +35,9 @@ frozen result.
 What the subset does not support
 --------------------------------
 * Exact reproduction. The subset is roughly 5% of the corpus, so its numbers
-  approximate the paper's. Overall Top-1 lands within 0.1 points (72.8% against
-  72.9%) and Type IV localization within 0.3 (95.2% against 94.9%). Type III
-  retrieval (99.6% against 88.3%) and Type II localization (70.3% against
-  77.3%) drift the most: 59 binaries do not average out the variation inside a
-  project, only between projects.
+  approximate the paper's rather than matching them. Overall retrieval accuracy
+  comes out closest; the per-type rows drift more, because 59 binaries average
+  out the variation between projects but not the variation inside one.
 
 * Two projects are missing. jasper and libxml2 are excluded because their
   cheapest qualifying binaries cost more GPU time than the whole interactive

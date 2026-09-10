@@ -58,43 +58,26 @@ Run claim 1 first. Claim 2 reuses its cascade results and then finishes in secon
 
 ## Expected Results
 
-Each claim prints a table and compares itself against `claims/claim*/expected/result.txt`.
+Each claim generates evaluation results showing:
+- Top-K retrieval accuracy and MRR, per inlining type (Types I-IV) and overall
+- The BinShot backbone evaluated standalone against the full PinPoint cascade
+- Within-function localization accuracy, per inlining type
+- The number of evaluated cases behind each figure
 
-Claim 1 reproduces Table III, the type-wise Top-K retrieval accuracy and MRR, for two
-configurations of the same subset: whole-function matching alone (the backbone standalone) and
-PinPoint's full cascade. Claim 2 reproduces Table IV, the fraction of Top-1 queries whose
-reported range overlaps the DWARF-derived vulnerable bytes.
-
-Top-1 accuracy on this subset, against the paper's full-corpus figures:
-
-| | Type I | Type II | Type III | Type IV | Overall |
-|---|---|---|---|---|---|
-| BinShot, this subset | 79.4% | 39.4% | 99.1% | 46.4% | 63.9% |
-| PinPoint, this subset | 77.5% | 63.8% | 99.6% | 78.6% | **72.8%** |
-| PinPoint, paper | 76.1% | 65.5% | 88.3% | 69.6% | **72.9%** |
-
-Range localization on this subset, against the paper:
-
-| | Type I | Type II | Type III | Type IV | Total |
-|---|---|---|---|---|---|
-| this subset | 100.0% | 70.3% | 100.0% | 95.2% | 85.9% |
-| paper | 100.0% | 77.3% | 100.0% | 94.9% | 94.0% |
+Expected outputs are provided in `claims/claim*/expected/result.txt` for comparison.
 
 ## Technical Notes
 
 Due to computational constraints for artifact evaluation:
-
 - The full corpus is 300 target binaries against a 577-entry reference database, and a complete
-  run takes about a week on a single GPU. The packaged subset is 59 binaries, chosen so that all
-  four inlining types appear in usable numbers.
-- Binaries were selected on inlining type, project and measured runtime only, never on whether
-  PinPoint got a case right. Type II accuracy varies widely by project, so its project mix is
-  matched to the corpus; Type IV exists in only 19 binaries corpus-wide and the four cheapest
-  are included. `artifact/scripts/build_eval_subset.py` carries the rule.
-- Results show numerical differences from the paper but demonstrate the same trends. Overall
-  Top-1 lands within 0.1 points and Type IV localization within 0.3; Type III retrieval and
-  Type II localization drift the most, since 59 binaries do not average out the variation
-  within a project.
+  run takes about a week on a single GPU. The packaged subset is 59 binaries.
+- Two of the nine projects (jasper, libxml2) are excluded; their cheapest qualifying binaries
+  cost more GPU time than the whole interactive budget.
+- Ghidra disassembly and DWARF ground-truth extraction are done offline and shipped as JSON, so
+  that reviewers do not repeat a multi-day preprocessing stage.
+- Efficiency results (pruning speedup, amortized latency) are not reproduced; they characterize
+  a full-corpus run.
+- Results may show numerical differences from the paper but demonstrate the same trends.
 
 ## Directory Structure
 

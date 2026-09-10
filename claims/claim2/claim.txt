@@ -15,5 +15,4 @@ score, the reported region is chosen by the containment rule of Section VII-A.
 
 Types I and III reach 100% by construction, because their ground-truth range
 spans the entire target function. Types II and IV are the informative rows,
-where a vulnerable inlinee has to be found inside a larger host: in the paper
-they are 77.3% and 94.9%, against 94.0% overall.
+where a vulnerable inlinee has to be found inside a larger host.

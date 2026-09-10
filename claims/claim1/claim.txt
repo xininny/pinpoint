@@ -13,9 +13,7 @@ per inlining type (Types I-IV, defined in Section III) and overall.
 
 The gain concentrates on Type II, where the compiler inlined the vulnerable
 function into a non-vulnerable host and it no longer survives as a routine with
-a boundary a function-granularity model can match against. In the paper,
-overall Top-1 accuracy rises from 58.6% to 72.9% and Type II from 26.9% to
-65.5%.
+a boundary a function-granularity model can match against.
 
 The BCSD backbone is BinShot, from: S. Ahn, S. Ahn, H. Koo, and Y. Paek,
 "Practical binary code similarity detection with BERT-based transferable
