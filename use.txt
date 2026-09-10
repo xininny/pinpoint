@@ -20,7 +20,7 @@ Why a subset, and how it was chosen
 -----------------------------------
 The full corpus is 300 target binaries against a 577-entry reference database
 (plus 409 -fno-inline references), and a full pass takes about a week on one
-GPU. The packaged subset is 59 binaries carrying 1,256 evaluated cases across
+GPU. The packaged subset is 56 binaries carrying 1,208 evaluated cases across
 all four inlining types.
 
 Selection proceeded in three steps, none of which looks at whether PinPoint got
@@ -36,7 +36,7 @@ What the subset does not support
 --------------------------------
 * Exact reproduction. The subset is roughly 5% of the corpus, so its numbers
   approximate the paper's rather than matching them. Overall retrieval accuracy
-  comes out closest; the per-type rows drift more, because 59 binaries average
+  comes out closest; the per-type rows drift more, because 56 binaries average
   out the variation between projects but not the variation inside one.
 
 * Two projects are missing. jasper and libxml2 are excluded because their

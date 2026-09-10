@@ -7,19 +7,32 @@ artifact/data/ from the full corpus is auditable rather than taken on trust.
 
 Selection rule
 --------------
-The full corpus is 300 target binaries carrying 596 ground-truth
-target-function instances, and running all of it takes about a week on one
-GPU. The subset keeps ~10% of those instances while preserving their
-composition across the four inlining types.
+The full corpus is 300 target binaries against a 577-entry reference database,
+and a complete pass takes about a week on one GPU. The subset keeps the four
+inlining types in numbers large enough for the paper's two tables to come out
+close, at a size that fits a Colab session.
 
-Binaries are chosen by a cost-aware greedy pass over per-type instance quotas:
-at each step it takes the binary that supplies the most still-needed instances
-per second of measured runtime, subject to a cap on how many builds of the same
-binary and how large a share of one project may be taken. Runtime comes from
-the archived full-corpus run, so the selection depends only on cost and on the
-inlining type of each instance -- never on whether PinPoint got that instance
-right. The resulting binary list is frozen in SUBSET below so the subset is
-reproducible without re-running the search.
+Selection proceeds in three steps.
+
+Type II first. Its accuracy varies widely by project, so binaries are drawn to
+reproduce the corpus's project mix for Type II, and within a project at random
+(seed 20260909) from those at or below the project's median runtime. Always
+taking a project's cheapest binaries biased an earlier version of this subset:
+they turned out to be systematically easier to localize in.
+
+Then Type IV, which exists in only 19 binaries corpus-wide, all of them costly.
+Only the cheapest is taken. The next ones are readelf builds that each cost
+more on a T4 than the rest of the subset put together, which is why the Type IV
+row carries far fewer cases than the others.
+
+Then Types I and III fill the remaining budget, matched to their own project
+mixes, with a penalty on binaries that would skew the Type II mix already
+fixed.
+
+The rule reads only the inlining type, the project, and the runtime measured in
+the archived full-corpus run. It never reads whether PinPoint got a case right.
+The resulting list is frozen in SUBSET below, so the subset is reproducible
+without re-running the search.
 
 Usage:
     python3 build_eval_subset.py --paper-root /path/to/full/corpus
@@ -32,8 +45,8 @@ import shutil
 import sys
 from collections import defaultdict
 
-# Frozen selection: 34 binaries, 58 instances (I 27 / II 20 / III 10 / IV 1),
-# 5 projects, 20 CVEs. Composition 47/34/17/2 % against the corpus 47/34/15/3 %.
+# Frozen selection: 56 binaries over 6 projects, 27 CVEs, carrying 93
+# ground-truth instances (I 35 / II 46 / III 11 / IV 1).
 SUBSET = [
     'coreutils-pr-23-gcc-O3',
     'coreutils-shred-45-clang-O2',
@@ -93,10 +106,8 @@ SUBSET = [
     'zziplib-unzzipcatmem-74-gcc-O2',
 ]
 
-# A handful of the cheapest binaries, for the minutes-long smoke run.
-# The cheapest binaries carrying Type II cases: a few minutes end to end,
-# enough to confirm the pipeline works before committing to the full subset.
-# The cheapest binaries, for a quick end-to-end check.
+# The cheapest binaries of the subset: a few minutes end to end, enough to
+# confirm the pipeline runs before committing to the full subset.
 SMOKE = [
     'zziplib-unzzipcatmem-74-gcc-O2',
     'coreutils-split-03-gcc-O2',
