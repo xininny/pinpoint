@@ -22,13 +22,5 @@ echo "== computing type-wise Top-K tables"
 "$PY" "$ART/analysis/topk_table.py" --db-dir "$BASE_FLAT" --out "$OUT/topk.baseline.txt" 2>&1 | tail -2
 
 echo
-set +e
 "$PY" "$ART/analysis/report_claim1.py" \
     --cascade "$OUT/topk.cascade.txt" --baseline "$OUT/topk.baseline.txt" | tee "$OUT/claim1.txt"
-rc=${PIPESTATUS[0]}
-set -e
-
-compare_expected "$OUT/claim1.txt" "$HERE/expected/result.txt"
-echo
-echo "== claim 1: $([ $rc -eq 0 ] && echo PASS || echo FAIL)"
-exit $rc

@@ -1,0 +1,2936 @@
+=========================================================================================================
+GROUND TRUTH v4.1 — Cloning family matching + match-type 표기
+
+  Match type:
+    exact       — 이름 정확 매치 (또는 .constprop/.isra/.N 벗겨서 일치)
+    ⟨family⟩    — cloning flag 있는 vuln의 base name 매칭 (_N 벗김)
+                  같은 소스 함수의 다른 clone/base와 매칭
+
+  범례:
+    DB:  ✅ standalone   🔀 standalone(cloning)   ⚠️ vuln_inlined   🚫 DB 없음
+    GT:  ✅ [함수](라벨)   🔁 [caller](라벨) 인라이닝   ❌ 정답 없음
+=========================================================================================================
+
+#########################################################################################################
+# TARGET 바이너리: binutils/nm-new-20
+# 포함된 CVE: 1개 — CVE-2017-15020
+#########################################################################################################
+
+▼▼▼ CVE-2017-15020 ▼▼▼
+
+── Vuln func: parse_die  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [parse_die](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [parse_die](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [parse_die](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [parse_die](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [parse_die](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [parse_die](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [parse_die](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [parse_die](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [parse_die](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [parse_die](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [parse_die](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [parse_die](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [parse_die](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [parse_die](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [parse_die](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [parse_die](V)
+
+── Vuln func: parse_line_table  [reg+fno]
+    clang-O0 
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [parse_line_table](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [parse_line_table](V)
+    clang-O1 
+        Regular    | DB 🚫 없음                 | GT 🔁 [dwarf1_unit_find_nearest_line](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [parse_line_table](V)
+    clang-O2 
+        Regular    | DB 🚫 없음                 | GT 🔁 [dwarf1_unit_find_nearest_line](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [parse_line_table](V)
+    clang-O3 
+        Regular    | DB 🚫 없음                 | GT 🔁 [dwarf1_unit_find_nearest_line](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [parse_line_table](V)
+    gcc-O0   
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [parse_line_table](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [parse_line_table](V)
+    gcc-O1   
+        Regular    | DB 🚫 없음                 | GT 🔁 [dwarf1_unit_find_nearest_line](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [parse_line_table](V)
+    gcc-O2   
+        Regular    | DB 🚫 없음                 | GT 🔁 [dwarf1_unit_find_nearest_line](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [parse_line_table](V)
+    gcc-O3   
+        Regular    | DB 🚫 없음                 | GT 🔁 [dwarf1_unit_find_nearest_line](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [parse_line_table](V)
+
+#########################################################################################################
+# TARGET 바이너리: binutils/nm-new-22
+# 포함된 CVE: 4개 — CVE-2017-15021, CVE-2017-15022, CVE-2017-15023, CVE-2017-15024
+#########################################################################################################
+
+▼▼▼ CVE-2017-15021 ▼▼▼
+
+── Vuln func: bfd_get_debug_link_info_1  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [bfd_get_debug_link_info_1](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [bfd_get_debug_link_info_1](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [bfd_get_debug_link_info_1](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [bfd_get_debug_link_info_1](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [bfd_get_debug_link_info_1](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [bfd_get_debug_link_info_1](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [bfd_get_debug_link_info_1](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [bfd_get_debug_link_info_1](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [bfd_get_debug_link_info_1](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [bfd_get_debug_link_info_1](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [bfd_get_debug_link_info_1](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [bfd_get_debug_link_info_1](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [bfd_get_debug_link_info_1](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [bfd_get_debug_link_info_1](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [bfd_get_debug_link_info_1](V) + 🔁 [bfd_get_debug_link_info](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [bfd_get_debug_link_info_1](V)
+
+▼▼▼ CVE-2017-15022 ▼▼▼
+
+── Vuln func: parse_comp_unit  [reg+fno]
+    clang-O0 
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [parse_comp_unit](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [parse_comp_unit](V)
+    clang-O1 
+        Regular    | DB 🚫 없음                 | GT 🔁 [_bfd_dwarf2_find_nearest_line](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [parse_comp_unit](V)
+    clang-O2 
+        Regular    | DB 🚫 없음                 | GT 🔁 [_bfd_dwarf2_find_nearest_line](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [parse_comp_unit](V)
+    clang-O3 
+        Regular    | DB 🚫 없음                 | GT 🔁 [_bfd_dwarf2_find_nearest_line](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [parse_comp_unit](V)
+    gcc-O0   
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [parse_comp_unit](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [parse_comp_unit](V)
+    gcc-O1   
+        Regular    | DB 🚫 없음                 | GT 🔁 [_bfd_dwarf2_find_nearest_line](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [parse_comp_unit](V)
+    gcc-O2   
+        Regular    | DB 🚫 없음                 | GT 🔁 [_bfd_dwarf2_find_nearest_line](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [parse_comp_unit](V)
+    gcc-O3   
+        Regular    | DB 🚫 없음                 | GT 🔁 [_bfd_dwarf2_find_nearest_line](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [parse_comp_unit](V)
+
+── Vuln func: scan_unit_for_symbols  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [scan_unit_for_symbols](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [scan_unit_for_symbols](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [scan_unit_for_symbols](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [scan_unit_for_symbols](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [scan_unit_for_symbols](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [scan_unit_for_symbols](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [scan_unit_for_symbols](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [scan_unit_for_symbols](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [scan_unit_for_symbols](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [scan_unit_for_symbols](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [scan_unit_for_symbols](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [scan_unit_for_symbols](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [scan_unit_for_symbols](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [scan_unit_for_symbols](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [scan_unit_for_symbols](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [scan_unit_for_symbols](V)
+
+▼▼▼ CVE-2017-15023 ▼▼▼
+
+── Vuln func: read_formatted_entries  [reg+fno]
+    clang-O0 
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [read_formatted_entries](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [read_formatted_entries](V)
+    clang-O1 
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [read_formatted_entries](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [read_formatted_entries](V)
+    clang-O2 
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [read_formatted_entries](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [read_formatted_entries](V)
+    clang-O3 
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [read_formatted_entries](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [read_formatted_entries](V)
+    gcc-O0   
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [read_formatted_entries](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [read_formatted_entries](V)
+    gcc-O1   
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [read_formatted_entries](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [read_formatted_entries](V)
+    gcc-O2   
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [read_formatted_entries](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [read_formatted_entries](V)
+    gcc-O3   
+        Regular    | DB 🚫 없음                 | GT 🔁 [decode_line_info](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [read_formatted_entries](V)
+
+▼▼▼ CVE-2017-15024 ▼▼▼
+
+── Vuln func: find_abstract_instance_name  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [find_abstract_instance_name](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [find_abstract_instance_name](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [find_abstract_instance_name](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [find_abstract_instance_name](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [find_abstract_instance_name](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [find_abstract_instance_name](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [find_abstract_instance_name](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [find_abstract_instance_name](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [find_abstract_instance_name](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [find_abstract_instance_name](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [find_abstract_instance_name](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [find_abstract_instance_name](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [find_abstract_instance_name](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [find_abstract_instance_name](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [find_abstract_instance_name](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [find_abstract_instance_name](V)
+
+── Vuln func: scan_unit_for_symbols  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [scan_unit_for_symbols](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [scan_unit_for_symbols](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [scan_unit_for_symbols](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [scan_unit_for_symbols](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [scan_unit_for_symbols](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [scan_unit_for_symbols](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [scan_unit_for_symbols](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [scan_unit_for_symbols](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [scan_unit_for_symbols](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [scan_unit_for_symbols](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [scan_unit_for_symbols](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [scan_unit_for_symbols](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [scan_unit_for_symbols](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [scan_unit_for_symbols](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [scan_unit_for_symbols](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [scan_unit_for_symbols](V)
+
+#########################################################################################################
+# TARGET 바이너리: binutils/nm-new-25
+# 포함된 CVE: 1개 — CVE-2017-15025
+#########################################################################################################
+
+▼▼▼ CVE-2017-15025 ▼▼▼
+
+── Vuln func: decode_line_info  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [decode_line_info](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [decode_line_info](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [decode_line_info](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [decode_line_info](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [decode_line_info](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [decode_line_info](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [decode_line_info](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [decode_line_info](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [decode_line_info](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [decode_line_info](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [decode_line_info](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [decode_line_info](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [decode_line_info](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [decode_line_info](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [decode_line_info](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [decode_line_info](V)
+
+#########################################################################################################
+# TARGET 바이너리: binutils/nm-new-29
+# 포함된 CVE: 3개 — CVE-2017-14729, CVE-2017-14939, CVE-2017-14940
+#########################################################################################################
+
+▼▼▼ CVE-2017-14729 ▼▼▼
+
+── Vuln func: elf_i386_get_synthetic_symtab  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [elf_i386_get_synthetic_symtab](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [elf_i386_get_synthetic_symtab](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [elf_i386_get_synthetic_symtab](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [elf_i386_get_synthetic_symtab](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [elf_i386_get_synthetic_symtab](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [elf_i386_get_synthetic_symtab](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [elf_i386_get_synthetic_symtab](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [elf_i386_get_synthetic_symtab](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [elf_i386_get_synthetic_symtab](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [elf_i386_get_synthetic_symtab](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [elf_i386_get_synthetic_symtab](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [elf_i386_get_synthetic_symtab](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [elf_i386_get_synthetic_symtab](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [elf_i386_get_synthetic_symtab](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [elf_i386_get_synthetic_symtab](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [elf_i386_get_synthetic_symtab](V)
+
+── Vuln func: elf_x86_64_get_synthetic_symtab  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [elf_x86_64_get_synthetic_symtab](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [elf_x86_64_get_synthetic_symtab](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [elf_x86_64_get_synthetic_symtab](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [elf_x86_64_get_synthetic_symtab](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [elf_x86_64_get_synthetic_symtab](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [elf_x86_64_get_synthetic_symtab](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [elf_x86_64_get_synthetic_symtab](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [elf_x86_64_get_synthetic_symtab](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [elf_x86_64_get_synthetic_symtab](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [elf_x86_64_get_synthetic_symtab](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [elf_x86_64_get_synthetic_symtab](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [elf_x86_64_get_synthetic_symtab](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [elf_x86_64_get_synthetic_symtab](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [elf_x86_64_get_synthetic_symtab](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [elf_x86_64_get_synthetic_symtab](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [elf_x86_64_get_synthetic_symtab](V)
+
+▼▼▼ CVE-2017-14939 ▼▼▼
+
+── Vuln func: decode_line_info  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [decode_line_info](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [decode_line_info](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [decode_line_info](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [decode_line_info](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [decode_line_info](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [decode_line_info](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [decode_line_info](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [decode_line_info](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [decode_line_info](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [decode_line_info](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [decode_line_info](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [decode_line_info](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [decode_line_info](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [decode_line_info](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [decode_line_info](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [decode_line_info](V)
+
+▼▼▼ CVE-2017-14940 ▼▼▼
+
+── Vuln func: _bfd_elf_slurp_version_tables  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [_bfd_elf_slurp_version_tables](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [_bfd_elf_slurp_version_tables](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [_bfd_elf_slurp_version_tables](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [_bfd_elf_slurp_version_tables](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [_bfd_elf_slurp_version_tables](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [_bfd_elf_slurp_version_tables](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [_bfd_elf_slurp_version_tables](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [_bfd_elf_slurp_version_tables](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [_bfd_elf_slurp_version_tables](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [_bfd_elf_slurp_version_tables](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [_bfd_elf_slurp_version_tables](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [_bfd_elf_slurp_version_tables](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [_bfd_elf_slurp_version_tables](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [_bfd_elf_slurp_version_tables](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [_bfd_elf_slurp_version_tables](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [_bfd_elf_slurp_version_tables](V)
+
+#########################################################################################################
+# TARGET 바이너리: binutils/nm-new-38
+# 포함된 CVE: 1개 — CVE-2017-15938
+#########################################################################################################
+
+▼▼▼ CVE-2017-15938 ▼▼▼
+
+── Vuln func: find_abstract_instance_name  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [find_abstract_instance_name](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [find_abstract_instance_name](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [find_abstract_instance_name](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [find_abstract_instance_name](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [find_abstract_instance_name](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [find_abstract_instance_name](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [find_abstract_instance_name](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [find_abstract_instance_name](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [find_abstract_instance_name](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [find_abstract_instance_name](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [find_abstract_instance_name](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [find_abstract_instance_name](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [find_abstract_instance_name](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [find_abstract_instance_name](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [find_abstract_instance_name](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [find_abstract_instance_name](V)
+
+── Vuln func: parse_comp_unit  [reg+fno]
+    clang-O0 
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [parse_comp_unit](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [parse_comp_unit](V)
+    clang-O1 
+        Regular    | DB 🚫 없음                 | GT 🔁 [_bfd_dwarf2_find_nearest_line](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [parse_comp_unit](V)
+    clang-O2 
+        Regular    | DB 🚫 없음                 | GT 🔁 [_bfd_dwarf2_find_nearest_line](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [parse_comp_unit](V)
+    clang-O3 
+        Regular    | DB 🚫 없음                 | GT 🔁 [_bfd_dwarf2_find_nearest_line](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [parse_comp_unit](V)
+    gcc-O0   
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [parse_comp_unit](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [parse_comp_unit](V)
+    gcc-O1   
+        Regular    | DB 🚫 없음                 | GT 🔁 [_bfd_dwarf2_find_nearest_line](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [parse_comp_unit](V)
+    gcc-O2   
+        Regular    | DB 🚫 없음                 | GT 🔁 [_bfd_dwarf2_find_nearest_line](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [parse_comp_unit](V)
+    gcc-O3   
+        Regular    | DB 🚫 없음                 | GT 🔁 [_bfd_dwarf2_find_nearest_line](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [parse_comp_unit](V)
+
+#########################################################################################################
+# TARGET 바이너리: binutils/objdump-45
+# 포함된 CVE: 1개 — CVE-2017-14745
+#########################################################################################################
+
+▼▼▼ CVE-2017-14745 ▼▼▼
+
+── Vuln func: elf_i386_get_synthetic_symtab  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [elf_i386_get_synthetic_symtab](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [elf_i386_get_synthetic_symtab](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [elf_i386_get_synthetic_symtab](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [elf_i386_get_synthetic_symtab](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [elf_i386_get_synthetic_symtab](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [elf_i386_get_synthetic_symtab](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [elf_i386_get_synthetic_symtab](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [elf_i386_get_synthetic_symtab](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [elf_i386_get_synthetic_symtab](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [elf_i386_get_synthetic_symtab](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [elf_i386_get_synthetic_symtab](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [elf_i386_get_synthetic_symtab](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [elf_i386_get_synthetic_symtab](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [elf_i386_get_synthetic_symtab](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [elf_i386_get_synthetic_symtab](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [elf_i386_get_synthetic_symtab](V)
+
+── Vuln func: elf_x86_64_get_synthetic_symtab  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [elf_x86_64_get_synthetic_symtab](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [elf_x86_64_get_synthetic_symtab](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [elf_x86_64_get_synthetic_symtab](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [elf_x86_64_get_synthetic_symtab](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [elf_x86_64_get_synthetic_symtab](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [elf_x86_64_get_synthetic_symtab](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [elf_x86_64_get_synthetic_symtab](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [elf_x86_64_get_synthetic_symtab](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [elf_x86_64_get_synthetic_symtab](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [elf_x86_64_get_synthetic_symtab](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [elf_x86_64_get_synthetic_symtab](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [elf_x86_64_get_synthetic_symtab](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [elf_x86_64_get_synthetic_symtab](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [elf_x86_64_get_synthetic_symtab](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [elf_x86_64_get_synthetic_symtab](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [elf_x86_64_get_synthetic_symtab](V)
+
+#########################################################################################################
+# TARGET 바이너리: binutils/readelf-38
+# 포함된 CVE: 1개 — CVE-2017-9038
+#########################################################################################################
+
+▼▼▼ CVE-2017-9038 ▼▼▼
+
+── Vuln func: get_unwind_section_word  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [get_unwind_section_word](V)
+        fno_inline | DB 🔀 [standalone(cloning)]   | GT ✅ [get_unwind_section_word](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [get_unwind_section_word](V)
+        fno_inline | DB 🔀 [standalone(cloning)]   | GT ✅ [get_unwind_section_word](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [get_unwind_section_word](V)
+        fno_inline | DB 🔀 [standalone(cloning)]   | GT ✅ [get_unwind_section_word](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [get_unwind_section_word](V)
+        fno_inline | DB 🔀 [standalone(cloning)]   | GT ✅ [get_unwind_section_word](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [get_unwind_section_word](V)
+        fno_inline | DB 🔀 [standalone(cloning)]   | GT ✅ [get_unwind_section_word](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [get_unwind_section_word](V)
+        fno_inline | DB 🔀 [standalone(cloning)]   | GT ✅ [get_unwind_section_word](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [get_unwind_section_word](V)
+        fno_inline | DB 🔀 [standalone(cloning)]   | GT ✅ [get_unwind_section_word](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [get_unwind_section_word](V)
+        fno_inline | DB 🚫 없음                 | GT (info 없음)
+
+── Vuln func: get_unwind_section_word_0  [fno]
+    gcc-O3   
+        Regular    | DB 🚫 없음                 | GT (info 없음)
+        fno_inline | DB 🔀 [standalone(cloning)]   | GT ✅ [get_unwind_section_word_0](V) + ✅ [get_unwind_section_word_1](V) ⟨family⟩
+
+── Vuln func: get_unwind_section_word_1  [fno]
+    gcc-O3   
+        Regular    | DB 🚫 없음                 | GT (info 없음)
+        fno_inline | DB 🔀 [standalone(cloning)]   | GT ✅ [get_unwind_section_word_0](V) ⟨family⟩ + ✅ [get_unwind_section_word_1](V)
+
+#########################################################################################################
+# TARGET 바이너리: binutils/readelf-42
+# 포함된 CVE: 1개 — CVE-2017-9043
+#########################################################################################################
+
+▼▼▼ CVE-2017-9043 ▼▼▼
+
+── Vuln func: print_gnu_build_attribute_name  [reg+fno]
+    clang-O0 
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [print_gnu_build_attribute_name](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [print_gnu_build_attribute_name](V)
+    clang-O1 
+        Regular    | DB 🚫 없음                 | GT 🔁 [process_note](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [print_gnu_build_attribute_name](V)
+    clang-O2 
+        Regular    | DB 🚫 없음                 | GT 🔁 [process_notes_at](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [print_gnu_build_attribute_name](V)
+    clang-O3 
+        Regular    | DB 🚫 없음                 | GT 🔁 [process_notes_at](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [print_gnu_build_attribute_name](V)
+    gcc-O0   
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [print_gnu_build_attribute_name](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [print_gnu_build_attribute_name](V)
+    gcc-O1   
+        Regular    | DB 🚫 없음                 | GT 🔁 [process_notes_at](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [print_gnu_build_attribute_name](V)
+    gcc-O2   
+        Regular    | DB 🚫 없음                 | GT 🔁 [process_notes_at](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [print_gnu_build_attribute_name](V)
+    gcc-O3   
+        Regular    | DB 🚫 없음                 | GT 🔁 [process_notes_at](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [print_gnu_build_attribute_name](V)
+
+#########################################################################################################
+# TARGET 바이너리: binutils/readelf-65
+# 포함된 CVE: 1개 — CVE-2017-6965
+#########################################################################################################
+
+▼▼▼ CVE-2017-6965 ▼▼▼
+
+── Vuln func: apply_relocations  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [apply_relocations](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [apply_relocations](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [apply_relocations](V-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [apply_relocations](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [apply_relocations](V-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [apply_relocations](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [apply_relocations](V-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [apply_relocations](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [apply_relocations](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [apply_relocations](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [apply_relocations](V-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [apply_relocations](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [apply_relocations](V-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [apply_relocations](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [apply_relocations](V-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [apply_relocations](V)
+
+── Vuln func: target_specific_reloc_handling  [reg+fno]
+    clang-O0 
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [target_specific_reloc_handling](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [target_specific_reloc_handling](V)
+    clang-O1 
+        Regular    | DB 🚫 없음                 | GT 🔁 [apply_relocations](V-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [target_specific_reloc_handling](V)
+    clang-O2 
+        Regular    | DB 🚫 없음                 | GT 🔁 [apply_relocations](V-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [target_specific_reloc_handling](V)
+    clang-O3 
+        Regular    | DB 🚫 없음                 | GT 🔁 [apply_relocations](V-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [target_specific_reloc_handling](V)
+    gcc-O0   
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [target_specific_reloc_handling](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [target_specific_reloc_handling](V)
+    gcc-O1   
+        Regular    | DB 🚫 없음                 | GT 🔁 [apply_relocations](V-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [target_specific_reloc_handling](V)
+    gcc-O2   
+        Regular    | DB 🚫 없음                 | GT 🔁 [apply_relocations](V-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [target_specific_reloc_handling](V)
+    gcc-O3   
+        Regular    | DB 🚫 없음                 | GT 🔁 [apply_relocations](V-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [target_specific_reloc_handling](V)
+
+#########################################################################################################
+# TARGET 바이너리: binutils/readelf-72
+# 포함된 CVE: 1개 — CVE-2018-10372
+#########################################################################################################
+
+▼▼▼ CVE-2018-10372 ▼▼▼
+
+── Vuln func: process_cu_tu_index  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [process_cu_tu_index](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [process_cu_tu_index](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [process_cu_tu_index](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [process_cu_tu_index](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [process_cu_tu_index](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [process_cu_tu_index](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [process_cu_tu_index](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [process_cu_tu_index](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [process_cu_tu_index](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [process_cu_tu_index](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [process_cu_tu_index](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [process_cu_tu_index](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [process_cu_tu_index](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [process_cu_tu_index](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [process_cu_tu_index](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [process_cu_tu_index](V)
+
+#########################################################################################################
+# TARGET 바이너리: binutils/readelf-77
+# 포함된 CVE: 1개 — CVE-2019-9077
+#########################################################################################################
+
+▼▼▼ CVE-2019-9077 ▼▼▼
+
+── Vuln func: process_mips_specific  [reg+fno]
+    clang-O0 
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [process_mips_specific](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [process_mips_specific](V)
+    clang-O1 
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [process_mips_specific](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [process_mips_specific](V)
+    clang-O2 
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [process_mips_specific](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [process_mips_specific](V)
+    clang-O3 
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [process_mips_specific](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [process_mips_specific](V)
+    gcc-O0   
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [process_mips_specific](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [process_mips_specific](V)
+    gcc-O1   
+        Regular    | DB 🚫 없음                 | GT 🔁 [process_object](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [process_mips_specific](V)
+    gcc-O2   
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [process_mips_specific](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [process_mips_specific](V)
+    gcc-O3   
+        Regular    | DB 🚫 없음                 | GT 🔁 [process_object](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [process_mips_specific](V)
+
+#########################################################################################################
+# TARGET 바이너리: coreutils/pr-23
+# 포함된 CVE: 1개 — gnubug_25023
+#########################################################################################################
+
+▼▼▼ gnubug_25023 ▼▼▼
+
+── Vuln func: init_parameters  [reg+fno]
+    clang-O0 
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [init_parameters](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [init_parameters](V)
+    clang-O1 
+        Regular    | DB 🚫 없음                 | GT 🔁 [print_files](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [init_parameters](V)
+    clang-O2 
+        Regular    | DB 🚫 없음                 | GT 🔁 [print_files](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [init_parameters](V)
+    clang-O3 
+        Regular    | DB 🚫 없음                 | GT 🔁 [print_files](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [init_parameters](V)
+    gcc-O0   
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [init_parameters](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [init_parameters](V)
+    gcc-O1   
+        Regular    | DB 🚫 없음                 | GT 🔁 [print_files](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [init_parameters](V)
+    gcc-O2   
+        Regular    | DB 🚫 없음                 | GT 🔁 [print_files](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [init_parameters](V)
+    gcc-O3   
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [init_parameters](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [init_parameters](V)
+
+#########################################################################################################
+# TARGET 바이너리: coreutils/shred-45
+# 포함된 CVE: 1개 — gnubug_26545
+#########################################################################################################
+
+▼▼▼ gnubug_26545 ▼▼▼
+
+── Vuln func: fillpattern  [reg+fno]
+    clang-O0 
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [fillpattern](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [fillpattern](V)
+    clang-O1 
+        Regular    | DB 🚫 없음                 | GT 🔁 [do_wipefd](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [fillpattern](V)
+    clang-O2 
+        Regular    | DB 🚫 없음                 | GT 🔁 [do_wipefd](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [fillpattern](V)
+    clang-O3 
+        Regular    | DB 🚫 없음                 | GT 🔁 [do_wipefd](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [fillpattern](V)
+    gcc-O0   
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [fillpattern](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [fillpattern](V)
+    gcc-O1   
+        Regular    | DB 🚫 없음                 | GT 🔁 [dopass](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [fillpattern](V)
+    gcc-O2   
+        Regular    | DB 🚫 없음                 | GT 🔁 [dopass](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [fillpattern](V)
+    gcc-O3   
+        Regular    | DB 🚫 없음                 | GT 🔁 [dopass](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [fillpattern](V)
+
+#########################################################################################################
+# TARGET 바이너리: coreutils/split-3
+# 포함된 CVE: 1개 — gnubug_25003
+#########################################################################################################
+
+▼▼▼ gnubug_25003 ▼▼▼
+
+── Vuln func: bytes_chunk_extract  [reg+fno]
+    clang-O0 
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [bytes_chunk_extract](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [bytes_chunk_extract](V)
+    clang-O1 
+        Regular    | DB 🚫 없음                 | GT 🔁 [main](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [bytes_chunk_extract](V)
+    clang-O2 
+        Regular    | DB 🚫 없음                 | GT 🔁 [main](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [bytes_chunk_extract](V)
+    clang-O3 
+        Regular    | DB 🚫 없음                 | GT 🔁 [main](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [bytes_chunk_extract](V)
+    gcc-O0   
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [bytes_chunk_extract](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [bytes_chunk_extract](V)
+    gcc-O1   
+        Regular    | DB 🚫 없음                 | GT 🔁 [main](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [bytes_chunk_extract](V)
+    gcc-O2   
+        Regular    | DB 🚫 없음                 | GT 🔁 [main](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [bytes_chunk_extract](V)
+    gcc-O3   
+        Regular    | DB 🚫 없음                 | GT 🔁 [main](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [bytes_chunk_extract](V)
+
+#########################################################################################################
+# TARGET 바이너리: jasper/imginfo-51
+# 포함된 CVE: 1개 — CVE-2016-10251
+#########################################################################################################
+
+▼▼▼ CVE-2016-10251 ▼▼▼
+
+── Vuln func: jpc_pi_nextcprl  [reg+fno]
+    clang-O0 
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [jpc_pi_nextcprl](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_pi_nextcprl](V)
+    clang-O1 
+        Regular    | DB 🚫 없음                 | GT 🔁 [jpc_pi_next](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_pi_nextcprl](V)
+    clang-O2 
+        Regular    | DB 🚫 없음                 | GT 🔁 [jpc_pi_next](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_pi_nextcprl](V)
+    clang-O3 
+        Regular    | DB 🚫 없음                 | GT 🔁 [jpc_pi_next](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_pi_nextcprl](V)
+    gcc-O0   
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [jpc_pi_nextcprl](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_pi_nextcprl](V)
+    gcc-O1   
+        Regular    | DB 🚫 없음                 | GT 🔁 [jpc_pi_next](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_pi_nextcprl](V)
+    gcc-O2   
+        Regular    | DB 🚫 없음                 | GT 🔁 [jpc_pi_next](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_pi_nextcprl](V)
+    gcc-O3   
+        Regular    | DB 🚫 없음                 | GT 🔁 [jpc_pi_next](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_pi_nextcprl](V)
+
+#########################################################################################################
+# TARGET 바이너리: jasper/imginfo-60
+# 포함된 CVE: 1개 — CVE-2016-9560
+#########################################################################################################
+
+▼▼▼ CVE-2016-9560 ▼▼▼
+
+── Vuln func: jpc_dec_tileinit  [reg+fno]
+    clang-O0 
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [jpc_dec_tileinit](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_dec_tileinit](V)
+    clang-O1 
+        Regular    | DB 🚫 없음                 | GT 🔁 [jpc_dec_process_sod](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_dec_tileinit](V)
+    clang-O2 
+        Regular    | DB 🚫 없음                 | GT 🔁 [jpc_dec_process_sod](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_dec_tileinit](V)
+    clang-O3 
+        Regular    | DB 🚫 없음                 | GT 🔁 [jpc_dec_process_sod](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_dec_tileinit](V)
+    gcc-O0   
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [jpc_dec_tileinit](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_dec_tileinit](V)
+    gcc-O1   
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [jpc_dec_tileinit](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_dec_tileinit](V)
+    gcc-O2   
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [jpc_dec_tileinit](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_dec_tileinit](V)
+    gcc-O3   
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [jpc_dec_tileinit](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_dec_tileinit](V)
+
+#########################################################################################################
+# TARGET 바이너리: jasper/imginfo-84
+# 포함된 CVE: 2개 — CVE-2016-10248, CVE-2016-8887
+#########################################################################################################
+
+▼▼▼ CVE-2016-10248 ▼▼▼
+
+── Vuln func: jpc_tsfb_synthesize  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_tsfb_synthesize](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_tsfb_synthesize](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_tsfb_synthesize](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_tsfb_synthesize](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_tsfb_synthesize](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_tsfb_synthesize](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_tsfb_synthesize](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_tsfb_synthesize](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_tsfb_synthesize](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_tsfb_synthesize](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_tsfb_synthesize](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_tsfb_synthesize](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_tsfb_synthesize](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_tsfb_synthesize](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_tsfb_synthesize](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_tsfb_synthesize](V)
+
+▼▼▼ CVE-2016-8887 ▼▼▼
+
+── Vuln func: jp2_box_get  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [jp2_box_get](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jp2_box_get](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [jp2_box_get](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jp2_box_get](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [jp2_box_get](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jp2_box_get](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [jp2_box_get](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jp2_box_get](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [jp2_box_get](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jp2_box_get](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [jp2_box_get](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jp2_box_get](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [jp2_box_get](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jp2_box_get](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [jp2_box_get](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jp2_box_get](V)
+
+#########################################################################################################
+# TARGET 바이너리: jasper/imginfo-87
+# 포함된 CVE: 1개 — CVE-2016-9387
+#########################################################################################################
+
+▼▼▼ CVE-2016-9387 ▼▼▼
+
+── Vuln func: jpc_dec_process_siz  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_dec_process_siz](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_dec_process_siz](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_dec_process_siz](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_dec_process_siz](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_dec_process_siz](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_dec_process_siz](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_dec_process_siz](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_dec_process_siz](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_dec_process_siz](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_dec_process_siz](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_dec_process_siz](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_dec_process_siz](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_dec_process_siz](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_dec_process_siz](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_dec_process_siz](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_dec_process_siz](V)
+
+#########################################################################################################
+# TARGET 바이너리: jasper/imginfo-88
+# 포함된 CVE: 4개 — CVE-2016-9389, CVE-2016-9390, CVE-2016-9391, CVE-2016-9396
+#########################################################################################################
+
+▼▼▼ CVE-2016-9389 ▼▼▼
+
+── Vuln func: jpc_dec_tiledecode  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_dec_tiledecode](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_dec_tiledecode](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_dec_tiledecode](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_dec_tiledecode](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_dec_tiledecode](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_dec_tiledecode](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_dec_tiledecode](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_dec_tiledecode](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_dec_tiledecode](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_dec_tiledecode](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_dec_tiledecode](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_dec_tiledecode](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_dec_tiledecode](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_dec_tiledecode](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_dec_tiledecode](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_dec_tiledecode](V)
+
+▼▼▼ CVE-2016-9390 ▼▼▼
+
+── Vuln func: jpc_siz_getparms  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+
+▼▼▼ CVE-2016-9391 ▼▼▼
+
+── Vuln func: jpc_bitstream_getbits  [reg+fno]
+    clang-O0 
+        Regular    | DB 🔀 [standalone(cloning)]   | GT ✅ [jpc_bitstream_getbits](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_bitstream_getbits](V)
+    clang-O1 
+        Regular    | DB 🔀 [standalone(cloning)]   | GT ✅ [jpc_bitstream_getbits](V) + 🔁 [jpc_bitstream_inalign](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_bitstream_getbits](V)
+    clang-O2 
+        Regular    | DB 🔀 [standalone(cloning)]   | GT ✅ [jpc_bitstream_getbits](V) + 🔁 [jpc_bitstream_inalign](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_bitstream_getbits](V)
+    clang-O3 
+        Regular    | DB 🔀 [standalone(cloning)]   | GT ✅ [jpc_bitstream_getbits](V) + 🔁 [jpc_bitstream_inalign](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_bitstream_getbits](V)
+    gcc-O0   
+        Regular    | DB 🔀 [standalone(cloning)]   | GT ✅ [jpc_bitstream_getbits](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_bitstream_getbits](V)
+    gcc-O1   
+        Regular    | DB 🔀 [standalone(cloning)]   | GT ✅ [jpc_bitstream_getbits](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_bitstream_getbits](V)
+    gcc-O2   
+        Regular    | DB 🚫 없음                 | GT (info 없음)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_bitstream_getbits](V)
+    gcc-O3   
+        Regular    | DB 🔀 [standalone(cloning)]   | GT ✅ [jpc_bitstream_getbits](V-V) + 🔁 [jpc_bitstream_inalign](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_bitstream_getbits](V)
+
+── Vuln func: jpc_bitstream_getbits_0  [reg]
+    gcc-O2   
+        Regular    | DB 🔀 [standalone(cloning)]   | GT ✅ [jpc_bitstream_getbits_0](V) + ✅ [jpc_bitstream_getbits_1](V) ⟨family⟩ + 🔁 [jpc_bitstream_inalign](NV-V) ⟨family⟩
+        fno_inline | DB 🚫 없음                 | GT (info 없음)
+
+── Vuln func: jpc_bitstream_getbits_1  [reg]
+    gcc-O2   
+        Regular    | DB 🔀 [standalone(cloning)]   | GT ✅ [jpc_bitstream_getbits_0](V) ⟨family⟩ + ✅ [jpc_bitstream_getbits_1](V) + 🔁 [jpc_bitstream_inalign](NV-V) ⟨family⟩
+        fno_inline | DB 🚫 없음                 | GT (info 없음)
+
+── Vuln func: jpc_bitstream_putbits  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_bitstream_putbits](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_bitstream_putbits](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_bitstream_putbits](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_bitstream_putbits](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_bitstream_putbits](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_bitstream_putbits](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_bitstream_putbits](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_bitstream_putbits](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_bitstream_putbits](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_bitstream_putbits](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_bitstream_putbits](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_bitstream_putbits](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_bitstream_putbits](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_bitstream_putbits](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_bitstream_putbits](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_bitstream_putbits](V)
+
+▼▼▼ CVE-2016-9396 ▼▼▼
+
+── Vuln func: jpc_cox_getcompparms  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_cox_getcompparms](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_cox_getcompparms](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_cox_getcompparms](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_cox_getcompparms](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_cox_getcompparms](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_cox_getcompparms](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_cox_getcompparms](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_cox_getcompparms](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_cox_getcompparms](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_cox_getcompparms](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_cox_getcompparms](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_cox_getcompparms](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_cox_getcompparms](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_cox_getcompparms](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_cox_getcompparms](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_cox_getcompparms](V)
+
+#########################################################################################################
+# TARGET 바이너리: jasper/imginfo-91
+# 포함된 CVE: 1개 — CVE-2016-8691
+#########################################################################################################
+
+▼▼▼ CVE-2016-8691 ▼▼▼
+
+── Vuln func: jpc_siz_getparms  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+
+#########################################################################################################
+# TARGET 바이너리: jasper/imginfo-92
+# 포함된 CVE: 1개 — CVE-2016-8692
+#########################################################################################################
+
+▼▼▼ CVE-2016-8692 ▼▼▼
+
+── Vuln func: jpc_siz_getparms  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+
+#########################################################################################################
+# TARGET 바이너리: jasper/imginfo-94
+# 포함된 CVE: 2개 — CVE-2016-9394, CVE-2016-9398
+#########################################################################################################
+
+▼▼▼ CVE-2016-9394 ▼▼▼
+
+── Vuln func: jpc_siz_getparms  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_siz_getparms](V)
+
+▼▼▼ CVE-2016-9398 ▼▼▼
+
+── Vuln func: jpc_dec_decodepkt  [reg+fno]
+    clang-O0 
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [jpc_dec_decodepkt](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_dec_decodepkt](V)
+    clang-O1 
+        Regular    | DB 🚫 없음                 | GT 🔁 [jpc_dec_decodepkts](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_dec_decodepkt](V)
+    clang-O2 
+        Regular    | DB 🚫 없음                 | GT 🔁 [jpc_dec_decodepkts](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_dec_decodepkt](V)
+    clang-O3 
+        Regular    | DB 🚫 없음                 | GT 🔁 [jpc_dec_decodepkts](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_dec_decodepkt](V)
+    gcc-O0   
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [jpc_dec_decodepkt](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_dec_decodepkt](V)
+    gcc-O1   
+        Regular    | DB 🚫 없음                 | GT 🔁 [jpc_dec_decodepkts](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_dec_decodepkt](V)
+    gcc-O2   
+        Regular    | DB 🚫 없음                 | GT 🔁 [jpc_dec_decodepkts](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_dec_decodepkt](V)
+    gcc-O3   
+        Regular    | DB 🚫 없음                 | GT 🔁 [jpc_dec_decodepkts](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jpc_dec_decodepkt](V)
+
+#########################################################################################################
+# TARGET 바이너리: libarchive/bsdtar-44
+# 포함된 CVE: 1개 — CVE-2016-5844
+#########################################################################################################
+
+▼▼▼ CVE-2016-5844 ▼▼▼
+
+── Vuln func: choose_volume  [reg+fno]
+    clang-O0 
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [choose_volume](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [choose_volume](V)
+    clang-O1 
+        Regular    | DB 🚫 없음                 | GT 🔁 [archive_read_format_iso9660_read_header](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [choose_volume](V)
+    clang-O2 
+        Regular    | DB 🚫 없음                 | GT 🔁 [archive_read_format_iso9660_read_header](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [choose_volume](V)
+    clang-O3 
+        Regular    | DB 🚫 없음                 | GT 🔁 [archive_read_format_iso9660_read_header](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [choose_volume](V)
+    gcc-O0   
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [choose_volume](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [choose_volume](V)
+    gcc-O1   
+        Regular    | DB 🚫 없음                 | GT 🔁 [archive_read_format_iso9660_read_header](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [choose_volume](V)
+    gcc-O2   
+        Regular    | DB 🚫 없음                 | GT 🔁 [archive_read_format_iso9660_read_header](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [choose_volume](V)
+    gcc-O3   
+        Regular    | DB 🚫 없음                 | GT 🔁 [archive_read_format_iso9660_read_header](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [choose_volume](V)
+
+#########################################################################################################
+# TARGET 바이너리: libarchive/bsdtar-49
+# 포함된 CVE: 2개 — CVE-2016-10349, CVE-2016-10350
+#########################################################################################################
+
+▼▼▼ CVE-2016-10349 ▼▼▼
+
+── Vuln func: cab_read_header  [reg+fno]
+    clang-O0 
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [cab_read_header](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [cab_read_header](V)
+    clang-O1 
+        Regular    | DB 🚫 없음                 | GT 🔁 [archive_read_format_cab_read_header](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [cab_read_header](V)
+    clang-O2 
+        Regular    | DB 🚫 없음                 | GT 🔁 [archive_read_format_cab_read_header](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [cab_read_header](V)
+    clang-O3 
+        Regular    | DB 🚫 없음                 | GT 🔁 [archive_read_format_cab_read_header](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [cab_read_header](V)
+    gcc-O0   
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [cab_read_header](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [cab_read_header](V)
+    gcc-O1   
+        Regular    | DB 🚫 없음                 | GT 🔁 [archive_read_format_cab_read_header](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [cab_read_header](V)
+    gcc-O2   
+        Regular    | DB 🚫 없음                 | GT 🔁 [archive_read_format_cab_read_header](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [cab_read_header](V)
+    gcc-O3   
+        Regular    | DB 🚫 없음                 | GT 🔁 [archive_read_format_cab_read_header](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [cab_read_header](V)
+
+▼▼▼ CVE-2016-10350 ▼▼▼
+
+── Vuln func: cab_read_header  [reg+fno]
+    clang-O0 
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [cab_read_header](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [cab_read_header](V)
+    clang-O1 
+        Regular    | DB 🚫 없음                 | GT 🔁 [archive_read_format_cab_read_header](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [cab_read_header](V)
+    clang-O2 
+        Regular    | DB 🚫 없음                 | GT 🔁 [archive_read_format_cab_read_header](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [cab_read_header](V)
+    clang-O3 
+        Regular    | DB 🚫 없음                 | GT 🔁 [archive_read_format_cab_read_header](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [cab_read_header](V)
+    gcc-O0   
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [cab_read_header](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [cab_read_header](V)
+    gcc-O1   
+        Regular    | DB 🚫 없음                 | GT 🔁 [archive_read_format_cab_read_header](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [cab_read_header](V)
+    gcc-O2   
+        Regular    | DB 🚫 없음                 | GT 🔁 [archive_read_format_cab_read_header](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [cab_read_header](V)
+    gcc-O3   
+        Regular    | DB 🚫 없음                 | GT 🔁 [archive_read_format_cab_read_header](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [cab_read_header](V)
+
+#########################################################################################################
+# TARGET 바이너리: libjpeg/cjpeg-98
+# 포함된 CVE: 1개 — CVE-2018-14498
+#########################################################################################################
+
+▼▼▼ CVE-2018-14498 ▼▼▼
+
+── Vuln func: get_8bit_row_0  [reg+fno]
+    clang-O0 
+        Regular    | DB 🔀 [standalone(cloning)]   | GT ✅ [get_8bit_row_0](V) + ✅ [get_8bit_row_1](V) ⟨family⟩
+        fno_inline | DB 🔀 [standalone(cloning)]   | GT ✅ [get_8bit_row_0](V) + ✅ [get_8bit_row_1](V) ⟨family⟩
+    clang-O1 
+        Regular    | DB 🔀 [standalone(cloning)]   | GT ✅ [get_8bit_row_0](V) + ✅ [get_8bit_row_1](V) ⟨family⟩
+        fno_inline | DB 🔀 [standalone(cloning)]   | GT ✅ [get_8bit_row_0](V) + ✅ [get_8bit_row_1](V) ⟨family⟩
+    clang-O2 
+        Regular    | DB 🔀 [standalone(cloning)]   | GT ✅ [get_8bit_row_0](V) + ✅ [get_8bit_row_1](V) ⟨family⟩
+        fno_inline | DB 🔀 [standalone(cloning)]   | GT ✅ [get_8bit_row_0](V) + ✅ [get_8bit_row_1](V) ⟨family⟩
+    clang-O3 
+        Regular    | DB 🔀 [standalone(cloning)]   | GT ✅ [get_8bit_row_0](V) + ✅ [get_8bit_row_1](V) ⟨family⟩
+        fno_inline | DB 🔀 [standalone(cloning)]   | GT ✅ [get_8bit_row_0](V) + ✅ [get_8bit_row_1](V) ⟨family⟩
+    gcc-O0   
+        Regular    | DB 🔀 [standalone(cloning)]   | GT ✅ [get_8bit_row_0](V) + ✅ [get_8bit_row_1](V) ⟨family⟩
+        fno_inline | DB 🔀 [standalone(cloning)]   | GT ✅ [get_8bit_row_0](V) + ✅ [get_8bit_row_1](V) ⟨family⟩
+    gcc-O1   
+        Regular    | DB 🔀 [standalone(cloning)]   | GT ✅ [get_8bit_row_0](V) + ✅ [get_8bit_row_1](V) ⟨family⟩
+        fno_inline | DB 🔀 [standalone(cloning)]   | GT ✅ [get_8bit_row_0](V) + ✅ [get_8bit_row_1](V) ⟨family⟩
+    gcc-O2   
+        Regular    | DB 🔀 [standalone(cloning)]   | GT ✅ [get_8bit_row_0](V) + ✅ [get_8bit_row_1](V) ⟨family⟩
+        fno_inline | DB 🔀 [standalone(cloning)]   | GT ✅ [get_8bit_row_0](V) + ✅ [get_8bit_row_1](V) ⟨family⟩
+    gcc-O3   
+        Regular    | DB 🔀 [standalone(cloning)]   | GT ✅ [get_8bit_row_0](V) + ✅ [get_8bit_row_1](V) ⟨family⟩
+        fno_inline | DB 🔀 [standalone(cloning)]   | GT ✅ [get_8bit_row_0](V) + ✅ [get_8bit_row_1](V) ⟨family⟩
+
+── Vuln func: get_8bit_row_1  [reg+fno]
+    clang-O0 
+        Regular    | DB 🔀 [standalone(cloning)]   | GT ✅ [get_8bit_row_0](V) ⟨family⟩ + ✅ [get_8bit_row_1](V)
+        fno_inline | DB 🔀 [standalone(cloning)]   | GT ✅ [get_8bit_row_0](V) ⟨family⟩ + ✅ [get_8bit_row_1](V)
+    clang-O1 
+        Regular    | DB 🔀 [standalone(cloning)]   | GT ✅ [get_8bit_row_0](V) ⟨family⟩ + ✅ [get_8bit_row_1](V)
+        fno_inline | DB 🔀 [standalone(cloning)]   | GT ✅ [get_8bit_row_0](V) ⟨family⟩ + ✅ [get_8bit_row_1](V)
+    clang-O2 
+        Regular    | DB 🔀 [standalone(cloning)]   | GT ✅ [get_8bit_row_0](V) ⟨family⟩ + ✅ [get_8bit_row_1](V)
+        fno_inline | DB 🔀 [standalone(cloning)]   | GT ✅ [get_8bit_row_0](V) ⟨family⟩ + ✅ [get_8bit_row_1](V)
+    clang-O3 
+        Regular    | DB 🔀 [standalone(cloning)]   | GT ✅ [get_8bit_row_0](V) ⟨family⟩ + ✅ [get_8bit_row_1](V)
+        fno_inline | DB 🔀 [standalone(cloning)]   | GT ✅ [get_8bit_row_0](V) ⟨family⟩ + ✅ [get_8bit_row_1](V)
+    gcc-O0   
+        Regular    | DB 🔀 [standalone(cloning)]   | GT ✅ [get_8bit_row_0](V) ⟨family⟩ + ✅ [get_8bit_row_1](V)
+        fno_inline | DB 🔀 [standalone(cloning)]   | GT ✅ [get_8bit_row_0](V) ⟨family⟩ + ✅ [get_8bit_row_1](V)
+    gcc-O1   
+        Regular    | DB 🔀 [standalone(cloning)]   | GT ✅ [get_8bit_row_0](V) ⟨family⟩ + ✅ [get_8bit_row_1](V)
+        fno_inline | DB 🔀 [standalone(cloning)]   | GT ✅ [get_8bit_row_0](V) ⟨family⟩ + ✅ [get_8bit_row_1](V)
+    gcc-O2   
+        Regular    | DB 🔀 [standalone(cloning)]   | GT ✅ [get_8bit_row_0](V) ⟨family⟩ + ✅ [get_8bit_row_1](V)
+        fno_inline | DB 🔀 [standalone(cloning)]   | GT ✅ [get_8bit_row_0](V) ⟨family⟩ + ✅ [get_8bit_row_1](V)
+    gcc-O3   
+        Regular    | DB 🔀 [standalone(cloning)]   | GT ✅ [get_8bit_row_0](V) ⟨family⟩ + ✅ [get_8bit_row_1](V)
+        fno_inline | DB 🔀 [standalone(cloning)]   | GT ✅ [get_8bit_row_0](V) ⟨family⟩ + ✅ [get_8bit_row_1](V)
+
+── Vuln func: start_input_bmp  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [start_input_bmp](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [start_input_bmp](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [start_input_bmp](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [start_input_bmp](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [start_input_bmp](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [start_input_bmp](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [start_input_bmp](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [start_input_bmp](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [start_input_bmp](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [start_input_bmp](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [start_input_bmp](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [start_input_bmp](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [start_input_bmp](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [start_input_bmp](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [start_input_bmp](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [start_input_bmp](V)
+
+#########################################################################################################
+# TARGET 바이너리: libjpeg/djpeg-6
+# 포함된 CVE: 1개 — CVE-2012-2806
+#########################################################################################################
+
+▼▼▼ CVE-2012-2806 ▼▼▼
+
+── Vuln func: get_sos  [reg+fno]
+    clang-O0 
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [get_sos](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [get_sos](V)
+    clang-O1 
+        Regular    | DB 🚫 없음                 | GT 🔁 [read_markers](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [get_sos](V)
+    clang-O2 
+        Regular    | DB 🚫 없음                 | GT 🔁 [read_markers](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [get_sos](V)
+    clang-O3 
+        Regular    | DB 🚫 없음                 | GT 🔁 [read_markers](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [get_sos](V)
+    gcc-O0   
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [get_sos](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [get_sos](V)
+    gcc-O1   
+        Regular    | DB 🚫 없음                 | GT 🔁 [read_markers](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [get_sos](V)
+    gcc-O2   
+        Regular    | DB 🚫 없음                 | GT 🔁 [read_markers](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [get_sos](V)
+    gcc-O3   
+        Regular    | DB 🚫 없음                 | GT 🔁 [read_markers](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [get_sos](V)
+
+#########################################################################################################
+# TARGET 바이너리: libjpeg/djpeg-64
+# 포함된 CVE: 1개 — CVE-2018-19664
+#########################################################################################################
+
+▼▼▼ CVE-2018-19664 ▼▼▼
+
+── Vuln func: jinit_write_bmp  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [jinit_write_bmp](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jinit_write_bmp](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [jinit_write_bmp](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jinit_write_bmp](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [jinit_write_bmp](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jinit_write_bmp](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [jinit_write_bmp](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jinit_write_bmp](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [jinit_write_bmp](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jinit_write_bmp](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [jinit_write_bmp](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jinit_write_bmp](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [jinit_write_bmp](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jinit_write_bmp](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [jinit_write_bmp](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [jinit_write_bmp](V)
+
+#########################################################################################################
+# TARGET 바이너리: libming/listmp3-64
+# 포함된 CVE: 1개 — CVE-2016-9264
+#########################################################################################################
+
+▼▼▼ CVE-2016-9264 ▼▼▼
+
+── Vuln func: printMP3Headers  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [printMP3Headers](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [printMP3Headers](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [printMP3Headers](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [printMP3Headers](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [printMP3Headers](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [printMP3Headers](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [printMP3Headers](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [printMP3Headers](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [printMP3Headers](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [printMP3Headers](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [printMP3Headers](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [printMP3Headers](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [printMP3Headers](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [printMP3Headers](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [printMP3Headers](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [printMP3Headers](V)
+
+#########################################################################################################
+# TARGET 바이너리: libming/listmp3-65
+# 포함된 CVE: 2개 — CVE-2016-9265, CVE-2016-9266
+#########################################################################################################
+
+▼▼▼ CVE-2016-9265 ▼▼▼
+
+── Vuln func: printMP3Headers  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [printMP3Headers](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [printMP3Headers](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [printMP3Headers](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [printMP3Headers](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [printMP3Headers](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [printMP3Headers](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [printMP3Headers](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [printMP3Headers](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [printMP3Headers](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [printMP3Headers](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [printMP3Headers](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [printMP3Headers](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [printMP3Headers](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [printMP3Headers](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [printMP3Headers](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [printMP3Headers](V)
+
+▼▼▼ CVE-2016-9266 ▼▼▼
+
+── Vuln func: printMP3Headers  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [printMP3Headers](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [printMP3Headers](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [printMP3Headers](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [printMP3Headers](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [printMP3Headers](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [printMP3Headers](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [printMP3Headers](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [printMP3Headers](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [printMP3Headers](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [printMP3Headers](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [printMP3Headers](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [printMP3Headers](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [printMP3Headers](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [printMP3Headers](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [printMP3Headers](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [printMP3Headers](V)
+
+#########################################################################################################
+# TARGET 바이너리: libming/listswf-27
+# 포함된 CVE: 3개 — CVE-2016-9827, CVE-2016-9828, CVE-2016-9831
+#########################################################################################################
+
+▼▼▼ CVE-2016-9827 ▼▼▼
+
+── Vuln func: parseSWF_PROTECT  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [parseSWF_PROTECT](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [parseSWF_PROTECT](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [parseSWF_PROTECT](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [parseSWF_PROTECT](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [parseSWF_PROTECT](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [parseSWF_PROTECT](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [parseSWF_PROTECT](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [parseSWF_PROTECT](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [parseSWF_PROTECT](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [parseSWF_PROTECT](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [parseSWF_PROTECT](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [parseSWF_PROTECT](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [parseSWF_PROTECT](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [parseSWF_PROTECT](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [parseSWF_PROTECT](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [parseSWF_PROTECT](V)
+
+▼▼▼ CVE-2016-9828 ▼▼▼
+
+── Vuln func: outputBlock  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [outputBlock](V)
+        fno_inline | DB 🔀 [standalone(cloning)]   | GT ✅ [outputBlock](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [outputBlock](V-NV)
+        fno_inline | DB 🔀 [standalone(cloning)]   | GT ✅ [outputBlock](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [outputBlock](V-NV)
+        fno_inline | DB 🔀 [standalone(cloning)]   | GT ✅ [outputBlock](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [outputBlock](V-NV)
+        fno_inline | DB 🔀 [standalone(cloning)]   | GT ✅ [outputBlock](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [outputBlock](V)
+        fno_inline | DB 🔀 [standalone(cloning)]   | GT ✅ [outputBlock](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [outputBlock](V)
+        fno_inline | DB 🔀 [standalone(cloning)]   | GT ✅ [outputBlock](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [outputBlock](V)
+        fno_inline | DB 🔀 [standalone(cloning)]   | GT ✅ [outputBlock](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [outputBlock](V-V)
+        fno_inline | DB 🚫 없음                 | GT (info 없음)
+
+── Vuln func: outputBlock_0  [fno]
+    gcc-O3   
+        Regular    | DB 🚫 없음                 | GT (info 없음)
+        fno_inline | DB 🔀 [standalone(cloning)]   | GT ✅ [outputBlock_0](V) + ✅ [outputBlock_1](V) ⟨family⟩
+
+── Vuln func: outputBlock_1  [fno]
+    gcc-O3   
+        Regular    | DB 🚫 없음                 | GT (info 없음)
+        fno_inline | DB 🔀 [standalone(cloning)]   | GT ✅ [outputBlock_0](V) ⟨family⟩ + ✅ [outputBlock_1](V)
+
+▼▼▼ CVE-2016-9831 ▼▼▼
+
+── Vuln func: readBits  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [readBits](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readBits](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [readBits](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readBits](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [readBits](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readBits](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [readBits](V) + 🔁 [readSBits](NV-V) + 🔁 [readRect](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readBits](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [readBits](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readBits](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [readBits](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readBits](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [readBits](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readBits](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [readBits](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readBits](V)
+
+── Vuln func: readUInt8  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [readUInt8](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readUInt8](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [readUInt8](V) + 🔁 [readSInt8](NV-V) + 🔁 [readSInt16](NV-V) + 🔁 [readUInt16](NV-V) + 🔁 [readSInt32](NV-V) + 🔁 [readUInt32](NV-V) + 🔁 [readDouble](NV-V) + 🔁 [readFloat](NV-V) + 🔁 [readBytes](NV-V) + 🔁 [readString](NV-V) + 🔁 [readEncSInt32](NV-V) + 🔁 [readEncUInt30](NV-V) + 🔁 [readEncUInt32](NV-V) + 🔁 [readSizedString](NV-V) + 🔁 [_dumpBytes](NV-V) + 🔁 [silentSkipBytes](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readUInt8](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [readUInt8](V) + 🔁 [readSInt8](NV-V) + 🔁 [readSInt16](NV-V) + 🔁 [readUInt16](NV-V) + 🔁 [readSInt32](NV-V) + 🔁 [readUInt32](NV-V) + 🔁 [readDouble](NV-V) + 🔁 [readFloat](NV-V) + 🔁 [readBytes](NV-V) + 🔁 [readString](NV-V) + 🔁 [readEncSInt32](NV-V) + 🔁 [readEncUInt30](NV-V) + 🔁 [readEncUInt32](NV-V) + 🔁 [readSizedString](NV-V) + 🔁 [_dumpBytes](NV-V) + 🔁 [silentSkipBytes](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readUInt8](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [readUInt8](V) + 🔁 [readSInt8](NV-V) + 🔁 [readSInt16](NV-V) + 🔁 [readUInt16](NV-V) + 🔁 [readSInt32](NV-V) + 🔁 [readUInt32](NV-V) + 🔁 [readDouble](NV-V) + 🔁 [readFloat](NV-V) + 🔁 [readBytes](NV-V) + 🔁 [readString](NV-V) + 🔁 [readEncSInt32](NV-V) + 🔁 [readEncUInt30](NV-V) + 🔁 [readEncUInt32](NV-V) + 🔁 [readSizedString](NV-V) + 🔁 [_dumpBytes](NV-V) + 🔁 [silentSkipBytes](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readUInt8](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [readUInt8](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readUInt8](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [readUInt8](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readUInt8](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [readUInt8](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readUInt8](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [readUInt8](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readUInt8](V)
+
+#########################################################################################################
+# TARGET 바이너리: libtiff/gif2tiff-43
+# 포함된 CVE: 1개 — CVE-2013-4243
+#########################################################################################################
+
+▼▼▼ CVE-2013-4243 ▼▼▼
+
+── Vuln func: process  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [process](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [process](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [process](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [process](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [process](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [process](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [process](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [process](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [process](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [process](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [process](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [process](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [process](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [process](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [process](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [process](V)
+
+── Vuln func: readgifimage  [reg+fno]
+    clang-O0 
+        Regular    | DB 🔀 [standalone(cloning)]   | GT ✅ [readgifimage](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readgifimage](V)
+    clang-O1 
+        Regular    | DB 🔀 [standalone(cloning)]   | GT ✅ [readgifimage](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readgifimage](V)
+    clang-O2 
+        Regular    | DB 🔀 [standalone(cloning)]   | GT ✅ [readgifimage](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readgifimage](V)
+    clang-O3 
+        Regular    | DB 🔀 [standalone(cloning)]   | GT ✅ [readgifimage](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readgifimage](V)
+    gcc-O0   
+        Regular    | DB 🔀 [standalone(cloning)]   | GT ✅ [readgifimage](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readgifimage](V)
+    gcc-O1   
+        Regular    | DB 🔀 [standalone(cloning)]   | GT ✅ [readgifimage](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readgifimage](V)
+    gcc-O2   
+        Regular    | DB 🔀 [standalone(cloning)]   | GT ✅ [readgifimage.cold](V) + ✅ [readgifimage](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readgifimage](V)
+    gcc-O3   
+        Regular    | DB 🔀 [standalone(cloning)]   | GT ✅ [readgifimage.cold](V) + ✅ [readgifimage](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readgifimage](V)
+
+── Vuln func: readgifimage.cold  [reg]
+    gcc-O2   
+        Regular    | DB 🔀 [standalone(cloning)]   | GT ✅ [readgifimage.cold](V) + ✅ [readgifimage](V)
+        fno_inline | DB 🚫 없음                 | GT (info 없음)
+    gcc-O3   
+        Regular    | DB 🔀 [standalone(cloning)]   | GT ✅ [readgifimage.cold](V) + ✅ [readgifimage](V-NV)
+        fno_inline | DB 🚫 없음                 | GT (info 없음)
+
+#########################################################################################################
+# TARGET 바이너리: libtiff/tiff2pdf-94
+# 포함된 CVE: 1개 — CVE-2016-10094
+#########################################################################################################
+
+▼▼▼ CVE-2016-10094 ▼▼▼
+
+── Vuln func: t2p_readwrite_pdf_image_tile  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [t2p_readwrite_pdf_image_tile](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [t2p_readwrite_pdf_image_tile](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [t2p_readwrite_pdf_image_tile](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [t2p_readwrite_pdf_image_tile](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [t2p_readwrite_pdf_image_tile](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [t2p_readwrite_pdf_image_tile](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [t2p_readwrite_pdf_image_tile](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [t2p_readwrite_pdf_image_tile](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [t2p_readwrite_pdf_image_tile](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [t2p_readwrite_pdf_image_tile](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [t2p_readwrite_pdf_image_tile](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [t2p_readwrite_pdf_image_tile](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [t2p_readwrite_pdf_image_tile](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [t2p_readwrite_pdf_image_tile](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [t2p_readwrite_pdf_image_tile](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [t2p_readwrite_pdf_image_tile](V)
+
+#########################################################################################################
+# TARGET 바이너리: libtiff/tiff2ps-33
+# 포함된 CVE: 1개 — bugzilla_2633
+#########################################################################################################
+
+▼▼▼ bugzilla_2633 ▼▼▼
+
+── Vuln func: PSDataColorContig  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [PSDataColorContig](V)
+        fno_inline | DB 🔀 [standalone(cloning)]   | GT ✅ [PSDataColorContig](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [PSDataColorContig](V)
+        fno_inline | DB 🔀 [standalone(cloning)]   | GT ✅ [PSDataColorContig](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [PSDataColorContig](V)
+        fno_inline | DB 🔀 [standalone(cloning)]   | GT ✅ [PSDataColorContig](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [PSDataColorContig](V)
+        fno_inline | DB 🔀 [standalone(cloning)]   | GT ✅ [PSDataColorContig](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [PSDataColorContig](V)
+        fno_inline | DB 🔀 [standalone(cloning)]   | GT ✅ [PSDataColorContig](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [PSDataColorContig](V)
+        fno_inline | DB 🔀 [standalone(cloning)]   | GT ✅ [PSDataColorContig](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [PSDataColorContig](V)
+        fno_inline | DB 🔀 [standalone(cloning)]   | GT ✅ [PSDataColorContig](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [PSDataColorContig](V)
+        fno_inline | DB 🚫 없음                 | GT (info 없음)
+
+── Vuln func: PSDataColorContig_0  [fno]
+    gcc-O3   
+        Regular    | DB 🚫 없음                 | GT (info 없음)
+        fno_inline | DB 🔀 [standalone(cloning)]   | GT ✅ [PSDataColorContig_0](V) + ✅ [PSDataColorContig_1](V) ⟨family⟩
+
+── Vuln func: PSDataColorContig_1  [fno]
+    gcc-O3   
+        Regular    | DB 🚫 없음                 | GT (info 없음)
+        fno_inline | DB 🔀 [standalone(cloning)]   | GT ✅ [PSDataColorContig_0](V) ⟨family⟩ + ✅ [PSDataColorContig_1](V)
+
+#########################################################################################################
+# TARGET 바이너리: libtiff/tiffcp-1
+# 포함된 CVE: 1개 — CVE-2017-7601
+#########################################################################################################
+
+▼▼▼ CVE-2017-7601 ▼▼▼
+
+── Vuln func: JPEGSetupEncode  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [JPEGSetupEncode](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [JPEGSetupEncode](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [JPEGSetupEncode](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [JPEGSetupEncode](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [JPEGSetupEncode](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [JPEGSetupEncode](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [JPEGSetupEncode](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [JPEGSetupEncode](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [JPEGSetupEncode](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [JPEGSetupEncode](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [JPEGSetupEncode](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [JPEGSetupEncode](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [JPEGSetupEncode](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [JPEGSetupEncode](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [JPEGSetupEncode](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [JPEGSetupEncode](V)
+
+#########################################################################################################
+# TARGET 바이너리: libtiff/tiffcp-25
+# 포함된 CVE: 1개 — CVE-2017-5225
+#########################################################################################################
+
+▼▼▼ CVE-2017-5225 ▼▼▼
+
+── Vuln func: cpContig2SeparateByRow  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [cpContig2SeparateByRow](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [cpContig2SeparateByRow](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [cpContig2SeparateByRow](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [cpContig2SeparateByRow](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [cpContig2SeparateByRow](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [cpContig2SeparateByRow](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [cpContig2SeparateByRow](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [cpContig2SeparateByRow](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [cpContig2SeparateByRow](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [cpContig2SeparateByRow](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [cpContig2SeparateByRow](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [cpContig2SeparateByRow](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [cpContig2SeparateByRow](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [cpContig2SeparateByRow](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [cpContig2SeparateByRow](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [cpContig2SeparateByRow](V)
+
+── Vuln func: pickCopyFunc  [reg+fno]
+    clang-O0 
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [pickCopyFunc](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [pickCopyFunc](V)
+    clang-O1 
+        Regular    | DB 🚫 없음                 | GT 🔁 [main](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [pickCopyFunc](V)
+    clang-O2 
+        Regular    | DB 🚫 없음                 | GT 🔁 [main](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [pickCopyFunc](V)
+    clang-O3 
+        Regular    | DB 🚫 없음                 | GT 🔁 [main](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [pickCopyFunc](V)
+    gcc-O0   
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [pickCopyFunc](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [pickCopyFunc](V)
+    gcc-O1   
+        Regular    | DB 🚫 없음                 | GT 🔁 [main](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [pickCopyFunc](V)
+    gcc-O2   
+        Regular    | DB 🚫 없음                 | GT 🔁 [main](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [pickCopyFunc](V)
+    gcc-O3   
+        Regular    | DB 🚫 없음                 | GT 🔁 [main](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [pickCopyFunc](V)
+
+#########################################################################################################
+# TARGET 바이너리: libtiff/tiffcp-93
+# 포함된 CVE: 7개 — CVE-2016-10093, CVE-2016-10266, CVE-2016-10268, CVE-2016-10269, CVE-2016-10270, CVE-2017-7598, CVE-2017-7602
+#########################################################################################################
+
+▼▼▼ CVE-2016-10093 ▼▼▼
+
+── Vuln func: cpStripToTile  [reg+fno]
+    clang-O0 
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [cpStripToTile](V)
+        fno_inline | DB 🔀 [standalone(cloning)]   | GT ✅ [cpStripToTile](V)
+    clang-O1 
+        Regular    | DB 🚫 없음                 | GT 🔁 [writeBufferToContigTiles](NV-V) + 🔁 [readContigTilesIntoBuffer](V-V)
+        fno_inline | DB 🔀 [standalone(cloning)]   | GT ✅ [cpStripToTile](V)
+    clang-O2 
+        Regular    | DB 🚫 없음                 | GT 🔁 [writeBufferToContigTiles](NV-V) + 🔁 [readContigTilesIntoBuffer](V-V)
+        fno_inline | DB 🔀 [standalone(cloning)]   | GT ✅ [cpStripToTile](V)
+    clang-O3 
+        Regular    | DB 🚫 없음                 | GT 🔁 [writeBufferToContigTiles](NV-V) + 🔁 [readContigTilesIntoBuffer](V-V)
+        fno_inline | DB 🔀 [standalone(cloning)]   | GT ✅ [cpStripToTile](V)
+    gcc-O0   
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [cpStripToTile](V)
+        fno_inline | DB 🔀 [standalone(cloning)]   | GT ✅ [cpStripToTile](V)
+    gcc-O1   
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [cpStripToTile](V)
+        fno_inline | DB 🔀 [standalone(cloning)]   | GT ✅ [cpStripToTile](V)
+    gcc-O2   
+        Regular    | DB 🚫 없음                 | GT 🔁 [readContigTilesIntoBuffer](V-V) + 🔁 [writeBufferToContigTiles](NV-V)
+        fno_inline | DB 🔀 [standalone(cloning)]   | GT ✅ [cpStripToTile](V)
+    gcc-O3   
+        Regular    | DB 🚫 없음                 | GT 🔁 [readContigTilesIntoBuffer](V-V) + 🔁 [writeBufferToContigTiles](NV-V)
+        fno_inline | DB 🚫 없음                 | GT (info 없음)
+
+── Vuln func: cpStripToTile_0  [fno]
+    gcc-O3   
+        Regular    | DB 🚫 없음                 | GT (info 없음)
+        fno_inline | DB 🔀 [standalone(cloning)]   | GT ✅ [cpStripToTile_0](V) + ✅ [cpStripToTile_1](V) ⟨family⟩
+
+── Vuln func: cpStripToTile_1  [fno]
+    gcc-O3   
+        Regular    | DB 🚫 없음                 | GT (info 없음)
+        fno_inline | DB 🔀 [standalone(cloning)]   | GT ✅ [cpStripToTile_0](V) ⟨family⟩ + ✅ [cpStripToTile_1](V)
+
+── Vuln func: readContigTilesIntoBuffer  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [readContigTilesIntoBuffer](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readContigTilesIntoBuffer](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [readContigTilesIntoBuffer](V-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readContigTilesIntoBuffer](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [readContigTilesIntoBuffer](V-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readContigTilesIntoBuffer](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [readContigTilesIntoBuffer](V-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readContigTilesIntoBuffer](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [readContigTilesIntoBuffer](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readContigTilesIntoBuffer](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [readContigTilesIntoBuffer](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readContigTilesIntoBuffer](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [readContigTilesIntoBuffer](V-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readContigTilesIntoBuffer](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [readContigTilesIntoBuffer](V-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readContigTilesIntoBuffer](V)
+
+▼▼▼ CVE-2016-10266 ▼▼▼
+
+── Vuln func: TIFFReadEncodedStrip  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFReadEncodedStrip](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFReadEncodedStrip](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFReadEncodedStrip](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFReadEncodedStrip](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFReadEncodedStrip](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFReadEncodedStrip](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFReadEncodedStrip](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFReadEncodedStrip](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFReadEncodedStrip](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFReadEncodedStrip](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFReadEncodedStrip](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFReadEncodedStrip](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFReadEncodedStrip](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFReadEncodedStrip](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFReadEncodedStrip](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFReadEncodedStrip](V)
+
+▼▼▼ CVE-2016-10268 ▼▼▼
+
+── Vuln func: cpDecodedStrips  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [cpDecodedStrips](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [cpDecodedStrips](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [cpDecodedStrips](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [cpDecodedStrips](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [cpDecodedStrips](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [cpDecodedStrips](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [cpDecodedStrips](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [cpDecodedStrips](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [cpDecodedStrips](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [cpDecodedStrips](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [cpDecodedStrips](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [cpDecodedStrips](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [cpDecodedStrips](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [cpDecodedStrips](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [cpDecodedStrips](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [cpDecodedStrips](V)
+
+▼▼▼ CVE-2016-10269 ▼▼▼
+
+── Vuln func: LogLuvClose  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [LogLuvClose](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [LogLuvClose](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [LogLuvClose](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [LogLuvClose](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [LogLuvClose](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [LogLuvClose](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [LogLuvClose](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [LogLuvClose](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [LogLuvClose](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [LogLuvClose](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [LogLuvClose](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [LogLuvClose](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [LogLuvClose](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [LogLuvClose](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [LogLuvClose](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [LogLuvClose](V)
+
+── Vuln func: PixarLogClose  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [PixarLogClose](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [PixarLogClose](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [PixarLogClose](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [PixarLogClose](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [PixarLogClose](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [PixarLogClose](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [PixarLogClose](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [PixarLogClose](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [PixarLogClose](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [PixarLogClose](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [PixarLogClose](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [PixarLogClose](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [PixarLogClose](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [PixarLogClose](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [PixarLogClose](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [PixarLogClose](V)
+
+▼▼▼ CVE-2016-10270 ▼▼▼
+
+── Vuln func: ChopUpSingleUncompressedStrip  [reg+fno]
+    clang-O0 
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [ChopUpSingleUncompressedStrip](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [ChopUpSingleUncompressedStrip](V)
+    clang-O1 
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [ChopUpSingleUncompressedStrip](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [ChopUpSingleUncompressedStrip](V)
+    clang-O2 
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [ChopUpSingleUncompressedStrip](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [ChopUpSingleUncompressedStrip](V)
+    clang-O3 
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [ChopUpSingleUncompressedStrip](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [ChopUpSingleUncompressedStrip](V)
+    gcc-O0   
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [ChopUpSingleUncompressedStrip](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [ChopUpSingleUncompressedStrip](V)
+    gcc-O1   
+        Regular    | DB 🚫 없음                 | GT 🔁 [TIFFReadDirectory](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [ChopUpSingleUncompressedStrip](V)
+    gcc-O2   
+        Regular    | DB 🚫 없음                 | GT 🔁 [TIFFReadDirectory](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [ChopUpSingleUncompressedStrip](V)
+    gcc-O3   
+        Regular    | DB 🚫 없음                 | GT 🔁 [TIFFReadDirectory](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [ChopUpSingleUncompressedStrip](V)
+
+▼▼▼ CVE-2017-7598 ▼▼▼
+
+── Vuln func: TIFFReadDirEntryCheckedRational  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFReadDirEntryCheckedRational](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFReadDirEntryCheckedRational](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFReadDirEntryCheckedRational](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFReadDirEntryCheckedRational](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFReadDirEntryCheckedRational](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFReadDirEntryCheckedRational](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFReadDirEntryCheckedRational](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFReadDirEntryCheckedRational](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFReadDirEntryCheckedRational](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFReadDirEntryCheckedRational](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFReadDirEntryCheckedRational](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFReadDirEntryCheckedRational](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFReadDirEntryCheckedRational](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFReadDirEntryCheckedRational](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFReadDirEntryCheckedRational](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFReadDirEntryCheckedRational](V)
+
+── Vuln func: TIFFReadDirEntryCheckedSrational  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFReadDirEntryCheckedSrational](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFReadDirEntryCheckedSrational](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFReadDirEntryCheckedSrational](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFReadDirEntryCheckedSrational](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFReadDirEntryCheckedSrational](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFReadDirEntryCheckedSrational](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFReadDirEntryCheckedSrational](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFReadDirEntryCheckedSrational](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFReadDirEntryCheckedSrational](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFReadDirEntryCheckedSrational](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFReadDirEntryCheckedSrational](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFReadDirEntryCheckedSrational](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFReadDirEntryCheckedSrational](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFReadDirEntryCheckedSrational](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFReadDirEntryCheckedSrational](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFReadDirEntryCheckedSrational](V)
+
+▼▼▼ CVE-2017-7602 ▼▼▼
+
+── Vuln func: TIFFReadRawStrip1  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFReadRawStrip1](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFReadRawStrip1](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFReadRawStrip1](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFReadRawStrip1](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFReadRawStrip1](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFReadRawStrip1](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFReadRawStrip1](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFReadRawStrip1](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFReadRawStrip1](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFReadRawStrip1](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFReadRawStrip1](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFReadRawStrip1](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFReadRawStrip1](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFReadRawStrip1](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFReadRawStrip1](V) + 🔁 [TIFFReadRawStrip](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFReadRawStrip1](V)
+
+#########################################################################################################
+# TARGET 바이너리: libtiff/tiffcp-95
+# 포함된 CVE: 1개 — CVE-2017-7595
+#########################################################################################################
+
+▼▼▼ CVE-2017-7595 ▼▼▼
+
+── Vuln func: JPEGSetupEncode  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [JPEGSetupEncode](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [JPEGSetupEncode](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [JPEGSetupEncode](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [JPEGSetupEncode](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [JPEGSetupEncode](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [JPEGSetupEncode](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [JPEGSetupEncode](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [JPEGSetupEncode](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [JPEGSetupEncode](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [JPEGSetupEncode](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [JPEGSetupEncode](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [JPEGSetupEncode](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [JPEGSetupEncode](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [JPEGSetupEncode](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [JPEGSetupEncode](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [JPEGSetupEncode](V)
+
+#########################################################################################################
+# TARGET 바이너리: libtiff/tiffcrop-21
+# 포함된 CVE: 1개 — CVE-2016-5321
+#########################################################################################################
+
+▼▼▼ CVE-2016-5321 ▼▼▼
+
+── Vuln func: readSeparateTilesIntoBuffer  [reg+fno]
+    clang-O0 
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [readSeparateTilesIntoBuffer](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readSeparateTilesIntoBuffer](V)
+    clang-O1 
+        Regular    | DB 🚫 없음                 | GT 🔁 [main](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readSeparateTilesIntoBuffer](V)
+    clang-O2 
+        Regular    | DB 🚫 없음                 | GT 🔁 [main](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readSeparateTilesIntoBuffer](V)
+    clang-O3 
+        Regular    | DB 🚫 없음                 | GT 🔁 [loadImage](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readSeparateTilesIntoBuffer](V)
+    gcc-O0   
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [readSeparateTilesIntoBuffer](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readSeparateTilesIntoBuffer](V)
+    gcc-O1   
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [readSeparateTilesIntoBuffer](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readSeparateTilesIntoBuffer](V)
+    gcc-O2   
+        Regular    | DB 🚫 없음                 | GT 🔁 [loadImage](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readSeparateTilesIntoBuffer](V)
+    gcc-O3   
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [readSeparateTilesIntoBuffer](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readSeparateTilesIntoBuffer](V)
+
+#########################################################################################################
+# TARGET 바이너리: libtiff/tiffcrop-71
+# 포함된 CVE: 1개 — CVE-2016-10271
+#########################################################################################################
+
+▼▼▼ CVE-2016-10271 ▼▼▼
+
+── Vuln func: readContigStripsIntoBuffer  [reg+fno]
+    clang-O0 
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [readContigStripsIntoBuffer](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readContigStripsIntoBuffer](V)
+    clang-O1 
+        Regular    | DB 🚫 없음                 | GT 🔁 [loadImage](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readContigStripsIntoBuffer](V)
+    clang-O2 
+        Regular    | DB 🚫 없음                 | GT 🔁 [loadImage](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readContigStripsIntoBuffer](V)
+    clang-O3 
+        Regular    | DB 🚫 없음                 | GT 🔁 [loadImage](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readContigStripsIntoBuffer](V)
+    gcc-O0   
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [readContigStripsIntoBuffer](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readContigStripsIntoBuffer](V)
+    gcc-O1   
+        Regular    | DB 🚫 없음                 | GT 🔁 [loadImage](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readContigStripsIntoBuffer](V)
+    gcc-O2   
+        Regular    | DB 🚫 없음                 | GT 🔁 [loadImage](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readContigStripsIntoBuffer](V)
+    gcc-O3   
+        Regular    | DB 🚫 없음                 | GT 🔁 [main](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readContigStripsIntoBuffer](V)
+
+#########################################################################################################
+# TARGET 바이너리: libtiff/tiffcrop-92
+# 포함된 CVE: 2개 — CVE-2016-10092, CVE-2016-10272
+#########################################################################################################
+
+▼▼▼ CVE-2016-10092 ▼▼▼
+
+── Vuln func: readContigStripsIntoBuffer  [reg+fno]
+    clang-O0 
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [readContigStripsIntoBuffer](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readContigStripsIntoBuffer](V)
+    clang-O1 
+        Regular    | DB 🚫 없음                 | GT 🔁 [loadImage](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readContigStripsIntoBuffer](V)
+    clang-O2 
+        Regular    | DB 🚫 없음                 | GT 🔁 [loadImage](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readContigStripsIntoBuffer](V)
+    clang-O3 
+        Regular    | DB 🚫 없음                 | GT 🔁 [loadImage](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readContigStripsIntoBuffer](V)
+    gcc-O0   
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [readContigStripsIntoBuffer](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readContigStripsIntoBuffer](V)
+    gcc-O1   
+        Regular    | DB 🚫 없음                 | GT 🔁 [loadImage](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readContigStripsIntoBuffer](V)
+    gcc-O2   
+        Regular    | DB 🚫 없음                 | GT 🔁 [loadImage](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readContigStripsIntoBuffer](V)
+    gcc-O3   
+        Regular    | DB 🚫 없음                 | GT 🔁 [main](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readContigStripsIntoBuffer](V)
+
+▼▼▼ CVE-2016-10272 ▼▼▼
+
+── Vuln func: readContigStripsIntoBuffer  [reg+fno]
+    clang-O0 
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [readContigStripsIntoBuffer](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readContigStripsIntoBuffer](V)
+    clang-O1 
+        Regular    | DB 🚫 없음                 | GT 🔁 [loadImage](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readContigStripsIntoBuffer](V)
+    clang-O2 
+        Regular    | DB 🚫 없음                 | GT 🔁 [loadImage](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readContigStripsIntoBuffer](V)
+    clang-O3 
+        Regular    | DB 🚫 없음                 | GT 🔁 [loadImage](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readContigStripsIntoBuffer](V)
+    gcc-O0   
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [readContigStripsIntoBuffer](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readContigStripsIntoBuffer](V)
+    gcc-O1   
+        Regular    | DB 🚫 없음                 | GT 🔁 [loadImage](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readContigStripsIntoBuffer](V)
+    gcc-O2   
+        Regular    | DB 🚫 없음                 | GT 🔁 [loadImage](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readContigStripsIntoBuffer](V)
+    gcc-O3   
+        Regular    | DB 🚫 없음                 | GT 🔁 [main](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [readContigStripsIntoBuffer](V)
+
+#########################################################################################################
+# TARGET 바이너리: libtiff/tiffinfo-25
+# 포함된 CVE: 1개 — CVE-2006-2025
+#########################################################################################################
+
+▼▼▼ CVE-2006-2025 ▼▼▼
+
+── Vuln func: TIFFFetchData  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFFetchData](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFFetchData](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFFetchData](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFFetchData](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFFetchData](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFFetchData](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFFetchData](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFFetchData](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFFetchData](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFFetchData](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFFetchData](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFFetchData](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFFetchData](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFFetchData](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFFetchData](V) + 🔁 [TIFFFetchByteArray](NV-V) + 🔁 [TIFFReadDirectory](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFFetchData](V)
+
+#########################################################################################################
+# TARGET 바이너리: libtiff/tiffmedian-11
+# 포함된 CVE: 1개 — bugzilla_2611
+#########################################################################################################
+
+▼▼▼ bugzilla_2611 ▼▼▼
+
+── Vuln func: OJPEGDecode  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [OJPEGDecode](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [OJPEGDecode](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [OJPEGDecode](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [OJPEGDecode](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [OJPEGDecode](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [OJPEGDecode](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [OJPEGDecode](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [OJPEGDecode](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [OJPEGDecode](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [OJPEGDecode](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [OJPEGDecode](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [OJPEGDecode](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [OJPEGDecode](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [OJPEGDecode](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [OJPEGDecode](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [OJPEGDecode](V)
+
+── Vuln func: OJPEGPreDecode  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [OJPEGPreDecode](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [OJPEGPreDecode](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [OJPEGPreDecode](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [OJPEGPreDecode](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [OJPEGPreDecode](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [OJPEGPreDecode](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [OJPEGPreDecode](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [OJPEGPreDecode](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [OJPEGPreDecode](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [OJPEGPreDecode](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [OJPEGPreDecode](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [OJPEGPreDecode](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [OJPEGPreDecode](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [OJPEGPreDecode](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [OJPEGPreDecode](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [OJPEGPreDecode](V)
+
+#########################################################################################################
+# TARGET 바이너리: libtiff/tiffmedian-67
+# 포함된 CVE: 1개 — CVE-2016-10267
+#########################################################################################################
+
+▼▼▼ CVE-2016-10267 ▼▼▼
+
+── Vuln func: OJPEGDecode  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [OJPEGDecode](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [OJPEGDecode](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [OJPEGDecode](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [OJPEGDecode](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [OJPEGDecode](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [OJPEGDecode](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [OJPEGDecode](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [OJPEGDecode](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [OJPEGDecode](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [OJPEGDecode](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [OJPEGDecode](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [OJPEGDecode](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [OJPEGDecode](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [OJPEGDecode](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [OJPEGDecode](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [OJPEGDecode](V)
+
+── Vuln func: OJPEGPreDecode  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [OJPEGPreDecode](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [OJPEGPreDecode](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [OJPEGPreDecode](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [OJPEGPreDecode](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [OJPEGPreDecode](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [OJPEGPreDecode](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [OJPEGPreDecode](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [OJPEGPreDecode](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [OJPEGPreDecode](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [OJPEGPreDecode](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [OJPEGPreDecode](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [OJPEGPreDecode](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [OJPEGPreDecode](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [OJPEGPreDecode](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [OJPEGPreDecode](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [OJPEGPreDecode](V)
+
+#########################################################################################################
+# TARGET 바이너리: libtiff/tiffsplit-73
+# 포함된 CVE: 1개 — CVE-2016-9273
+#########################################################################################################
+
+▼▼▼ CVE-2016-9273 ▼▼▼
+
+── Vuln func: TIFFNumberOfStrips  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFNumberOfStrips](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFNumberOfStrips](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFNumberOfStrips](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFNumberOfStrips](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFNumberOfStrips](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFNumberOfStrips](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFNumberOfStrips](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFNumberOfStrips](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFNumberOfStrips](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFNumberOfStrips](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFNumberOfStrips](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFNumberOfStrips](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFNumberOfStrips](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFNumberOfStrips](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFNumberOfStrips](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFNumberOfStrips](V)
+
+#########################################################################################################
+# TARGET 바이너리: libtiff/tiffsplit-95
+# 포함된 CVE: 1개 — CVE-2016-10095
+#########################################################################################################
+
+▼▼▼ CVE-2016-10095 ▼▼▼
+
+── Vuln func: TIFFReadDirectory  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFReadDirectory](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFReadDirectory](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFReadDirectory](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFReadDirectory](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFReadDirectory](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFReadDirectory](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFReadDirectory](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFReadDirectory](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFReadDirectory](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFReadDirectory](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFReadDirectory](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFReadDirectory](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFReadDirectory](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFReadDirectory](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [TIFFReadDirectory](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [TIFFReadDirectory](V)
+
+#########################################################################################################
+# TARGET 바이너리: libxml2/xmllint-34
+# 포함된 CVE: 1개 — CVE-2012-5134
+#########################################################################################################
+
+▼▼▼ CVE-2012-5134 ▼▼▼
+
+── Vuln func: xmlParseAttValueComplex  [reg+fno]
+    clang-O0 
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [xmlParseAttValueComplex](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [xmlParseAttValueComplex](V)
+    clang-O1 
+        Regular    | DB 🚫 없음                 | GT 🔁 [xmlParseAttValueInternal](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [xmlParseAttValueComplex](V)
+    clang-O2 
+        Regular    | DB 🚫 없음                 | GT 🔁 [xmlParseAttValueInternal](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [xmlParseAttValueComplex](V)
+    clang-O3 
+        Regular    | DB 🚫 없음                 | GT 🔁 [xmlParseAttValueInternal](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [xmlParseAttValueComplex](V)
+    gcc-O0   
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [xmlParseAttValueComplex](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [xmlParseAttValueComplex](V)
+    gcc-O1   
+        Regular    | DB 🚫 없음                 | GT 🔁 [xmlParseAttValueInternal](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [xmlParseAttValueComplex](V)
+    gcc-O2   
+        Regular    | DB 🚫 없음                 | GT 🔁 [xmlParseAttValueInternal](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [xmlParseAttValueComplex](V)
+    gcc-O3   
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [xmlParseAttValueComplex](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [xmlParseAttValueComplex](V)
+
+#########################################################################################################
+# TARGET 바이너리: libxml2/xmllint-38
+# 포함된 CVE: 1개 — CVE-2016-1838
+#########################################################################################################
+
+▼▼▼ CVE-2016-1838 ▼▼▼
+
+── Vuln func: xmlParseEndTag2  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [xmlParseEndTag2](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [xmlParseEndTag2](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [xmlParseEndTag2](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [xmlParseEndTag2](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [xmlParseEndTag2](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [xmlParseEndTag2](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [xmlParseEndTag2](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [xmlParseEndTag2](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [xmlParseEndTag2](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [xmlParseEndTag2](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [xmlParseEndTag2](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [xmlParseEndTag2](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [xmlParseEndTag2](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [xmlParseEndTag2](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [xmlParseEndTag2](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [xmlParseEndTag2](V)
+
+#########################################################################################################
+# TARGET 바이너리: libxml2/xmllint-39
+# 포함된 CVE: 1개 — CVE-2016-1839
+#########################################################################################################
+
+▼▼▼ CVE-2016-1839 ▼▼▼
+
+── Vuln func: htmlParseName  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [htmlParseName](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [htmlParseName](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [htmlParseName](V-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [htmlParseName](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [htmlParseName](V-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [htmlParseName](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [htmlParseName](V-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [htmlParseName](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [htmlParseName](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [htmlParseName](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [htmlParseName](V-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [htmlParseName](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [htmlParseName](V-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [htmlParseName](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [htmlParseName](V-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [htmlParseName](V)
+
+── Vuln func: htmlParseNameComplex  [reg+fno]
+    clang-O0 
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [htmlParseNameComplex](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [htmlParseNameComplex](V)
+    clang-O1 
+        Regular    | DB 🚫 없음                 | GT 🔁 [htmlParseName](V-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [htmlParseNameComplex](V)
+    clang-O2 
+        Regular    | DB 🚫 없음                 | GT 🔁 [htmlParseName](V-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [htmlParseNameComplex](V)
+    clang-O3 
+        Regular    | DB 🚫 없음                 | GT 🔁 [htmlParseName](V-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [htmlParseNameComplex](V)
+    gcc-O0   
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [htmlParseNameComplex](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [htmlParseNameComplex](V)
+    gcc-O1   
+        Regular    | DB 🚫 없음                 | GT 🔁 [htmlParseName](V-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [htmlParseNameComplex](V)
+    gcc-O2   
+        Regular    | DB 🚫 없음                 | GT 🔁 [htmlParseName](V-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [htmlParseNameComplex](V)
+    gcc-O3   
+        Regular    | DB 🚫 없음                 | GT 🔁 [htmlParseName](V-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [htmlParseNameComplex](V)
+
+#########################################################################################################
+# TARGET 바이너리: libxml2/xmllint-69
+# 포함된 CVE: 1개 — CVE-2017-5969
+#########################################################################################################
+
+▼▼▼ CVE-2017-5969 ▼▼▼
+
+── Vuln func: xmlDumpElementContent  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [xmlDumpElementContent](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [xmlDumpElementContent](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [xmlDumpElementContent](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [xmlDumpElementContent](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [xmlDumpElementContent](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [xmlDumpElementContent](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [xmlDumpElementContent](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [xmlDumpElementContent](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [xmlDumpElementContent](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [xmlDumpElementContent](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [xmlDumpElementContent](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [xmlDumpElementContent](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [xmlDumpElementContent](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [xmlDumpElementContent](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [xmlDumpElementContent](V-NV)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [xmlDumpElementContent](V)
+
+#########################################################################################################
+# TARGET 바이너리: zziplib/unzzipcat-mem-74
+# 포함된 CVE: 3개 — CVE-2017-5974, CVE-2017-5975, CVE-2017-5976
+#########################################################################################################
+
+▼▼▼ CVE-2017-5974 ▼▼▼
+
+── Vuln func: zzip_mem_entry_extra_block  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_extra_block](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_extra_block](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_extra_block](V) + 🔁 [zzip_mem_disk_load](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_extra_block](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_extra_block](V) + 🔁 [zzip_mem_disk_load](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_extra_block](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_extra_block](V) + 🔁 [zzip_mem_disk_load](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_extra_block](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_extra_block](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_extra_block](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_extra_block](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_extra_block](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_extra_block](V) + 🔁 [zzip_mem_disk_load](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_extra_block](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_extra_block](V) + 🔁 [zzip_mem_disk_load](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_extra_block](V)
+
+── Vuln func: zzip_mem_entry_new  [reg+fno]
+    clang-O0 
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [zzip_mem_entry_new](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_new](V)
+    clang-O1 
+        Regular    | DB 🚫 없음                 | GT 🔁 [zzip_mem_disk_load](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_new](V)
+    clang-O2 
+        Regular    | DB 🚫 없음                 | GT 🔁 [zzip_mem_disk_load](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_new](V)
+    clang-O3 
+        Regular    | DB 🚫 없음                 | GT 🔁 [zzip_mem_disk_load](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_new](V)
+    gcc-O0   
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [zzip_mem_entry_new](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_new](V)
+    gcc-O1   
+        Regular    | DB 🚫 없음                 | GT 🔁 [zzip_mem_disk_load](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_new](V)
+    gcc-O2   
+        Regular    | DB 🚫 없음                 | GT 🔁 [zzip_mem_disk_load](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_new](V)
+    gcc-O3   
+        Regular    | DB 🚫 없음                 | GT 🔁 [zzip_mem_disk_load](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_new](V)
+
+▼▼▼ CVE-2017-5975 ▼▼▼
+
+── Vuln func: zzip_disk_entry_to_file_header  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [zzip_disk_entry_to_file_header](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [zzip_disk_entry_to_file_header](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [zzip_disk_entry_to_file_header](V) + 🔁 [zzip_disk_entry_to_data](NV-V) + 🔁 [zzip_disk_entry_strdup_name](NV-V) + 🔁 [zzip_disk_findfile](NV-V) + 🔁 [zzip_disk_findmatch](NV-V) + 🔁 [zzip_disk_entry_fopen](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [zzip_disk_entry_to_file_header](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [zzip_disk_entry_to_file_header](V) + 🔁 [zzip_disk_entry_to_data](NV-V) + 🔁 [zzip_disk_entry_strdup_name](NV-V) + 🔁 [zzip_disk_entry_fopen](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [zzip_disk_entry_to_file_header](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [zzip_disk_entry_to_file_header](V) + 🔁 [zzip_disk_entry_to_data](NV-V) + 🔁 [zzip_disk_entry_strdup_name](NV-V) + 🔁 [zzip_disk_entry_fopen](NV-V) + 🔁 [zzip_disk_fopen](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [zzip_disk_entry_to_file_header](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [zzip_disk_entry_to_file_header](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [zzip_disk_entry_to_file_header](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [zzip_disk_entry_to_file_header](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [zzip_disk_entry_to_file_header](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [zzip_disk_entry_to_file_header](V) + 🔁 [zzip_disk_entry_to_data](NV-V) + 🔁 [zzip_disk_entry_strdup_name](NV-V) + 🔁 [zzip_disk_entry_fopen](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [zzip_disk_entry_to_file_header](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [zzip_disk_entry_to_file_header](V) + 🔁 [zzip_disk_entry_to_data](NV-V) + 🔁 [zzip_disk_entry_strdup_name](NV-V) + 🔁 [zzip_disk_findfile](NV-V) + 🔁 [zzip_disk_findmatch](NV-V) + 🔁 [zzip_disk_entry_fopen](NV-V) + 🔁 [zzip_disk_fopen](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [zzip_disk_entry_to_file_header](V)
+
+── Vuln func: zzip_mem_entry_new  [reg+fno]
+    clang-O0 
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [zzip_mem_entry_new](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_new](V)
+    clang-O1 
+        Regular    | DB 🚫 없음                 | GT 🔁 [zzip_mem_disk_load](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_new](V)
+    clang-O2 
+        Regular    | DB 🚫 없음                 | GT 🔁 [zzip_mem_disk_load](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_new](V)
+    clang-O3 
+        Regular    | DB 🚫 없음                 | GT 🔁 [zzip_mem_disk_load](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_new](V)
+    gcc-O0   
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [zzip_mem_entry_new](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_new](V)
+    gcc-O1   
+        Regular    | DB 🚫 없음                 | GT 🔁 [zzip_mem_disk_load](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_new](V)
+    gcc-O2   
+        Regular    | DB 🚫 없음                 | GT 🔁 [zzip_mem_disk_load](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_new](V)
+    gcc-O3   
+        Regular    | DB 🚫 없음                 | GT 🔁 [zzip_mem_disk_load](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_new](V)
+
+▼▼▼ CVE-2017-5976 ▼▼▼
+
+── Vuln func: zzip_mem_entry_extra_block  [reg+fno]
+    clang-O0 
+        Regular    | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_extra_block](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_extra_block](V)
+    clang-O1 
+        Regular    | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_extra_block](V) + 🔁 [zzip_mem_disk_load](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_extra_block](V)
+    clang-O2 
+        Regular    | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_extra_block](V) + 🔁 [zzip_mem_disk_load](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_extra_block](V)
+    clang-O3 
+        Regular    | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_extra_block](V) + 🔁 [zzip_mem_disk_load](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_extra_block](V)
+    gcc-O0   
+        Regular    | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_extra_block](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_extra_block](V)
+    gcc-O1   
+        Regular    | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_extra_block](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_extra_block](V)
+    gcc-O2   
+        Regular    | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_extra_block](V) + 🔁 [zzip_mem_disk_load](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_extra_block](V)
+    gcc-O3   
+        Regular    | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_extra_block](V) + 🔁 [zzip_mem_disk_load](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_extra_block](V)
+
+── Vuln func: zzip_mem_entry_new  [reg+fno]
+    clang-O0 
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [zzip_mem_entry_new](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_new](V)
+    clang-O1 
+        Regular    | DB 🚫 없음                 | GT 🔁 [zzip_mem_disk_load](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_new](V)
+    clang-O2 
+        Regular    | DB 🚫 없음                 | GT 🔁 [zzip_mem_disk_load](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_new](V)
+    clang-O3 
+        Regular    | DB 🚫 없음                 | GT 🔁 [zzip_mem_disk_load](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_new](V)
+    gcc-O0   
+        Regular    | DB ⚠️  [vuln_inlined]          | GT ✅ [zzip_mem_entry_new](V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_new](V)
+    gcc-O1   
+        Regular    | DB 🚫 없음                 | GT 🔁 [zzip_mem_disk_load](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_new](V)
+    gcc-O2   
+        Regular    | DB 🚫 없음                 | GT 🔁 [zzip_mem_disk_load](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_new](V)
+    gcc-O3   
+        Regular    | DB 🚫 없음                 | GT 🔁 [zzip_mem_disk_load](NV-V)
+        fno_inline | DB ✅ [standalone]            | GT ✅ [zzip_mem_entry_new](V)

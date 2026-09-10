@@ -152,6 +152,8 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument('--paper-root', required=True)
+    ap.add_argument('--ground-truth',
+                    help='ground_truth_v3.txt; defaults to <paper-root>/ground_truth_v3.txt')
     ap.add_argument('--out', default=os.path.join(art, 'data'))
     ap.add_argument('--model-out', default=os.path.join(art, 'models'))
     args = ap.parse_args()

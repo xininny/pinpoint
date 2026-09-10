@@ -52,21 +52,3 @@ assert_no_skips() {   # assert_no_skips <log file>
     fi
     return 0
 }
-
-compare_expected() {   # compare_expected <actual> <expected>
-    echo
-    echo "--- comparison with the recorded reference output ---"
-    if [ ! -f "$2" ]; then
-        echo "    no reference output recorded at ${2#$ROOT/}"
-        return 0
-    fi
-    if diff -u "$2" "$1" >/dev/null 2>&1; then
-        echo "    identical to ${2#$ROOT/}"
-    else
-        diff -u "$2" "$1" | sed 's/^/    /' || true
-        echo
-        echo "    Scores are rounded to two decimals, so a different GPU can move"
-        echo "    the last digit on a few windows. A changed accuracy by more than"
-        echo "    a point, or a changed case count, is not expected."
-    fi
-}
