@@ -12,6 +12,7 @@ set -euo pipefail
 
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ART_ROOT="$(cd "$HERE/.." && pwd)"
+PY_BIN="${PYTHON:-${PINPOINT_PYTHON:-python3}}"
 
 # Zenodo record for this artifact. Replace with the minted DOI URL.
 DEFAULT_URL="https://zenodo.org/records/PLACEHOLDER/files/pinpoint-acsac26-data.tar.gz"
@@ -23,12 +24,27 @@ ARCHIVE="${TMPDIR:-/tmp}/pinpoint-acsac26-data.tar.gz"
 # here rather than showing up later as an unexplained number.
 EXPECTED_SHA256="f62131e4be6b5294375b8f85a5e62d4025ce576e3391e1f2f16ee5d663ad028a"
 
-if [ -f "$ART_ROOT/models/binshot_sim.model" ] && \
-   [ -d "$ART_ROOT/data/targets" ] && \
-   [ -n "$(ls -A "$ART_ROOT/data/targets" 2>/dev/null)" ]; then
-    echo "[=] data already present under $ART_ROOT -- nothing to do"
-    echo "    (delete artifact/data and artifact/models to force a re-download)"
+# "Already there" is not enough: a checkout whose subset has changed leaves a
+# stale data directory behind, and the run would then quietly evaluate the old
+# binaries. Compare what is on disk against the subset the checkout declares.
+want=$("$PY_BIN" -c "import json;print(len(json.load(open('$ART_ROOT/data/ground_truth/subset.json'))['binaries']))" 2>/dev/null || echo 0)
+have=$(ls -1 "$ART_ROOT/data/targets"/*.json 2>/dev/null | wc -l)
+
+if [ -f "$ART_ROOT/models/binshot_sim.model" ] && [ "$want" -gt 0 ] && [ "$have" -eq "$want" ]; then
+    echo "[=] data already present under $ART_ROOT ($have binaries) -- nothing to do"
     exit 0
+fi
+
+if [ "$have" -gt 0 ] && [ "$have" -ne "$want" ]; then
+    echo "[*] target directory holds $have binaries but this checkout expects $want"
+    echo "    replacing the stale data"
+    rm -rf "$ART_ROOT/data/targets" "$ART_ROOT/data/reference_db" \
+           "$ART_ROOT/data/reference_embeddings" "$ART_ROOT/models"
+    # results computed against the old subset are no longer meaningful
+    if [ -d "$ART_ROOT/results" ]; then
+        echo "    clearing results from the previous subset"
+        rm -rf "$ART_ROOT/results"
+    fi
 fi
 
 # The bundle ships inside the repository, so a clone is self-contained and no
