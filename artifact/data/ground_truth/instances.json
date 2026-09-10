@@ -1,23 +1,5 @@
 [
  {
-  "target": "binutils-readelf-65-clang-O1",
-  "func": "apply_relocations",
-  "type": "IV",
-  "label": "V-V"
- },
- {
-  "target": "binutils-readelf-65-gcc-O1",
-  "func": "apply_relocations",
-  "type": "IV",
-  "label": "V-V"
- },
- {
-  "target": "binutils-readelf-65-gcc-O2",
-  "func": "apply_relocations",
-  "type": "IV",
-  "label": "V-V"
- },
- {
   "target": "coreutils-pr-23-gcc-O3",
   "func": "init_parameters",
   "type": "I",

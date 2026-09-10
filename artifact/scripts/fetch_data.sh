@@ -22,7 +22,7 @@ ARCHIVE="${TMPDIR:-/tmp}/pinpoint-acsac26-data.tar.gz"
 # The bundle's contents are fixed, so its digest is too. Checked after every
 # download, whatever the URL, so a truncated transfer or a stale mirror fails
 # here rather than showing up later as an unexplained number.
-EXPECTED_SHA256="f62131e4be6b5294375b8f85a5e62d4025ce576e3391e1f2f16ee5d663ad028a"
+EXPECTED_SHA256="49659a6e62bed8092585e0fa1a5ca4e5c0d3e264de5ced29eab106c0a6ed0c73"
 
 # Is what is on disk the subset this checkout declares? "The directory exists"
 # is not enough: a checkout that pulled a different subset keeps the old

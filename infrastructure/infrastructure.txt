@@ -35,12 +35,12 @@ the clone at artifact/binshot/, which backbone.py puts on sys.path.
 
 Expected runtime
 ----------------
-    claim 1 (two configurations)     about 6 hours on a Colab T4
+    claim 1 (two configurations)     about 3.5 hours on a Colab T4
     claim 2 (reuses claim 1's run)   seconds
 
-Measured on a free Colab T4: the cascade over the 59 binaries and both
+Measured on a free Colab T4: the cascade over the 56 binaries and both
 reference databases runs at roughly 0.75 target-database pairs per minute,
-putting the cascade at about five and a half hours; the Stage-1 baseline that
+putting the cascade at about three hours; the Stage-1 baseline that
 claim 1 also needs is much cheaper, since Stage 1 embeds each candidate once
 instead of sliding a window over it.
 

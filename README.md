@@ -70,7 +70,7 @@ Expected outputs are provided in `claims/claim*/expected/result.txt` for compari
 
 Due to computational constraints for artifact evaluation:
 - The full corpus is 300 target binaries against a 577-entry reference database, and a complete
-  run takes about a week on a single GPU. The packaged subset is 59 binaries.
+  run takes about a week on a single GPU. The packaged subset is 56 binaries.
 - Two of the nine projects (jasper, libxml2) are excluded; their cheapest qualifying binaries
   cost more GPU time than the whole interactive budget.
 - Ghidra disassembly and DWARF ground-truth extraction are done offline and shipped as JSON, so
@@ -130,7 +130,7 @@ Every window scored in Stages 2 and 3 is dumped to `results/cascade/<db>/result_
 | | time |
 |---|---|
 | Smoke test | a few minutes |
-| Claim 1 (two configurations) | about 6 hours on a Colab T4 |
+| Claim 1 (two configurations) | about 3.5 hours on a Colab T4 |
 | Claim 2 (reuses claim 1's run) | seconds |
 
 Measured on a free Colab T4. The work is not GPU-bound, so a T4 is not much slower here than a datacentre GPU. Runs are resumable: a target whose report already exists is skipped, so re-running a claim after a dropped Colab session continues instead of starting over. Mounting Google Drive in the notebook keeps results across sessions.

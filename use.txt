@@ -43,6 +43,12 @@ What the subset does not support
   cheapest qualifying binaries cost more GPU time than the whole interactive
   budget.
 
+* Type IV is thin. It exists in only 19 binaries corpus-wide and all of them
+  are expensive; the readelf builds that carry most of it each cost more on a
+  T4 than the rest of the subset together. The subset keeps the one affordable
+  source, so the Type IV row is a demonstration that the pipeline handles the
+  type, not an estimate of its accuracy.
+
 * The efficiency results (pruning speedup, amortized latency) are not
   reproduced. They are a property of the full corpus run.
 

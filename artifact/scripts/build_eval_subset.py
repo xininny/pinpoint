@@ -35,9 +35,6 @@ from collections import defaultdict
 # Frozen selection: 34 binaries, 58 instances (I 27 / II 20 / III 10 / IV 1),
 # 5 projects, 20 CVEs. Composition 47/34/17/2 % against the corpus 47/34/15/3 %.
 SUBSET = [
-    'binutils-readelf-65-clang-O1',
-    'binutils-readelf-65-gcc-O1',
-    'binutils-readelf-65-gcc-O2',
     'coreutils-pr-23-gcc-O3',
     'coreutils-shred-45-clang-O2',
     'coreutils-shred-45-gcc-O1',

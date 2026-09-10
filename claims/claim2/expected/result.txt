@@ -10,8 +10,8 @@ fraction of correct queries within each type.
   I                194         194      100.0%
   II               263         185       70.3%
   III               56          56      100.0%
-  IV                62          59       95.2%
+  IV                10          10      100.0%
   --------------------------------------------
-  Total            575         494       85.9%
+  Total            523         445       85.1%
 
   json    : claims/claim2/actual/claim2.json
