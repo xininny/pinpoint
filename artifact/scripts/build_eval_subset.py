@@ -35,6 +35,10 @@ from collections import defaultdict
 # Frozen selection: 34 binaries, 58 instances (I 27 / II 20 / III 10 / IV 1),
 # 5 projects, 20 CVEs. Composition 47/34/17/2 % against the corpus 47/34/15/3 %.
 SUBSET = [
+    'binutils-readelf-65-clang-O1',
+    'binutils-readelf-65-gcc-O1',
+    'binutils-readelf-65-gcc-O2',
+    'coreutils-pr-23-gcc-O3',
     'coreutils-shred-45-clang-O2',
     'coreutils-shred-45-gcc-O1',
     'coreutils-split-03-clang-O1',
@@ -45,9 +49,34 @@ SUBSET = [
     'libarchive-bsdtar-49-clang-O2',
     'libarchive-bsdtar-49-gcc-O1',
     'libarchive-bsdtar-49-gcc-O2',
+    'libjpeg-cjpeg-98-clang-O1',
+    'libjpeg-cjpeg-98-clang-O2',
+    'libjpeg-cjpeg-98-clang-O3',
+    'libjpeg-cjpeg-98-gcc-O1',
+    'libjpeg-cjpeg-98-gcc-O2',
+    'libjpeg-cjpeg-98-gcc-O3',
     'libjpeg-djpeg-06-gcc-O1',
     'libjpeg-djpeg-06-gcc-O2',
+    'libjpeg-djpeg-64-clang-O1',
+    'libjpeg-djpeg-64-clang-O2',
+    'libjpeg-djpeg-64-clang-O3',
+    'libjpeg-djpeg-64-gcc-O1',
+    'libjpeg-djpeg-64-gcc-O2',
+    'libjpeg-djpeg-64-gcc-O3',
+    'libming-listmp3-64-clang-O1',
+    'libming-listmp3-64-clang-O2',
+    'libming-listmp3-64-clang-O3',
+    'libming-listmp3-64-gcc-O1',
+    'libming-listmp3-64-gcc-O2',
+    'libming-listmp3-64-gcc-O3',
+    'libming-listmp3-65-clang-O1',
+    'libming-listmp3-65-clang-O2',
+    'libming-listmp3-65-clang-O3',
+    'libming-listmp3-65-gcc-O1',
+    'libming-listmp3-65-gcc-O2',
+    'libming-listmp3-65-gcc-O3',
     'libming-listswf-27-clang-O2',
+    'libming-listswf-27-gcc-O3',
     'libtiff-tiffcrop-21-clang-O1',
     'libtiff-tiffcrop-21-clang-O2',
     'libtiff-tiffcrop-21-clang-O3',
@@ -56,7 +85,12 @@ SUBSET = [
     'libtiff-tiffcrop-92-clang-O2',
     'libtiff-tiffcrop-92-gcc-O1',
     'libtiff-tiffcrop-92-gcc-O2',
+    'libtiff-tiffinfo-25-clang-O1',
+    'libtiff-tiffinfo-25-gcc-O1',
     'libtiff-tiffinfo-25-gcc-O3',
+    'libtiff-tiffmedian-11-clang-O1',
+    'libtiff-tiffmedian-11-gcc-O1',
+    'libtiff-tiffsplit-95-gcc-O2',
     'zziplib-unzzipcatmem-74-clang-O2',
     'zziplib-unzzipcatmem-74-gcc-O1',
     'zziplib-unzzipcatmem-74-gcc-O2',
@@ -65,11 +99,12 @@ SUBSET = [
 # A handful of the cheapest binaries, for the minutes-long smoke run.
 # The cheapest binaries carrying Type II cases: a few minutes end to end,
 # enough to confirm the pipeline works before committing to the full subset.
+# The cheapest binaries, for a quick end-to-end check.
 SMOKE = [
     'zziplib-unzzipcatmem-74-gcc-O2',
     'coreutils-split-03-gcc-O2',
     'libjpeg-djpeg-06-gcc-O2',
-    'libtiff-tiffinfo-25-gcc-O3',
+    'libming-listmp3-64-clang-O2',
 ]
 
 TYPE = {'V': 'I', 'NV-V': 'II', 'V-NV': 'III', 'V-V': 'IV'}
@@ -178,6 +213,17 @@ def main():
     print(f'    {n} instances ' + ' '.join(f'{k}={counts[k]}' for k in ('I', 'II', 'III', 'IV')))
     print('    mix ' + ' '.join(f'{k}={counts[k]/n*100:.0f}%' for k in ('I', 'II', 'III', 'IV'))
           + '   (full corpus 47/34/15/3)')
+
+    # The analysis code resolves ground truth through this file, so it travels
+    # with the subset rather than being staged by hand.
+    gt_v3 = os.path.join(root, 'ground_truth_v3.txt')
+    if not os.path.exists(gt_v3):
+        gt_v3 = '/home/mijin/archive/misc/ground_truth_v3 copy.txt'
+    if os.path.exists(gt_v3):
+        shutil.copyfile(gt_v3, os.path.join(args.out, 'ground_truth', 'ground_truth_v3.txt'))
+        print('    ground_truth_v3.txt copied')
+    else:
+        sys.exit('[!] ground_truth_v3.txt not found; pass --paper-root containing it')
 
     with open(os.path.join(args.out, 'ground_truth', 'subset.json'), 'w') as f:
         json.dump({'binaries': SUBSET, 'smoke': SMOKE,

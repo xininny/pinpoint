@@ -60,23 +60,41 @@ Run claim 1 first. Claim 2 reuses its cascade results and then finishes in secon
 
 Each claim prints a table and compares itself against `claims/claim*/expected/result.txt`.
 
-Claim 1 reports type-wise Top-K retrieval for two configurations of the same subset, whole-function matching alone (the BCSD backbone by itself) and PinPoint's full cascade. Claim 2 reports, per inlining type, the fraction of Top-1 queries whose reported range overlaps the DWARF-derived vulnerable bytes.
+Claim 1 reproduces Table III, the type-wise Top-K retrieval accuracy and MRR, for two
+configurations of the same subset: whole-function matching alone (the backbone standalone) and
+PinPoint's full cascade. Claim 2 reproduces Table IV, the fraction of Top-1 queries whose
+reported range overlaps the DWARF-derived vulnerable bytes.
 
-| | this subset | paper (full corpus) |
-|---|---|---|
-| Type II Top-1 | 63.8% | 65.5% |
-| Type II Top-5 | 74.6% | 74.2% |
-| Type II MRR | 0.690 | 0.698 |
-| Type II localization | 70.3% | 77.3% |
+Top-1 accuracy on this subset, against the paper's full-corpus figures:
+
+| | Type I | Type II | Type III | Type IV | Overall |
+|---|---|---|---|---|---|
+| BinShot, this subset | 79.4% | 39.4% | 99.1% | 46.4% | 63.9% |
+| PinPoint, this subset | 77.5% | 63.8% | 99.6% | 78.6% | **72.8%** |
+| PinPoint, paper | 76.1% | 65.5% | 88.3% | 69.6% | **72.9%** |
+
+Range localization on this subset, against the paper:
+
+| | Type I | Type II | Type III | Type IV | Total |
+|---|---|---|---|---|---|
+| this subset | 100.0% | 70.3% | 100.0% | 95.2% | 85.9% |
+| paper | 100.0% | 77.3% | 100.0% | 94.9% | 94.0% |
 
 ## Technical Notes
 
 Due to computational constraints for artifact evaluation:
 
-- The full corpus is 300 target binaries against a 577-entry reference database, and a complete run takes about a week on a single GPU. The packaged subset is 25 binaries.
-- The subset concentrates on Type II, which is where the paper's contribution is measured. Types I and III localize by construction, since their ground-truth range spans the whole target function, and Type IV has only 19 instances in the entire corpus.
-- Binaries were chosen to reproduce the corpus's project mix for Type II, because Type II accuracy varies widely by project. Three projects (binutils, jasper, libxml2) are excluded on cost and hold 33% of the corpus's Type II cases.
-- Results show slight numerical differences from the paper but demonstrate the same trends. See `use.txt` for the full statement of what the subset does and does not support.
+- The full corpus is 300 target binaries against a 577-entry reference database, and a complete
+  run takes about a week on a single GPU. The packaged subset is 59 binaries, chosen so that all
+  four inlining types appear in usable numbers.
+- Binaries were selected on inlining type, project and measured runtime only, never on whether
+  PinPoint got a case right. Type II accuracy varies widely by project, so its project mix is
+  matched to the corpus; Type IV exists in only 19 binaries corpus-wide and the four cheapest
+  are included. `artifact/scripts/build_eval_subset.py` carries the rule.
+- Results show numerical differences from the paper but demonstrate the same trends. Overall
+  Top-1 lands within 0.1 points and Type IV localization within 0.3; Type III retrieval and
+  Type II localization drift the most, since 59 binaries do not average out the variation
+  within a project.
 
 ## Directory Structure
 
@@ -129,7 +147,7 @@ Every window scored in Stages 2 and 3 is dumped to `results/cascade/<db>/result_
 | | time |
 |---|---|
 | Smoke test | a few minutes |
-| Claim 1 (two configurations) | about 3 hours on a Colab T4 |
+| Claim 1 (two configurations) | about 6 hours on a Colab T4 |
 | Claim 2 (reuses claim 1's run) | seconds |
 
 Measured on a free Colab T4. The work is not GPU-bound, so a T4 is not much slower here than a datacentre GPU. Runs are resumable: a target whose report already exists is skipped, so re-running a claim after a dropped Colab session continues instead of starting over. Mounting Google Drive in the notebook keeps results across sessions.

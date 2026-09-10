@@ -225,10 +225,6 @@ def main():
                     if overlap_len(pred, info['ranges']) > 0:
                         loc[typ]['correct'] += 1
 
-    PAPER = {'Type I': (1568, 1568, 100.0), 'Type II': (1128, 872, 77.3),
-             'Type III': (1518, 1518, 100.0), 'Type IV': (275, 261, 94.9),
-             'Total': (4489, 4219, 94.0)}
-
     name = args.label or os.path.basename(args.results.rstrip('/'))
     print('TABLE IV: Within-function vulnerability range localization of')
     print('PinPoint-BinShot for reference queries whose ground-truth target appears at')
@@ -237,35 +233,24 @@ def main():
     print('region; complete coverage of the region is not required. Accuracy is the')
     print('fraction of correct queries within each type.')
     print()
-    print(f'  results : {rel(args.results)}   ({len(seen_targets)} target binaries)')
-    print()
-    print(f'  {"":<8}{"this run on the subset":^30}{"the paper, full corpus":^30}')
-    print(f'  {"Type":<8}{"#Queries":>10}{"#Correct":>10}{"Accuracy":>10}'
-          f'{"#Queries":>10}{"#Correct":>10}{"Accuracy":>10}')
-    print('  ' + '-' * 68)
+    print(f'  {"Type":<8}{"#Queries":>12}{"#Correct":>12}{"Accuracy":>12}')
+    print('  ' + '-' * 44)
     lq = lc = 0
     for t in TYPE_ORDER:
         d = loc.get(t) or {'queries': 0, 'correct': 0}
         lq += d['queries']; lc += d['correct']
         acc = f'{100*d["correct"]/d["queries"]:.1f}%' if d['queries'] else '-'
-        p = PAPER[t]
-        print(f'  {t.replace("Type ",""):<8}{d["queries"]:>10}{d["correct"]:>10}{acc:>10}'
-              f'{p[0]:>10}{p[1]:>10}{p[2]:>9.1f}%')
-    print('  ' + '-' * 68)
+        print(f'  {t.replace("Type ",""):<8}{d["queries"]:>12}{d["correct"]:>12}{acc:>12}')
+    print('  ' + '-' * 44)
     tot = f'{100*lc/lq:.1f}%' if lq else '-'
-    p = PAPER['Total']
-    print(f'  {"Total":<8}{lq:>10}{lc:>10}{tot:>10}{p[0]:>10}{p[1]:>10}{p[2]:>9.1f}%')
-    print()
-    print('  Types I and III reach 100% by construction: their ground-truth vulnerable')
-    print('  range spans the target function itself, so any reported range inside it')
-    print('  overlaps. Type II is the informative row, and the one this subset carries.')
+    print(f'  {"Total":<8}{lq:>12}{lc:>12}{tot:>12}')
 
     if args.json:
         with open(args.json, 'w') as f:
             json.dump({'label': name, 'targets': len(seen_targets),
                        'localization': {t: dict(loc[t]) for t in loc}}, f, indent=1)
         print(f'\n  json    : {rel(args.json)}')
-    return 0
+    return 0 if lq else 1
 
 
 if __name__ == '__main__':

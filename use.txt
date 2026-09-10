@@ -20,44 +20,33 @@ Why a subset, and how it was chosen
 -----------------------------------
 The full corpus is 300 target binaries against a 577-entry reference database
 (plus 409 -fno-inline references), and a full pass takes about a week on one
-GPU. The packaged subset is 25 binaries carrying roughly 400 Type II evaluation
-cases.
+GPU. The packaged subset is 59 binaries carrying 1,256 evaluated cases across
+all four inlining types.
 
-The subset deliberately concentrates on Type II. Types I and III localize by
-construction -- their ground-truth vulnerable range spans the whole target
-function, so any reported range inside it overlaps, and both sit at 100% in the
-paper. Type IV has only 19 instances in the entire corpus, and the binaries
-carrying them are among the most expensive to run. Type II is where the paper's
-contribution is measured, and it is what the subset is sized to measure.
-
-Type II accuracy varies widely by project, so the binaries were chosen to
-reproduce the corpus's *project* mix for Type II rather than to be cheap. Within
-each project they are drawn at random from those at or below the project's
-median runtime. The rule uses only the inlining type, the project, and measured
-runtime -- never whether PinPoint got a case right.
-artifact/scripts/build_eval_subset.py carries the rule and the seed.
+Selection proceeded in three steps, none of which looks at whether PinPoint got
+a case right. Type II accuracy varies widely by project, so its binaries were
+drawn to reproduce the corpus's project mix for Type II, and within a project at
+random from those at or below the project's median runtime. Type IV exists in
+only 19 binaries corpus-wide, all of them costly, so the four cheapest were
+added. Types I and III then filled the remaining budget, matched to their own
+project mixes. artifact/scripts/build_eval_subset.py carries the rule and the
+frozen result.
 
 What the subset does not support
 --------------------------------
-* Exact reproduction of the paper's numbers. The subset is around 5% of the
-  corpus, so its accuracies approximate the paper's rather than matching them.
-  Measured against the archived full run, Type II Top-1 comes out at 63.8%
-  against the paper's 65.5%, and Type II localization at 70.3% against 77.3%.
+* Exact reproduction. The subset is roughly 5% of the corpus, so its numbers
+  approximate the paper's. Overall Top-1 lands within 0.1 points (72.8% against
+  72.9%) and Type IV localization within 0.3 (95.2% against 94.9%). Type III
+  retrieval (99.6% against 88.3%) and Type II localization (70.3% against
+  77.3%) drift the most: 59 binaries do not average out the variation inside a
+  project, only between projects.
 
-* Three projects are missing. binutils, jasper and libxml2 are excluded because
-  the cheapest qualifying binary in each costs more than the whole interactive
-  budget (1,280 s, 2,140 s and 2,705 s of GPU time respectively, against a
-  target of a few hours for everything). Together they hold 33% of the corpus's
-  Type II cases. A reviewer who wants them can add those binaries from the
-  archived corpus; the subset script takes an explicit binary list.
-
-* Type IV is absent and Type I and Type III are present only incidentally, in
-  numbers too small to compare against the paper. The subset is not a scaled
-  model of the whole evaluation, only of its Type II part.
+* Two projects are missing. jasper and libxml2 are excluded because their
+  cheapest qualifying binaries cost more GPU time than the whole interactive
+  budget.
 
 * The efficiency results (pruning speedup, amortized latency) are not
-  reproduced. They are a property of the full corpus run and say nothing that a
-  subset can show.
+  reproduced. They are a property of the full corpus run.
 
 What it is not
 --------------
