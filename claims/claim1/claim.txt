@@ -7,14 +7,22 @@ host, so that it no longer survives as a routine with a boundary a binary code
 similarity model can match against.
 
 The evaluation runs the packaged subset twice: once restricted to Stage 1, which
-is plain whole-function comparison and therefore the BCSD backbone on its own,
-and once with PinPoint's full three-stage cascade. Both are scored with
+is plain whole-function comparison and therefore what the BCSD backbone does by
+itself, and once with PinPoint's full three-stage cascade. Both are scored with
 topk_table.py, the same analysis code that produced the paper's table, so the
 two configurations are measured on identical binaries and the gap between them
 is attributable to PinPoint's sub-function search rather than to the sample.
 
 In the paper's Table III, Type II Top-1 accuracy rises from 26.9% with BinShot
 alone to 65.5% with PinPoint-BinShot. On this subset the cascade reaches 63.8%.
+
+Two things to keep in mind when reading the subset's numbers against the
+paper's. The subset is around 5% of the corpus, so no row matches exactly. And
+the paper's BinShot row is BinShot evaluated standalone through its own
+pipeline, which is close to but not the same as restricting PinPoint to Stage 1:
+over the full corpus those two differ by a few points on Type II. The row this
+claim rests on is the cascade, and the comparison that is exact is the one
+between the two configurations run here.
 
 The BCSD backbone is BinShot, from: S. Ahn, S. Ahn, H. Koo, and Y. Paek,
 "Practical binary code similarity detection with BERT-based transferable

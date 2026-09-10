@@ -6,13 +6,17 @@ Reads the type-wise tables that topk_table.py writes for two configurations of
 the same subset and lays them out in the paper's Table III format: one row per
 model, columns grouped by inlining type, then overall.
 
-  BinShot           Stage 1 only, i.e. whole-function comparison, which is the
-                    BCSD backbone on its own.
+  Stage 1 only      PinPoint restricted to whole-function comparison, which is
+                    what the BCSD backbone does by itself.
   PinPoint-BinShot  the full three-stage cascade.
 
-The paper's full-corpus numbers are printed underneath for comparison. The
-subset is far smaller, so the rows will not match exactly; the claim is the
-gap between the two models on Type II.
+The paper's full-corpus numbers are printed underneath for reference. Two
+caveats on reading them side by side. The subset is far smaller, so no row
+matches exactly. And the paper's BinShot row is BinShot evaluated standalone
+through its own pipeline, which is close to but not the same as restricting
+PinPoint to Stage 1: over the full corpus the two differ by a few points on
+Type II. The claim is the gap between the two rows measured here, on identical
+binaries, not the distance to the published baseline.
 """
 import argparse
 import re
@@ -96,16 +100,16 @@ def main():
     top, sub = header()
 
     print('TABLE III: Type-wise and overall Top-K function-retrieval accuracy and MRR.')
-    print('T1, T5 and T10 denote Top-1, Top-5 and Top-10 accuracy. BinShot is the backbone')
-    print('evaluated standalone (whole-function matching); PinPoint-BinShot adds the')
-    print('sliding-window stages on top of it.')
+    print('T1, T5 and T10 denote Top-1, Top-5 and Top-10 accuracy. "Stage 1 only" is')
+    print('PinPoint restricted to whole-function comparison, which is what the backbone')
+    print('does by itself; PinPoint-BinShot adds the sliding-window stages on top.')
     print()
     print('This run, on the packaged subset:')
     print()
     print(top)
     print(sub)
     print('-' * len(sub))
-    print(row('BinShot', base))
+    print(row('Stage 1 only', base))
     print(row('PinPoint-BinShot', casc))
     print('-' * len(sub))
     ns = f'{"#cases":<18}'
@@ -114,7 +118,9 @@ def main():
         ns += f'{n:>25}'
     print(ns)
     print()
-    print('The paper, on the full corpus:')
+    print('The paper, on the full corpus. Its BinShot row is BinShot evaluated standalone')
+    print('through its own pipeline, which is close to but not identical to the Stage 1')
+    print('row above; the two differ by a few points on Type II over the full corpus.')
     print()
     print(top)
     print(sub)
@@ -135,9 +141,12 @@ def main():
         return 1
     gain = c[1] - b[1]
     paper_gain = PAPER['PinPoint-BinShot'][t][0] - PAPER['BinShot'][t][0]
-    print(f'  Type II Top-1, this run : {b[1]:.1f}% -> {c[1]:.1f}%  ({gain:+.1f} points, n={c[0]})')
-    print(f'  Type II Top-1, paper    : {PAPER["BinShot"][t][0]:.1f}% -> '
+    print(f'  Type II Top-1, this run       : {b[1]:.1f}% -> {c[1]:.1f}%  '
+          f'({gain:+.1f} points, n={c[0]})')
+    print(f'  Type II Top-1, paper          : {PAPER["BinShot"][t][0]:.1f}% -> '
           f'{PAPER["PinPoint-BinShot"][t][0]:.1f}%  ({paper_gain:+.1f} points, n={PAPER_N[t]})')
+    print(f'  the cascade figure to compare : {c[1]:.1f}% here against '
+          f'{PAPER["PinPoint-BinShot"][t][0]:.1f}% in the paper')
     print()
     ok = gain > 0
     print(f'  -> {"PASS" if ok else "FAIL"}  the sliding-window stages retrieve Type II targets '
