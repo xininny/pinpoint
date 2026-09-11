@@ -8,6 +8,8 @@ CUDA="${CUDA:-0}"
 # claims in either order costs one pass over the subset, not two.
 CASCADE="$ART/results/cascade"
 BASELINE="$ART/results/stage1"
+SAFE_CASCADE="$ART/results/safe/cascade"
+SAFE_BASELINE="$ART/results/safe/stage1"
 
 run_pinpoint() {   # run_pinpoint <output_dir> [extra args...]
     local out="$1"; shift
@@ -51,4 +53,14 @@ assert_no_skips() {   # assert_no_skips <log file>
         return 1
     fi
     return 0
+}
+
+
+run_safe() {   # run_safe <output_dir> [extra args...]
+    local out="$1"; shift
+    # SAFE is a frozen TensorFlow graph. TensorFlow prints a page of
+    # deprecation notices on every tf.compat.v1 call path, which buries the
+    # progress lines; quieten it without hiding real errors.
+    PYTHONUNBUFFERED=1 TF_CPP_MIN_LOG_LEVEL=2 "$PY" "$ART/safe/run_safe.py" \
+        --vuln_db regular fno_inline --output_dir "$out" "$@"
 }

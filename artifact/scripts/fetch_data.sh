@@ -22,7 +22,7 @@ ARCHIVE="${TMPDIR:-/tmp}/pinpoint-acsac26-data.tar.gz"
 # The bundle's contents are fixed, so its digest is too. Checked after every
 # download, whatever the URL, so a truncated transfer or a stale mirror fails
 # here rather than showing up later as an unexplained number.
-EXPECTED_SHA256="49659a6e62bed8092585e0fa1a5ca4e5c0d3e264de5ced29eab106c0a6ed0c73"
+EXPECTED_SHA256="1f85cf4c43d65521f2994066ef4e5e2e0d9e8cd6c89f51562e173971cffeca92"
 
 # Is what is on disk the subset this checkout declares? "The directory exists"
 # is not enough: a checkout that pulled a different subset keeps the old
@@ -86,7 +86,7 @@ fi
 if [ "$have" -gt 0 ] && [ "$have" -ne "$want" ]; then
     echo "[*] on disk: $have binaries; this checkout expects $want -- replacing"
     rm -rf "$ART_ROOT/data/targets" "$ART_ROOT/data/reference_db" \
-           "$ART_ROOT/data/reference_embeddings"
+           "$ART_ROOT/data/safe" "$ART_ROOT/data/reference_embeddings"
     # results computed against the previous subset are no longer meaningful
     if [ -d "$ART_ROOT/results" ]; then
         echo "    clearing results from the previous subset"

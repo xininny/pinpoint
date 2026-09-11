@@ -6,12 +6,6 @@
   "label": "V"
  },
  {
-  "target": "coreutils-shred-45-clang-O2",
-  "func": "do_wipefd",
-  "type": "II",
-  "label": "NV-V"
- },
- {
   "target": "coreutils-shred-45-gcc-O1",
   "func": "dopass",
   "type": "II",
@@ -30,38 +24,8 @@
   "label": "NV-V"
  },
  {
-  "target": "coreutils-split-03-gcc-O2",
-  "func": "main",
-  "type": "II",
-  "label": "NV-V"
- },
- {
   "target": "coreutils-split-03-gcc-O3",
   "func": "main",
-  "type": "II",
-  "label": "NV-V"
- },
- {
-  "target": "libarchive-bsdtar-44-gcc-O2",
-  "func": "archive_read_format_iso9660_read_header",
-  "type": "II",
-  "label": "NV-V"
- },
- {
-  "target": "libarchive-bsdtar-49-clang-O2",
-  "func": "archive_read_format_cab_read_header",
-  "type": "II",
-  "label": "NV-V"
- },
- {
-  "target": "libarchive-bsdtar-49-gcc-O1",
-  "func": "archive_read_format_cab_read_header",
-  "type": "II",
-  "label": "NV-V"
- },
- {
-  "target": "libarchive-bsdtar-49-gcc-O2",
-  "func": "archive_read_format_cab_read_header",
   "type": "II",
   "label": "NV-V"
  },
@@ -72,43 +36,7 @@
   "label": "V"
  },
  {
-  "target": "libjpeg-cjpeg-98-clang-O2",
-  "func": "start_input_bmp",
-  "type": "I",
-  "label": "V"
- },
- {
-  "target": "libjpeg-cjpeg-98-clang-O3",
-  "func": "start_input_bmp",
-  "type": "I",
-  "label": "V"
- },
- {
-  "target": "libjpeg-cjpeg-98-gcc-O1",
-  "func": "start_input_bmp",
-  "type": "I",
-  "label": "V"
- },
- {
-  "target": "libjpeg-cjpeg-98-gcc-O2",
-  "func": "start_input_bmp",
-  "type": "I",
-  "label": "V"
- },
- {
-  "target": "libjpeg-cjpeg-98-gcc-O3",
-  "func": "start_input_bmp",
-  "type": "I",
-  "label": "V"
- },
- {
   "target": "libjpeg-djpeg-06-gcc-O1",
-  "func": "read_markers",
-  "type": "II",
-  "label": "NV-V"
- },
- {
-  "target": "libjpeg-djpeg-06-gcc-O2",
   "func": "read_markers",
   "type": "II",
   "label": "NV-V"
@@ -150,12 +78,6 @@
   "label": "V"
  },
  {
-  "target": "libming-listmp3-64-clang-O1",
-  "func": "printMP3Headers",
-  "type": "III",
-  "label": "V-NV"
- },
- {
   "target": "libming-listmp3-64-clang-O2",
   "func": "printMP3Headers",
   "type": "III",
@@ -174,19 +96,7 @@
   "label": "V"
  },
  {
-  "target": "libming-listmp3-64-gcc-O2",
-  "func": "printMP3Headers",
-  "type": "III",
-  "label": "V-NV"
- },
- {
   "target": "libming-listmp3-64-gcc-O3",
-  "func": "printMP3Headers",
-  "type": "III",
-  "label": "V-NV"
- },
- {
-  "target": "libming-listmp3-65-clang-O1",
   "func": "printMP3Headers",
   "type": "III",
   "label": "V-NV"
@@ -360,43 +270,7 @@
   "label": "V"
  },
  {
-  "target": "libtiff-tiffcrop-21-clang-O1",
-  "func": "main",
-  "type": "II",
-  "label": "NV-V"
- },
- {
-  "target": "libtiff-tiffcrop-21-clang-O2",
-  "func": "main",
-  "type": "II",
-  "label": "NV-V"
- },
- {
-  "target": "libtiff-tiffcrop-21-clang-O3",
-  "func": "loadImage",
-  "type": "II",
-  "label": "NV-V"
- },
- {
   "target": "libtiff-tiffcrop-71-gcc-O1",
-  "func": "loadImage",
-  "type": "II",
-  "label": "NV-V"
- },
- {
-  "target": "libtiff-tiffcrop-92-clang-O1",
-  "func": "loadImage",
-  "type": "II",
-  "label": "NV-V"
- },
- {
-  "target": "libtiff-tiffcrop-92-clang-O2",
-  "func": "loadImage",
-  "type": "II",
-  "label": "NV-V"
- },
- {
-  "target": "libtiff-tiffcrop-92-gcc-O1",
   "func": "loadImage",
   "type": "II",
   "label": "NV-V"
@@ -436,30 +310,6 @@
   "func": "TIFFReadDirectory",
   "type": "II",
   "label": "NV-V"
- },
- {
-  "target": "libtiff-tiffmedian-11-clang-O1",
-  "func": "OJPEGDecode",
-  "type": "I",
-  "label": "V"
- },
- {
-  "target": "libtiff-tiffmedian-11-clang-O1",
-  "func": "OJPEGPreDecode",
-  "type": "III",
-  "label": "V-NV"
- },
- {
-  "target": "libtiff-tiffmedian-11-gcc-O1",
-  "func": "OJPEGDecode",
-  "type": "I",
-  "label": "V"
- },
- {
-  "target": "libtiff-tiffmedian-11-gcc-O1",
-  "func": "OJPEGPreDecode",
-  "type": "I",
-  "label": "V"
  },
  {
   "target": "libtiff-tiffsplit-95-gcc-O2",
@@ -502,24 +352,6 @@
   "func": "zzip_disk_entry_fopen",
   "type": "II",
   "label": "NV-V"
- },
- {
-  "target": "zziplib-unzzipcatmem-74-gcc-O1",
-  "func": "zzip_mem_entry_extra_block",
-  "type": "I",
-  "label": "V"
- },
- {
-  "target": "zziplib-unzzipcatmem-74-gcc-O1",
-  "func": "zzip_mem_disk_load",
-  "type": "II",
-  "label": "NV-V"
- },
- {
-  "target": "zziplib-unzzipcatmem-74-gcc-O1",
-  "func": "zzip_disk_entry_to_file_header",
-  "type": "I",
-  "label": "V"
  },
  {
   "target": "zziplib-unzzipcatmem-74-gcc-O2",

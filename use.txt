@@ -6,9 +6,11 @@ What this artifact is for
 Reproducing the paper's two effectiveness results on a packaged subset of the
 evaluation corpus, on hardware a reviewer already has:
 
-  Claim 1  PinPoint improves function retrieval, above all for Type II, where
-           the compiler inlined the vulnerable function into a non-vulnerable
-           host and it no longer exists as a routine to match against.
+  Claim 1  PinPoint improves function retrieval over the BCSD backbone it is
+           built on, for both of the packaged backbones, above all for Type II,
+           where the compiler inlined the vulnerable function into a
+           non-vulnerable host and it no longer exists as a routine to match
+           against.
   Claim 2  Once the right function is retrieved, PinPoint localizes the
            vulnerable code's address range inside it.
 
@@ -20,27 +22,45 @@ Why a subset, and how it was chosen
 -----------------------------------
 The full corpus is 300 target binaries against a 577-entry reference database
 (plus 409 -fno-inline references). The paper's full pass took about a week on
-an H200; on a T4 it would be closer to two weeks. The packaged subset is 56
-binaries carrying 1,208 evaluated cases across all four inlining types.
+an H200 with BinShot and about twice that with SAFE. The packaged subset is 32
+binaries carrying 724 evaluated cases across all four inlining types.
 
 Selection proceeded in three steps, none of which looks at whether PinPoint got
-a case right. Type II accuracy varies widely by project, so its binaries were
-drawn to reproduce the corpus's project mix for Type II, and within a project at
-random from those at or below the project's median runtime. Type IV exists in
-only 19 binaries corpus-wide, all of them costly, so the cheapest was added. Types I and III then filled the remaining budget, matched to their own
+a case right. Cost is the sum over both backbones, since Table III reports them
+on the same binaries. Type II accuracy varies widely by project, so its binaries
+were drawn to reproduce the corpus's project mix for Type II, and within a
+project at random from those at or below the project's median cost. Type IV
+exists in only 19 binaries corpus-wide, all of them costly, so the cheapest was
+added. Types I and III then filled the remaining budget, matched to their own
 project mixes. artifact/scripts/build_eval_subset.py carries the rule and the
 frozen result.
 
+The budget itself was fixed by one criterion: the largest subset whose combined
+BinShot and SAFE runtime stays under four hours on a Colab T4. That is these 32
+binaries; the next size up is 33, at 4.9 hours.
+
+Do not cut the list down further. Below 32 binaries the Top-5 ordering of the
+two BinShot rows becomes unstable. Small binaries expose few candidate
+functions, so whole-function matching alone lands the ground truth inside the
+top five far more often than it does on the corpus; at 28 and at 31 binaries the
+baseline overtakes PinPoint at Top-5, which the full corpus never does.
+
 What the subset does not support
 --------------------------------
-* Exact reproduction. The subset is roughly 5% of the corpus, so its numbers
-  approximate the paper's rather than matching them. Overall retrieval accuracy
-  comes out closest; the per-type rows drift more, because 56 binaries average
-  out the variation between projects but not the variation inside one.
+* Exact reproduction. The subset is roughly a tenth of the corpus, so its
+  numbers approximate the paper's rather than matching them. The direction of
+  every comparison holds, but the margins are narrower: a smaller corpus exposes
+  fewer candidate functions per binary, which flatters whole-function matching
+  and so shrinks the gap PinPoint opens over it.
 
-* Three projects are missing. binutils, jasper and libxml2 are excluded
-  because their cheapest qualifying binaries each cost more GPU time than the
-  rest of the subset put together.
+* Four projects are missing. binutils, jasper, libarchive and libxml2 are
+  excluded because their cheapest qualifying binaries each cost more GPU time
+  than the rest of the subset put together.
+
+* Two of the paper's five model configurations. Table III also reports Trex and
+  the graph-based baselines VulHawk and HermesSim. Trex needs its own
+  preprocessing pipeline and the graph-based models are evaluated at whole
+  function granularity only; neither is packaged here.
 
 * Type IV is thin. It exists in only 19 binaries corpus-wide and all of them
   are expensive; the readelf builds that carry most of it each cost more on a
@@ -59,9 +79,15 @@ What it is not
   multi-day preprocessing step; the stage itself is not included, so the
   artifact cannot be pointed at a new binary as it stands.
 
-* Not a trained model. The backbone is BinShot's published similarity model,
-  used as-is with no fine-tuning. This work contributes the localization layer
-  on top of it; there is no training step to reproduce.
+* Not a trained model. The backbones are BinShot's and SAFE's published
+  models, used as-is with no fine-tuning. This work contributes the localization
+  layer on top of them; there is no training step to reproduce.
+
+* Not a redistribution of SAFE. SAFE is published without a licence, so
+  install.sh downloads its weights from the SAFE authors' own distribution
+  rather than shipping them. If that distribution disappears, the SAFE rows
+  cannot be reproduced; the BinShot rows are unaffected, since BinShot is MIT
+  and its weights travel in the data bundle.
 
 * Not a scanner. PinPoint answers "where is this known vulnerable code inside
   this binary", given a reference for it. It does not discover unknown
@@ -75,9 +101,10 @@ Known limitations that the results show
   the containment rule of Section VII-A; where that rule picks the wrong window,
   localization fails even though the retrieval was right.
 
-* The reported window is capped at the backbone's 253-token input. Where the
-  vulnerable region is much larger, the window covers only part of it -- which
-  is why the paper's criterion is overlap rather than coverage.
+* The reported window is capped at the backbone's own input limit, 253 tokens
+  for BinShot and 150 instructions for SAFE. Where the vulnerable region is
+  larger, the window covers only part of it -- which is why the paper's
+  criterion is overlap rather than coverage.
 
 * Retrieval and localization are not the same problem. A query can retrieve the
   correct host function and still report a range that misses the inlined

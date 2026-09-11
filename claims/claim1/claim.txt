@@ -2,20 +2,38 @@ Function Retrieval under Compiler Inlining
 
 This claim demonstrates that PinPoint improves the retrieval of vulnerable code
 in target binaries over the binary code similarity detection (BCSD) backbone it
-is built on, and reproduces the type-wise Top-K accuracy and MRR of Table III.
+is built on, that the improvement does not depend on which backbone that is,
+and reproduces the type-wise Top-K accuracy and MRR of Table III.
 
-The evaluation runs the packaged subset twice: once restricted to Stage 1,
-which is whole-function comparison and therefore the backbone evaluated
-standalone, and once with PinPoint's full three-stage cascade. Both are scored
-with topk_table.py, the same analysis code that produced the paper's table, so
-the two configurations are measured on identical binaries. Results are reported
+The evaluation runs the packaged subset four times: with each of two backbones,
+once restricted to Stage 1, which is whole-function comparison and therefore
+the backbone evaluated standalone, and once with PinPoint's full three-stage
+cascade. All four runs are scored with topk_table.py, the same analysis code
+that produced the paper's table, over identical binaries. Results are reported
 per inlining type (Types I-IV, defined in Section III) and overall.
 
 The gain concentrates on Type II, where the compiler inlined the vulnerable
 function into a non-vulnerable host and it no longer survives as a routine with
-a boundary a function-granularity model can match against.
+a boundary a function-granularity model can match against. It is largest for
+SAFE, whose standalone Type II accuracy is close to zero.
 
-The BCSD backbone is BinShot, from: S. Ahn, S. Ahn, H. Koo, and Y. Paek,
-"Practical binary code similarity detection with BERT-based transferable
-similarity learning," in Proceedings of the 38th Annual Computer Security
-Applications Conference (ACSAC '22), 2022.
+The two backbones do not share a representation of a binary, so the packaged
+data carries each binary twice: Ghidra output for BinShot, radare2 output for
+SAFE, each with its own token budget (253 and 150). Neither disassembler is
+needed at evaluation time.
+
+The backbones are:
+
+  BinShot, from S. Ahn, S. Ahn, H. Koo, and Y. Paek, "Practical binary code
+  similarity detection with BERT-based transferable similarity learning," in
+  Proceedings of the 38th Annual Computer Security Applications Conference
+  (ACSAC '22), 2022.
+
+  SAFE, from L. Massarelli, G. A. Di Luna, F. Petroni, L. Querzoni, and
+  R. Baldoni, "SAFE: Self-attentive function embeddings for binary similarity,"
+  in Detection of Intrusions and Malware, and Vulnerability Assessment (DIMVA),
+  2019.
+
+Both are used with their published pre-trained weights, without fine-tuning.
+The paper additionally evaluates Trex and two graph-based baselines, which are
+not packaged here; see use.txt.

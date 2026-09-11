@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # ACSAC 2026 artifact -- one-shot setup.
 #
-# Installs Python dependencies, fetches the BinShot backbone, and puts the
+# Installs Python dependencies, fetches the two BCSD backbones, and puts the
 # evaluation data in place. Safe to re-run.
 #
 # Environment:
@@ -16,7 +16,7 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ART="$ROOT/artifact"
 PY="${PINPOINT_PYTHON:-${PYTHON:-python3}}"
 
-echo "== 1/3  Python dependencies"
+echo "== 1/4  Python dependencies"
 "$PY" -m pip install --quiet --upgrade pip
 "$PY" -m pip install --quiet -r "$ROOT/requirements.txt"
 
@@ -36,7 +36,20 @@ print(f"    torch {torch.__version__}  cuda={torch.cuda.is_available()}"
       + (f"  device={torch.cuda.get_device_name(0)}" if torch.cuda.is_available() else "  (running on CPU)"))
 PYEOF
 
-echo "== 2/3  BinShot backbone"
+# SAFE is a frozen TensorFlow graph, loaded through tf.compat.v1. Colab ships
+# TensorFlow already; installing it where it is absent pulls ~600 MB.
+if ! "$PY" -c 'import tensorflow' >/dev/null 2>&1; then
+    echo "    tensorflow not present -- installing (needed by the SAFE backbone)"
+    "$PY" -m pip install --quiet tensorflow
+else
+    echo "    tensorflow already present -- left untouched"
+fi
+"$PY" - <<'PYEOF'
+import tensorflow as tf
+print(f"    tensorflow {tf.__version__}")
+PYEOF
+
+echo "== 2/4  BCSD backbones"
 # The localization layer imports the BCSD backbone's model definitions. The
 # backbone is third-party code, used unmodified, and is fetched rather than
 # redistributed here. Only its Python sources are needed.
@@ -49,10 +62,23 @@ else
     git -C "$ART/binshot" sparse-checkout init --cone >/dev/null 2>&1
     git -C "$ART/binshot" sparse-checkout set --no-cone '/*.py' '/LICENSE' >/dev/null 2>&1
     git -C "$ART/binshot" checkout >/dev/null 2>&1
-    echo "    cloned $(ls -1 "$ART/binshot"/*.py | wc -l) backbone sources into artifact/binshot"
+    echo "    cloned $(ls -1 "$ART/binshot"/*.py | wc -l) BinShot sources into artifact/binshot"
 fi
 
-echo "== 3/3  Evaluation data"
+# SAFE supplies its own tokenizer, normalizer and frozen-graph loader, which
+# run_safe.py imports rather than reimplementing.
+if [ -f "$ART/safe_backbone/neural_network/SAFEEmbedder.py" ]; then
+    echo "    already present at artifact/safe_backbone"
+else
+    rm -rf "$ART/safe_backbone"
+    git clone --depth 1 https://github.com/gadiluna/SAFE.git "$ART/safe_backbone" >/dev/null 2>&1
+    echo "    cloned SAFE sources into artifact/safe_backbone"
+fi
+
+# SAFE's weights, which its licence does not let this artifact redistribute.
+"$ART/scripts/fetch_safe_model.sh"
+
+echo "== 3/4  Evaluation data"
 if [ "${SKIP_DATA:-0}" = "1" ]; then
     echo "    SKIP_DATA=1 -- skipped"
 else
@@ -60,7 +86,7 @@ else
 fi
 
 echo
-echo "== precomputing reference embeddings"
+echo "== 4/4  precomputing BinShot reference embeddings"
 # Without these the cascade recomputes each reference's embedding once per
 # candidate function, which dominates the runtime. Takes a few seconds.
 if [ -f "$ART/data/reference_embeddings/reference_embeddings_regular.pt" ]; then
@@ -81,7 +107,12 @@ for f in \
     "$ART/data/reference_db/fno_inline.json" \
     "$ART/data/ground_truth/gt_ranges.json" \
     "$ART/data/ground_truth/ground_truth_v3.txt" \
-    "$ART/data/ground_truth/subset.json" ; do
+    "$ART/data/ground_truth/subset.json" \
+    "$ART/safe_backbone/neural_network/SAFEEmbedder.py" \
+    "$ART/models/safe/safe_trained_X86.pb" \
+    "$ART/models/safe/word2id.json" \
+    "$ART/data/safe/reference_db/default.json" \
+    "$ART/data/safe/reference_db/fno_inline.json" ; do
     if [ -e "$f" ]; then
         printf '    ok      %s\n' "${f#$ROOT/}"
     else
@@ -98,12 +129,18 @@ n_targets=0
 if [ -d "$ART/data/targets" ]; then
     n_targets=$(find "$ART/data/targets" -maxdepth 1 -name '*.json' | wc -l)
 fi
-if [ "$n_targets" -eq "$n_expected" ] && [ "$n_expected" -gt 0 ]; then
-    printf '    ok      artifact/data/targets (%s binaries)\n' "$n_targets"
-else
-    printf '    MISSING artifact/data/targets (found %s of %s)\n' "$n_targets" "$n_expected"
-    missing=1
-fi
+for d in targets safe/targets; do
+    n=0
+    if [ -d "$ART/data/$d" ]; then
+        n=$(find "$ART/data/$d" -maxdepth 1 -name '*.json' | wc -l)
+    fi
+    if [ "$n" -eq "$n_expected" ] && [ "$n_expected" -gt 0 ]; then
+        printf '    ok      artifact/data/%s (%s binaries)\n' "$d" "$n"
+    else
+        printf '    MISSING artifact/data/%s (found %s of %s)\n' "$d" "$n" "$n_expected"
+        missing=1
+    fi
+done
 
 echo
 if [ "$missing" -ne 0 ]; then
@@ -112,5 +149,5 @@ if [ "$missing" -ne 0 ]; then
 fi
 echo "[+] setup complete."
 echo "    quick check (minutes) : bash artifact/scripts/smoke.sh"
-echo "    claim 1 (hours)       : claims/claim1/run.sh"
+echo "    claim 1 (~4 hours)    : claims/claim1/run.sh"
 echo "    claim 2 (seconds)     : claims/claim2/run.sh"

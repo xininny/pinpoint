@@ -7,11 +7,11 @@ fraction of correct queries within each type.
 
   Type        #Queries    #Correct    Accuracy
   --------------------------------------------
-  I                194         194      100.0%
-  II               263         183       69.6%
-  III               56          56      100.0%
+  I                126         126      100.0%
+  II               151         121       80.1%
+  III               24          24      100.0%
   IV                10          10      100.0%
   --------------------------------------------
-  Total            523         443       84.7%
+  Total            311         281       90.4%
 
   json    : claims/claim2/actual/claim2.json

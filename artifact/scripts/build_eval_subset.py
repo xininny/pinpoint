@@ -7,30 +7,46 @@ artifact/data/ from the full corpus is auditable rather than taken on trust.
 
 Selection rule
 --------------
-The full corpus is 300 target binaries against a 577-entry reference database,
-and a complete pass took about a week on an H200. The subset keeps the four
-inlining types in numbers large enough for the paper's two tables to come out
-close, at a size that fits a Colab session.
+The full corpus is 300 target binaries against a 577-entry reference database.
+A complete pass took about a week on an H200 with BinShot, and about twice that
+with SAFE. The subset keeps the four inlining types in numbers large enough for
+the paper's tables to come out close, at a size that fits a Colab session.
 
-Selection proceeds in three steps.
+Cost here is the sum of both backbones, since Table III reports BinShot and
+SAFE on the same binaries. Per-binary costs come from the archived full-corpus
+runs. Selection proceeds in three steps.
 
 Type II first. Its accuracy varies widely by project, so binaries are drawn to
 reproduce the corpus's project mix for Type II, and within a project at random
-(seed 20260909) from those at or below the project's median runtime. Always
-taking a project's cheapest binaries biased an earlier version of this subset:
-they turned out to be systematically easier to localize in.
+(seed 20260911) from those at or below the project's median cost. Always taking
+a project's cheapest binaries biased an earlier version of this subset: small
+binaries expose few candidate functions, so whole-function matching alone lands
+the ground truth inside the top five far more often than it does on the corpus,
+and the baseline comes out looking stronger than the paper reports.
 
 Then Type IV, which exists in only 19 binaries corpus-wide, all of them costly.
-Only the cheapest is taken. The next ones are readelf builds that each cost
-more on a T4 than the rest of the subset put together, which is why the Type IV
-row carries far fewer cases than the others.
+Only the cheapest is taken. The next ones are readelf builds that each cost more
+than the rest of the subset put together, which is why the Type IV row carries
+far fewer cases than the others.
 
 Then Types I and III fill the remaining budget, matched to their own project
-mixes, with a penalty on binaries that would skew the Type II mix already
-fixed.
+mixes.
 
-The rule reads only the inlining type, the project, and the runtime measured in
-the archived full-corpus run. It never reads whether PinPoint got a case right.
+The rule reads only the inlining type, the project, and the cost measured in the
+archived runs. It never reads whether PinPoint ranked a case correctly.
+
+Size
+----
+The rule takes a time budget, and the budget was fixed by one criterion: the
+largest subset whose combined BinShot and SAFE runtime stays under four hours on
+a Colab T4. That is this 32-binary list, at 1.59 h plus 2.38 h. The next size up
+is 33 binaries at 4.86 h, over the target.
+
+Do not cut this list down further. Below 32 binaries the Top-5 ordering of the
+two BinShot rows becomes unstable, for the reason given above: the baseline
+inflates faster than the cascade as the binaries get smaller, and at 28 and 31
+binaries it overtakes PinPoint at Top-5, which the full corpus never does.
+
 The resulting list is frozen in SUBSET below, so the subset is reproducible
 without re-running the search.
 
@@ -45,41 +61,26 @@ import shutil
 import sys
 from collections import defaultdict
 
-# Frozen selection: 56 binaries over 6 projects, 27 CVEs, carrying 93
-# ground-truth instances (I 35 / II 46 / III 11 / IV 1).
+# Frozen selection: 32 binaries over 5 projects, 22 CVEs, carrying 65
+# ground-truth instances (I 25 / II 32 / III 7 / IV 1).
 SUBSET = [
     'coreutils-pr-23-gcc-O3',
-    'coreutils-shred-45-clang-O2',
     'coreutils-shred-45-gcc-O1',
     'coreutils-split-03-clang-O1',
     'coreutils-split-03-gcc-O1',
-    'coreutils-split-03-gcc-O2',
     'coreutils-split-03-gcc-O3',
-    'libarchive-bsdtar-44-gcc-O2',
-    'libarchive-bsdtar-49-clang-O2',
-    'libarchive-bsdtar-49-gcc-O1',
-    'libarchive-bsdtar-49-gcc-O2',
     'libjpeg-cjpeg-98-clang-O1',
-    'libjpeg-cjpeg-98-clang-O2',
-    'libjpeg-cjpeg-98-clang-O3',
-    'libjpeg-cjpeg-98-gcc-O1',
-    'libjpeg-cjpeg-98-gcc-O2',
-    'libjpeg-cjpeg-98-gcc-O3',
     'libjpeg-djpeg-06-gcc-O1',
-    'libjpeg-djpeg-06-gcc-O2',
     'libjpeg-djpeg-64-clang-O1',
     'libjpeg-djpeg-64-clang-O2',
     'libjpeg-djpeg-64-clang-O3',
     'libjpeg-djpeg-64-gcc-O1',
     'libjpeg-djpeg-64-gcc-O2',
     'libjpeg-djpeg-64-gcc-O3',
-    'libming-listmp3-64-clang-O1',
     'libming-listmp3-64-clang-O2',
     'libming-listmp3-64-clang-O3',
     'libming-listmp3-64-gcc-O1',
-    'libming-listmp3-64-gcc-O2',
     'libming-listmp3-64-gcc-O3',
-    'libming-listmp3-65-clang-O1',
     'libming-listmp3-65-clang-O2',
     'libming-listmp3-65-clang-O3',
     'libming-listmp3-65-gcc-O1',
@@ -87,22 +88,13 @@ SUBSET = [
     'libming-listmp3-65-gcc-O3',
     'libming-listswf-27-clang-O2',
     'libming-listswf-27-gcc-O3',
-    'libtiff-tiffcrop-21-clang-O1',
-    'libtiff-tiffcrop-21-clang-O2',
-    'libtiff-tiffcrop-21-clang-O3',
     'libtiff-tiffcrop-71-gcc-O1',
-    'libtiff-tiffcrop-92-clang-O1',
-    'libtiff-tiffcrop-92-clang-O2',
-    'libtiff-tiffcrop-92-gcc-O1',
     'libtiff-tiffcrop-92-gcc-O2',
     'libtiff-tiffinfo-25-clang-O1',
     'libtiff-tiffinfo-25-gcc-O1',
     'libtiff-tiffinfo-25-gcc-O3',
-    'libtiff-tiffmedian-11-clang-O1',
-    'libtiff-tiffmedian-11-gcc-O1',
     'libtiff-tiffsplit-95-gcc-O2',
     'zziplib-unzzipcatmem-74-clang-O2',
-    'zziplib-unzzipcatmem-74-gcc-O1',
     'zziplib-unzzipcatmem-74-gcc-O2',
 ]
 
@@ -110,8 +102,8 @@ SUBSET = [
 # confirm the pipeline runs before committing to the full subset.
 SMOKE = [
     'zziplib-unzzipcatmem-74-gcc-O2',
-    'coreutils-split-03-gcc-O2',
-    'libjpeg-djpeg-06-gcc-O2',
+    'coreutils-split-03-gcc-O1',
+    'libjpeg-djpeg-06-gcc-O1',
     'libming-listmp3-64-clang-O2',
 ]
 

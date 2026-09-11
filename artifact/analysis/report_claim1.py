@@ -2,12 +2,13 @@
 """
 report_claim1.py -- render Table III for this run.
 
-Reads the type-wise tables topk_table.py writes for two configurations of the
+Reads the type-wise tables topk_table.py writes for four configurations of the
 same subset and lays them out in the paper's Table III format:
 
-  BinShot           Stage 1 only, whole-function comparison, which is what the
-                    BCSD backbone does on its own.
-  PinPoint-BinShot  the full three-stage cascade.
+  BinShot           Stage 1 only, whole-function comparison, which is what a
+  SAFE              BCSD backbone does on its own.
+  PinPoint-BinShot  the full three-stage cascade over each backbone.
+  PinPoint-SAFE
 """
 import argparse
 import re
@@ -53,20 +54,28 @@ def row(label, data):
 def main():
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument('--cascade', required=True)
-    ap.add_argument('--baseline', required=True)
+    ap.add_argument('--binshot-baseline', required=True)
+    ap.add_argument('--binshot-cascade', required=True)
+    ap.add_argument('--safe-baseline')
+    ap.add_argument('--safe-cascade')
     args = ap.parse_args()
 
-    casc, base = parse(args.cascade), parse(args.baseline)
-    if not (casc.get('Overall') and base.get('Overall')):
-        sys.exit('[!] both the cascade and the Stage 1 tables are needed')
+    rows = [('BinShot', parse(args.binshot_baseline)),
+            ('PinPoint-BinShot', parse(args.binshot_cascade))]
+    if args.safe_baseline and args.safe_cascade:
+        rows += [('SAFE', parse(args.safe_baseline)),
+                 ('PinPoint-SAFE', parse(args.safe_cascade))]
+    for label, data in rows:
+        if not data.get('Overall'):
+            sys.exit(f'[!] no results for the {label} row')
 
     print('TABLE III: Type-wise and overall Top-K function-retrieval accuracy and MRR of')
-    print('PinPoint and the BinShot backbone. For each target-function instance, rank is')
-    print('the best rank over all references derived from the same vulnerable function.')
-    print('T1, T5 and T10 denote Top-1, Top-5 and Top-10 accuracy. BinShot is evaluated')
-    print('standalone, with whole-function matching only; PinPoint-BinShot adds the')
-    print('block-stride and token-stride stages. Overall aggregates Types I-IV.')
+    print('PinPoint and the baseline BCSD models. For each target-function instance, rank')
+    print('is the best rank over all references derived from the same vulnerable function.')
+    print('T1, T5 and T10 denote Top-1, Top-5 and Top-10 accuracy. Each backbone is')
+    print('evaluated standalone, with whole-function matching only, and as a PinPoint')
+    print('backbone, which adds the block-stride and token-stride stages. Overall')
+    print('aggregates Types I-IV.')
     print()
 
     top = f'{"":<18}' + ''.join(f'{c:^25}' for c in COLS)
@@ -74,8 +83,8 @@ def main():
     print(top)
     print(sub)
     print('-' * len(sub))
-    print(row('BinShot', base))
-    print(row('PinPoint-BinShot', casc))
+    for label, data in rows:
+        print(row(label, data))
     print('-' * len(sub))
     return 0
 
