@@ -1,0 +1,98 @@
+Data provenance
+===============
+
+What the packaged data is
+-------------------------
+The artifact ships three kinds of data, all derived by static analysis. No
+source code and no binaries are redistributed.
+
+    artifact/data/targets/        56 target binaries analyzed with Ghidra:
+                                  functions, basic blocks, and normalized
+                                  assembly tokens, as JSON.
+    artifact/data/reference_db/   the vulnerable functions used as queries:
+                                  175 entries in default.json and 113 in
+                                  fno_inline.json.
+    artifact/data/ground_truth/   the address ranges of vulnerable code,
+                                  extracted from DWARF metadata.
+
+Where it came from
+------------------
+Nine open-source projects, taken from their public release lines: binutils,
+coreutils, jasper, libarchive, libjpeg-turbo, libming, libtiff, libxml2 and
+zziplib. Each project is covered by its own upstream license; license.txt
+lists them per project. The packaged subset covers six of the nine.
+
+The vulnerabilities are 73 publicly disclosed CVEs, all long fixed upstream.
+For every one of them we read the security patch diff by hand to identify the
+root-cause function, that is, the function that actually triggers the
+vulnerability, and discarded functions that the diff touches but that are not
+vulnerability-relevant. This yielded 74 root-cause functions across 12 CWEs.
+
+How the binaries were built
+---------------------------
+Every program was compiled from unmodified upstream source with both GCC and
+Clang.
+
+    target corpus         -O1, -O2, -O3, giving six builds per program.
+                          -O0 is excluded: without optimization the compiler
+                          does not inline, so there is nothing to localize.
+    reference database    -O0 through -O3 under both compilers, eight builds.
+                          -O0 is kept here so that a target can match a
+                          reference from any optimization level.
+    -fno-inline builds    additionally produced, under the same eight
+                          configurations, for the vulnerabilities that show
+                          Types II, III or IV in their default builds. These
+                          supply boundary-preserving references of functions
+                          that the optimizer would otherwise have inlined
+                          away. They are references only; the targets are
+                          always the default builds.
+
+How the data was extracted
+--------------------------
+The offline preprocessing pipeline runs in this order.
+
+    1. Ghidra 11.4 headless analyzer recovers per-function assembly, function
+       and basic-block boundaries, and the basic-block-to-instruction mapping
+       that Stages 2 and 3 need. BinShot's operand-normalization rules are then
+       applied to the Ghidra-extracted assembly. Across the full corpus this
+       recovers 224,188 functions, of which 223,592 are non-vulnerable and
+       38,516 (17.2%) carry an inlining relationship.
+    2. pyelftools reads DWARF metadata to recover which functions were inlined
+       into which, and the byte ranges the inlined bodies occupy. This is the
+       ground truth, and it is the reason the binaries are built with debug
+       information: the evaluation needs to know where the vulnerable code
+       ended up, not merely that a function disappeared.
+    3. Each vulnerability-relevant function is labelled with one of the four
+       inlining types of Section III (V, NV-V, V-NV, V-V), derived from the
+       DWARF inlining relationships rather than assigned by hand.
+    4. Per-basic-block token offsets are computed and written back, so that a
+       window reported in token indices can be mapped to a byte range.
+
+This leaves 596 vulnerability-relevant target-function instances and a
+577-entry reference database, plus 409 -fno-inline references.
+
+How the packaged subset was derived
+-----------------------------------
+artifact/scripts/build_eval_subset.py carries the selection rule and the frozen
+result, so the derivation is auditable rather than taken on trust. A full pass
+over the corpus takes about a week on an H200, so the artifact ships 56 of the
+300 target binaries, chosen in three steps: Type II binaries first, drawn to
+reproduce the corpus's project mix and picked at random within a project from
+those at or below its median runtime; then the single affordable Type IV
+binary; then Types I and III to fill the remaining budget.
+
+The rule reads only the inlining type, the project, and the runtime measured in
+the archived full-corpus run. It never reads whether PinPoint localized a case
+correctly.
+
+When
+----
+The corpus was compiled and analyzed, and the ground truth extracted and
+verified, between March and August 2026. The packaged subset was derived in
+September 2026.
+
+The full corpus
+---------------
+The complete corpus, its -fno-inline builds, the 577-entry reference database
+and the raw outputs of the paper's own run are archived separately with a DOI.
+See the Full Corpus section of README.md.

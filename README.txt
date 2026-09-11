@@ -103,10 +103,13 @@ claims/                     # Reproducibility claims
 infrastructure/             # Colab link and platform requirements
 install.sh                  # Installation script
 README.txt                  # This file
-license.txt                 # MIT License, including third-party
 use.txt                     # Usage guidelines and limitations
+provenance.txt              # Where the data came from and how it was derived
+ethics.txt                  # Ethics of the data collection
+license.txt                 # MIT License, including third-party
+metadata.toml               # ACSAC artifact metadata (artmeta)
 paper.pdf                   # The paper
-PinPoint_AE_ACSAC.ipynb      # Colab notebook
+PinPoint_AE_ACSAC.ipynb     # Colab notebook
 ```
 
 ## Running Individual Experiments

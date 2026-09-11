@@ -1,0 +1,57 @@
+Ethics
+======
+
+No human subjects
+-----------------
+This work collected no data from or about people. There are no participants,
+no surveys, no telemetry, no user studies, and no personally identifying
+information anywhere in the artifact. No institutional review was applicable
+and none was sought.
+
+The inputs are software, and they are public
+--------------------------------------------
+Every input is the source code of publicly released open-source software,
+obtained from the projects' own public release channels and used under the
+projects' own licenses. license.txt lists the license for each project. The
+artifact redistributes neither that source nor the binaries built from it: it
+ships only static-analysis output, namely normalized disassembly, function and
+basic-block boundaries, and DWARF-derived address ranges.
+
+The vulnerabilities are already disclosed
+-----------------------------------------
+All 73 CVEs studied here were publicly disclosed and fixed upstream before this
+work began; the most recent predates it by several years. This work discloses
+no new vulnerability, reports none to any vendor, and had no disclosure
+obligation to discharge. Nothing here is a zero-day.
+
+The binaries are analyzed, never executed. The artifact contains no exploit,
+no proof-of-concept input, and no crash trigger. It reports where known
+vulnerable code sits inside a compiled function; it does not demonstrate that
+the code can be reached or exploited.
+
+Dual use
+--------
+Locating a known vulnerability in a stripped binary is useful to whoever is
+looking, and the technique does not ask why. We judge the balance to favor
+publication, for three reasons.
+
+First, the vulnerabilities and their patches are already public. An attacker
+who wants to know whether a given binary is unpatched has simpler routes,
+starting with the version string.
+
+Second, the capability the paper adds is precision, not discovery. PinPoint
+answers "which bytes of this function are the vulnerable ones" for a
+vulnerability the operator already knows about. That question is the one a
+binary patcher has to answer and the one an attacker least needs.
+
+Third, the intended use is the defensive one. The motivation of the paper is
+the window between disclosure and deployed patch, and narrowing it by patching
+the running binary directly. use.txt states what the artifact is and is not
+suitable for.
+
+Compute
+-------
+The evaluation ran on a single GPU. The artifact is deliberately sized so that
+reviewers reproduce it on a free Colab T4 in a few hours rather than repeating
+the full run, which would cost roughly a week of GPU time to no additional
+scientific end.

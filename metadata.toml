@@ -1,6 +1,6 @@
 badge = "r"
 artifact_url = "https://github.com/xininny/pinpoint"
-cd = "c"
+cd = "b"
 citation = """
 @inproceedings{pinpoint2026,
   title     = {Localizing Vulnerabilities under Function Inlining Toward Precise Binary Patching},
@@ -37,3 +37,5 @@ requirements.txt deliberately omits torch and torchvision, because the backbone 
 api = "None. The artifact needs no API keys and accesses no paid online services."
 gui = "n"
 readme = "https://github.com/xininny/pinpoint/blob/main/README.md"
+provenance = "https://github.com/xininny/pinpoint/blob/main/provenance.txt"
+ethics = "https://github.com/xininny/pinpoint/blob/main/ethics.txt"
