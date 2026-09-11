@@ -1,0 +1,39 @@
+badge = "r"
+artifact_url = "https://github.com/xininny/pinpoint"
+cd = "c"
+citation = """
+@inproceedings{pinpoint2026,
+  title     = {Localizing Vulnerabilities under Function Inlining Toward Precise Binary Patching},
+  author    = {FIXME: full author list},
+  booktitle = {Proceedings of the 42nd Annual Computer Security Applications Conference (ACSAC '26)},
+  year      = {2026}
+}
+"""
+license_url = "https://opensource.org/license/mit"
+infrastructure_url = "https://colab.research.google.com/"
+infrastructure_resources = "https://github.com/xininny/pinpoint/blob/main/infrastructure/infrastructure.txt"
+infrastructure_allocation = "No allocation or account beyond a standard free Google account is needed. Open the shared notebook at https://colab.research.google.com/drive/1m_tNCu6K3DyKeXqeHvcgNW3PR-f9uX2_?usp=sharing and set Runtime -> Change runtime type -> T4 GPU before running the cells. A GPU is required; the free tier is sufficient. The same notebook is in the repository as PinPoint_AE_ACSAC.ipynb."
+install_script = "https://github.com/xininny/pinpoint/blob/main/install.sh"
+use = "https://github.com/xininny/pinpoint/blob/main/use.txt -- The artifact reproduces the effectiveness results of the paper (Tables III and IV) on a packaged subset of 56 target binaries, roughly 5% of the full corpus, chosen so that a complete run fits in a free Colab session. Numbers therefore approximate the paper's rather than matching them exactly. The artifact is not suitable for reproducing the paper's efficiency results (pruning speedup, amortized latency), which characterize a full-corpus run, nor for evaluating the SAFE and Trex backbones, which are not packaged. It is a research prototype for locating known vulnerabilities in analyzed binaries, not a production scanner."
+destructive = "None. The artifact only reads the packaged JSON data and writes results under its own directory. It performs no network access after setup, executes none of the analyzed binaries, and modifies nothing outside the repository."
+claim1 = "PinPoint improves Top-K function retrieval of known vulnerabilities over the BCSD backbone it is built on, and the improvement concentrates on the inlining types where the vulnerable function no longer survives as an independent routine. This reproduces Table III of the paper: type-wise and overall Top-1/5/10 accuracy and MRR for BinShot standalone and for PinPoint-BinShot."
+script1 = "https://github.com/xininny/pinpoint/blob/main/claims/claim1/run.sh"
+expected1 = "The script prints Table III in the paper's layout: one row for BinShot (whole-function matching only) and one for PinPoint-BinShot (the full three-stage cascade), with T1/T5/T10 and MRR for Types I-IV and Overall. PinPoint-BinShot should be substantially higher on Type II and higher overall. The output we obtained on a free Colab T4 is recorded in https://github.com/xininny/pinpoint/blob/main/claims/claim1/expected/result.txt (Overall Top-1 64.8% -> 72.6%, Type II Top-1 39.4% -> 63.8%). Because the packaged subset is about 5% of the corpus, figures approximate rather than match the paper. Runtime is about 4.5 hours on a T4."
+claim2 = "Once the correct target function is retrieved, PinPoint also reports where inside that function the vulnerable code sits. This reproduces Table IV of the paper: per-inlining-type accuracy of within-function vulnerability range localization for reference queries whose ground-truth target appears at Top-1."
+script2 = "https://github.com/xininny/pinpoint/blob/main/claims/claim2/run.sh"
+expected2 = "The script prints Table IV: #Queries, #Correct and Accuracy for Types I-IV and the total. A query counts as correct when at least one reported byte range overlaps the DWARF-derived vulnerable region. Types I and III are near 100% because their ground-truth range spans the whole retrieved function; Types II and IV are the informative rows. The output we obtained on a free Colab T4 is recorded in https://github.com/xininny/pinpoint/blob/main/claims/claim2/expected/result.txt (Total 443/523 = 84.7%). This claim reuses the run produced by claim 1 and completes in seconds."
+hw = """
+GPU: required. Any CUDA GPU with 4 GB or more; a free Colab T4 is what the artifact was sized for and is the intended platform. Peak GPU memory stays under 2 GB.
+CPU-only execution is not practical: the pipeline embeds hundreds of thousands of sliding windows, which would take days on Colab's two cores.
+Disk: about 600 MB (48 MB data bundle, 212 MB unpacked, plus dependencies and results).
+RAM: about 4 GB.
+Network: needed once during setup, to clone the BinShot backbone and unpack the data bundle. The evaluation itself runs offline.
+"""
+sw = """
+Linux. Python 3.9 to 3.12 (developed on 3.11, verified on 3.12, which is Colab's version). PyTorch 2.0 or newer with CUDA (verified on 2.10, 2.11 and 2.14). git and curl or wget.
+No paid software. No disassembler is needed at evaluation time: Ghidra analysis and DWARF ground-truth extraction are done offline and shipped as JSON.
+requirements.txt deliberately omits torch and torchvision, because the backbone imports torchvision and the two must come from the same build. install.sh leaves an existing matched pair untouched, which is what Colab already provides.
+"""
+api = "None. The artifact needs no API keys and accesses no paid online services."
+gui = "n"
+readme = "https://github.com/xininny/pinpoint/blob/main/README.md"
