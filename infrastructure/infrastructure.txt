@@ -10,7 +10,7 @@ shared notebook link is in infrastructure/colab_link.txt.
               sized for. Peak usage stays under 2 GB.
     CPU-only  not practical. The pipeline embeds hundreds of thousands of
               sliding windows; Colab's two cores would take days.
-    disk      ~600 MB (270 MB data bundle, plus dependencies and results)
+    disk      ~600 MB (48 MB bundle, 212 MB unpacked, plus dependencies and results)
     RAM       ~4 GB
     network   needed once during setup, for the backbone clone and the data
               bundle. The evaluation itself runs offline.
@@ -18,7 +18,7 @@ shared notebook link is in infrastructure/colab_link.txt.
 Software
 --------
     Python     3.9 - 3.12   (developed on 3.11; verified on 3.12, Colab's version)
-    PyTorch    >= 2.0       (verified on 2.10 and 2.14)
+    PyTorch    >= 2.0       (verified on 2.10, 2.11 and 2.14)
     git        for the backbone clone
     curl/wget  for the data bundle
 
