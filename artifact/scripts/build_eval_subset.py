@@ -8,7 +8,7 @@ artifact/data/ from the full corpus is auditable rather than taken on trust.
 Selection rule
 --------------
 The full corpus is 300 target binaries against a 577-entry reference database,
-and a complete pass takes about a week on one GPU. The subset keeps the four
+and a complete pass took about a week on an H200. The subset keeps the four
 inlining types in numbers large enough for the paper's two tables to come out
 close, at a size that fits a Colab session.
 

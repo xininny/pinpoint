@@ -42,7 +42,7 @@ bash artifact/scripts/smoke.sh
 
 Then the two reproducibility claims:
 
-### Claim 1: Type II Function Retrieval
+### Claim 1: Function Retrieval under Compiler Inlining
 ```bash
 cd claims/claim1
 ./run.sh
@@ -59,20 +59,21 @@ Run claim 1 first. Claim 2 reuses its cascade results and then finishes in secon
 ## Expected Results
 
 Each claim generates evaluation results showing:
-- Top-K retrieval accuracy and MRR, per inlining type (Types I-IV) and overall
-- The BinShot backbone evaluated standalone against the full PinPoint cascade
-- Within-function localization accuracy, per inlining type
-- The number of evaluated cases behind each figure
+- Top-K retrieval accuracy and MRR, per inlining type (Types I-IV) and overall, for the
+  BinShot backbone standalone and for the full PinPoint cascade (paper Table III)
+- Within-function localization accuracy per inlining type, with the number of queries
+  behind each figure (paper Table IV)
 
 Expected outputs are provided in `claims/claim*/expected/result.txt` for comparison.
 
 ## Technical Notes
 
 Due to computational constraints for artifact evaluation:
-- The full corpus is 300 target binaries against a 577-entry reference database, and a complete
-  run takes about a week on a single GPU. The packaged subset is 56 binaries.
-- Two of the nine projects (jasper, libxml2) are excluded; their cheapest qualifying binaries
-  cost more GPU time than the whole interactive budget.
+- The full corpus is 300 target binaries against a 577-entry reference database. The paper's
+  run took about a week on an H200; on a T4 it would be closer to two weeks. The packaged
+  subset is 56 binaries.
+- Three of the nine projects (binutils, jasper, libxml2) are excluded. Their cheapest
+  qualifying binaries each cost more GPU time than the rest of the subset put together.
 - Ghidra disassembly and DWARF ground-truth extraction are done offline and shipped as JSON, so
   that reviewers do not repeat a multi-day preprocessing stage.
 - Efficiency results (pruning speedup, amortized latency) are not reproduced; they characterize
@@ -96,7 +97,7 @@ artifact/                   # Main implementation code
   models/                   # BinShot similarity model and vocabulary
 
 claims/                     # Reproducibility claims
-  claim1/                   # Type II function retrieval
+  claim1/                   # Function retrieval under compiler inlining
   claim2/                   # Vulnerability range localization
 
 infrastructure/             # Colab link and platform requirements
@@ -130,10 +131,12 @@ Every window scored in Stages 2 and 3 is dumped to `results/cascade/<db>/result_
 | | time |
 |---|---|
 | Smoke test | a few minutes |
-| Claim 1 (two configurations) | about 3.5 hours on a Colab T4 |
+| Claim 1 (two configurations) | about 4.5 hours on a Colab T4 |
 | Claim 2 (reuses claim 1's run) | seconds |
 
-Measured on a free Colab T4. The work is not GPU-bound, so a T4 is not much slower here than a datacentre GPU. Runs are resumable: a target whose report already exists is skipped, so re-running a claim after a dropped Colab session continues instead of starting over. Mounting Google Drive in the notebook keeps results across sessions.
+Measured on a free Colab T4: the cascade took 4h04m and the Stage 1 baseline a further 14m. Claim 1 is the long pole; claim 2 reuses its results.
+
+Runs are resumable. Each target's report is written as it finishes and a target whose report already exists is skipped, so re-running a claim in the same session continues instead of starting over. A Colab session that is torn down takes `/content` with it, and the run then starts from the beginning.
 
 ## Troubleshooting
 
