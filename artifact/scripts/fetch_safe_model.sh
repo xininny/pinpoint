@@ -54,13 +54,13 @@ fi
 
 if [ ! -s "$OUT/safe_trained_X86.pb" ]; then
     echo "    downloading the SAFE model (210 MiB)"
-    "$PY_BIN" -m gdown --id "$MODEL_ID" -O "$OUT/safe_trained_X86.pb" --quiet
+    "$PY_BIN" -m gdown "$MODEL_ID" -O "$OUT/safe_trained_X86.pb" --quiet
     check "$OUT/safe_trained_X86.pb" "$MODEL_SHA256" "model"
 fi
 
 if [ ! -s "$OUT/word2id.json" ]; then
     echo "    downloading the SAFE vocabulary (inside a 420 MiB archive)"
-    "$PY_BIN" -m gdown --id "$I2V_ID" -O "$TMP/i2v.tar.bz2" --quiet
+    "$PY_BIN" -m gdown "$I2V_ID" -O "$TMP/i2v.tar.bz2" --quiet
     # Take only word2id.json; the embedding matrix beside it is training data.
     tar -xjf "$TMP/i2v.tar.bz2" -C "$TMP"
     found="$(find "$TMP" -name word2id.json -print -quit)"
