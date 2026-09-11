@@ -92,20 +92,22 @@ def load_backbone():
                  'downloaded from\n    the authors\' own distribution rather '
                  'than redistributed here.')
     sys.path.insert(0, str(SAFE_SRC))
+    # SAFE's tokenizer and normalizer need only json and numpy, so they are
+    # used from the clone as published. Its frozen-graph loader is not: see
+    # lib/embedder.py.
     from asm_embedding.InstructionsConverter import InstructionsConverter
     from asm_embedding.FunctionNormalizer import FunctionNormalizer
-    from neural_network.SAFEEmbedder import SAFEEmbedder
+    from lib.embedder import FrozenSAFE
 
     converter = InstructionsConverter(str(WORD2ID))
     normalizer = FunctionNormalizer(max_instruction=MAX_INSTRUCTION)
-    embedder = SAFEEmbedder(str(MODEL_PB))
-    embedder.loadmodel()
-    embedder.get_tensor()
+    model = FrozenSAFE(MODEL_PB)
+    print(f'[+] SAFE model loaded, running on {model.device()}')
 
     def embed(token_lists):
         converted = [converter.convert_to_ids(x) for x in token_lists]
         normed, lengths = normalizer.normalize_functions(converted)
-        return embedder.embedd(np.stack(normed), np.array(lengths))
+        return model.embed(normed, lengths)
 
     return embed
 

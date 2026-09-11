@@ -106,6 +106,15 @@ Known limitations that the results show
   larger, the window covers only part of it -- which is why the paper's
   criterion is overlap rather than coverage.
 
+* Which stage is credited can differ between machines, for SAFE. Where a
+  target function is shorter than the sliding window, a later stage sees
+  exactly the tokens an earlier one already saw and the two scores are equal;
+  the argmax between them then falls whichever way the hardware rounded. This
+  moves the stage label and the reported range, never the score and never the
+  rank, so Table III is identical across machines. Checked by running the
+  packaged SAFE code under TensorFlow 1.15 and 2.21: all 782 ranking rows of
+  the binary tested agree, and 8 stage labels do not.
+
 * Retrieval and localization are not the same problem. A query can retrieve the
   correct host function and still report a range that misses the inlined
   vulnerable code; Type II is exactly where that happens.

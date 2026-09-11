@@ -65,9 +65,11 @@ else
     echo "    cloned $(ls -1 "$ART/binshot"/*.py | wc -l) BinShot sources into artifact/binshot"
 fi
 
-# SAFE supplies its own tokenizer, normalizer and frozen-graph loader, which
-# run_safe.py imports rather than reimplementing.
-if [ -f "$ART/safe_backbone/neural_network/SAFEEmbedder.py" ]; then
+# SAFE supplies the tokenizer and normalizer that turn radare2 instructions
+# into model input; run_safe.py imports those rather than reimplementing them.
+# Its frozen-graph loader is written against TensorFlow 1 and is not used; see
+# artifact/safe/lib/embedder.py.
+if [ -f "$ART/safe_backbone/asm_embedding/InstructionsConverter.py" ]; then
     echo "    already present at artifact/safe_backbone"
 else
     rm -rf "$ART/safe_backbone"
@@ -108,7 +110,7 @@ for f in \
     "$ART/data/ground_truth/gt_ranges.json" \
     "$ART/data/ground_truth/ground_truth_v3.txt" \
     "$ART/data/ground_truth/subset.json" \
-    "$ART/safe_backbone/neural_network/SAFEEmbedder.py" \
+    "$ART/safe_backbone/asm_embedding/InstructionsConverter.py" \
     "$ART/models/safe/safe_trained_X86.pb" \
     "$ART/models/safe/word2id.json" \
     "$ART/data/safe/reference_db/default.json" \

@@ -56,5 +56,15 @@ def cascade_score(skip_s1: bool, stage1_fn, stage2_fn, stage3_fn, force_stage=No
         scores['stage3'] = s3
         meta['stage3'] = m3
 
+    # The stage credited with a match is argmax over the stages that ran, as
+    # in the paper's implementation. Where a target is shorter than the sliding
+    # window, a later stage can see exactly the tokens an earlier one saw and
+    # the two scores tie to within floating-point noise; which one the argmax
+    # then picks depends on the hardware and the TensorFlow build, so the same
+    # match can be reported as stage1 on one machine and stage3 on another.
+    # Ranking is unaffected, because the scores are equal; only the reported
+    # range moves, between a whole function and a window covering it. Left as
+    # argmax rather than tie-broken here, so the artifact computes what the
+    # paper computed.
     best_stage = max(scores, key=scores.get)
     return scores, meta, best_stage
